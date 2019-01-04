@@ -96,8 +96,8 @@ namespace TittyPong.IO
             };
             KCM = new Dictionary<InputCommand, Keys>
             {
-                [InputCommand.Debug] = Keys.F1,     //Togles debugging information
-                [InputCommand.Editor] = Keys.F2,    //Togles editor overlay
+                [InputCommand.Debug] = Keys.F1,     //Toggles debugging information
+                [InputCommand.Editor] = Keys.F2,    //Toggles editor overlay
                 [InputCommand.Reload] = Keys.F3,    //Triggers a reload event
                 [InputCommand.Save] = Keys.F4       //Triggers a level save event
             };
