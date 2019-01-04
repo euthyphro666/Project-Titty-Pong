@@ -55,6 +55,8 @@
     <Compile Include="IO\InputCommandEventArgs.cs" />
     <Compile Include="IO\InputDirectionEventArgs.cs" />
     <Compile Include="IO\InputMouseEventArgs.cs" />
+    <Compile Include="NET\Client.cs" />
+    <Compile Include="NET\ReceivedMessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
