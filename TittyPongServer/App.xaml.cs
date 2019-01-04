@@ -19,7 +19,7 @@ namespace TittyPongServer
             Current.MainWindow = mainWindow;
             mainWindow.Show();
             
-            Events.GuiLogMessageEvent += mainWindow.EventsOnGuiLogMessageEvent;
+            Events.GuiLogMessageEvent += mainWindow.OnGuiLogMessageEvent;
             
             _master = new Master();
         }

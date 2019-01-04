@@ -23,12 +23,12 @@ namespace TittyPongServer.NET
             LidgrenServer.Start();
             
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-            LidgrenServer.RegisterReceivedCallback(ReceivedMessageHandler);
+            LidgrenServer.RegisterReceivedCallback(ReceivedMessageEventHandler);
 
             App.Events.RaiseGuiLogMessageEvent($"Server started at: {GetLocalIPAddress()}:{LidgrenServer.Port}");
         }
 
-        private void ReceivedMessageHandler(object state)
+        private void ReceivedMessageEventHandler(object state)
         {
             var msg = (state as NetServer)?.ReadMessage();
             if (msg == null) return;
