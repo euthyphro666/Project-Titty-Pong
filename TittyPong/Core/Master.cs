@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Myra;
+using Myra.Graphics2D.UI;
 using TittyPong.Contracts;
 using TittyPong.Graphics;
 using TittyPong.IO;
-
-
+using TittyPong.UI;
 
 namespace TittyPong.Core
 {
@@ -38,19 +37,25 @@ namespace TittyPong.Core
         protected override void Initialize()
         {
             IsMouseVisible = true;
+            MyraEnvironment.Game = this;
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             SM.LoadContent(Content);
-            
+
             //Initialize starting state
-            InitializeGame();
+            InitializeMenu();
         }
 
         protected override void UnloadContent()
         {
+        }
+
+        private void InitializeMenu()
+        {
+            State = new TittyMenu();
         }
 
         private void InitializeGame()
