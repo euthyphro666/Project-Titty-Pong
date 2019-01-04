@@ -44,6 +44,8 @@
     <StartupObject>TittyPong.Core.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IManager.cs" />
+    <Compile Include="Core\TittyGame.cs" />
     <Compile Include="Core\Master.cs" />
     <Compile Include="Core\Program.cs" />
     <Compile Include="Graphics\Screen.cs" />

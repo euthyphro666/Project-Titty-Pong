@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TittyPong.Contracts;
 using TittyPong.Graphics;
 using TittyPong.IO;
 
@@ -16,10 +18,15 @@ namespace TittyPong.Core
         
         internal static Input IM { private set; get; }
         internal static Screen SM { private set; get; }
+        internal static ContentManager Assets { private set; get; }
+        internal static GameTime DeltaTime;
+
+        internal IManager State;
 
         public Master()
         {
             Content.RootDirectory = "Content";
+            Assets = Content;
 
             SM = new Screen();
             IM = new Input();
@@ -33,31 +40,37 @@ namespace TittyPong.Core
             IsMouseVisible = true;
             base.Initialize();
         }
+
         protected override void LoadContent()
         {
             SM.LoadContent(Content);
+            
+            //Initialize starting state
+            InitializeGame();
         }
+
         protected override void UnloadContent()
         {
         }
 
+        private void InitializeGame()
+        {
+            State = new TittyGame();
+        }
+
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            //Run state update loop here
-
+            IM.Update();
+            DeltaTime = gameTime;
+            State?.Update();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             SM.Start();
-            //Run state render loop here
+            State?.Render();
             SM.Stop();
-
             base.Draw(gameTime);
         }
     }
