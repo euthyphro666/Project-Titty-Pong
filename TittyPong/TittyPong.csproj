@@ -40,9 +40,21 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TittyPong.Core.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Core\Master.cs" />
+    <Compile Include="Core\Program.cs" />
+    <Compile Include="Graphics\Screen.cs" />
+    <Compile Include="IO\Commands.cs" />
+    <Compile Include="IO\Controls.cs" />
+    <Compile Include="IO\IMouseEventListeners.cs" />
+    <Compile Include="IO\Input.cs" />
+    <Compile Include="IO\InputButtonEventArgs.cs" />
+    <Compile Include="IO\InputCommandEventArgs.cs" />
+    <Compile Include="IO\InputDirectionEventArgs.cs" />
+    <Compile Include="IO\InputMouseEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +70,12 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="NET\" />
+    <Folder Include="UI\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

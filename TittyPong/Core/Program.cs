@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TittyPong
+namespace TittyPong.Core
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -14,8 +14,8 @@ namespace TittyPong
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            using (var master = new Master())
+                master.Run();
         }
     }
 #endif
