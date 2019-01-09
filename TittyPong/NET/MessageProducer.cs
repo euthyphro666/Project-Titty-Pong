@@ -28,7 +28,8 @@ namespace TittyPong.NET
                 select nic.GetPhysicalAddress().ToString()
             ).FirstOrDefault();
             
-            var msg = new ConnectionRequest() {ClientId = macAddr};
+            var request = new ConnectionRequest() {ClientId = macAddr};
+            var msg = new Message(){MessageId = ConnectionRequest.MessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 

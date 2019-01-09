@@ -49,6 +49,12 @@ namespace TittyPongServer
 
         private void HandleDataMessage(Message msg, NetConnection sender)
         {
+            if(msg.Contents == null)
+            {
+                Events.OnGuiLogMessageEvent($"Received data message '{msg.MessageId}' with null contents");
+                return;
+            }
+            
             switch (msg.MessageId)
             {
                 case MessageIds.ConnectionRequest:
