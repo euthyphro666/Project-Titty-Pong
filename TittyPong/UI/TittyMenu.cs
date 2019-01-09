@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Myra;
 using Myra.Graphics2D.UI;
 using System;
@@ -9,11 +10,16 @@ using System.Threading.Tasks;
 using TittyPong.Contracts;
 using TittyPong.Core;
 using TittyPong.Events;
+using TittyPong.Graphics;
+using TittyPong.IO;
 
 namespace TittyPong.UI
 {
     public class TittyMenu : IManager
     {
+
+        private ContentManager assets;
+        private EventManager events;
 
         private Desktop UIHost;
         private Grid UIGrid;
@@ -23,8 +29,10 @@ namespace TittyPong.UI
         private TextField AddressFld;
         private Button ConnectBtn;
 
-        public TittyMenu()
+        public TittyMenu(ContentManager ass, EventManager ev)
         {
+            assets = ass;
+            events = ev;
             InitUI();
         }
 
@@ -87,17 +95,17 @@ namespace TittyPong.UI
         #region Events
         private void OnConnectionButton(object sender, EventArgs e)
         {
-            Master.EM.OnConnectionInfoEvent(this, new StringEventArgs(AddressFld.Text));
+            events.OnConnectionInfoEvent(this, new StringEventArgs(AddressFld.Text));
         }
         #endregion
 
-        public void Update()
+        public void Update(GameTime delta, InputManager input)
         {
         }
 
-        public void Render()
+        public void Render(GameTime delta, ScreenManager screen)
         {
-            UIHost.Bounds = new Rectangle(0, 0, (int)Master.SM.Width(), (int)Master.SM.Height());
+            UIHost.Bounds = new Rectangle(0, 0, (int)screen.Width(), (int)screen.Height());
             UIHost.Render();
         }
 

@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using TittyPong.Events;
 
 namespace TittyPong.Graphics
 {
     [Flags]
     public enum Alignment { Center = 0, Left = 1, Right = 2, Top = 4, Bottom = 8 }
 
-    public class Screen
+    public class ScreenManager
     {
         private GraphicsDeviceManager GDM;
         private SpriteBatch SB;
@@ -18,6 +19,13 @@ namespace TittyPong.Graphics
         private SpriteFont Font;
 
         private Texture2D WhitePixel;
+
+        private EventManager events;
+
+        public ScreenManager(EventManager ev)
+        {
+            events = ev;
+        }
 
         public void Init(Game game)
         {

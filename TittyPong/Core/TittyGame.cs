@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -6,52 +7,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TittyPong.Contracts;
+using TittyPong.Domain;
+using TittyPong.Events;
+using TittyPong.Graphics;
 using TittyPong.IO;
 
 namespace TittyPong.Core
 {
     public class TittyGame : IManager
     {
+        private ContentManager assets;
+        private EventManager events;
+        private Boobie[] boobies;
 
-        private Texture2D Titty;
-        private Rectangle Body;
-
-        public TittyGame()
+        public TittyGame(ContentManager ass, EventManager ev)
         {
-            var assets = Master.Assets;
-            Titty = assets.Load<Texture2D>("Titty");
-            Body = new Rectangle(0, 0, 64, 64);
-            Master.IM.DirectionEvent += OnMoveTitty;
-        }
+            assets = ass;
+            events = ev;
 
-        private void OnMoveTitty(object sender, InputDirectionEventArgs e)
-        {
-            var speed = 5;
-            switch (e.Direction)
+            var titty = assets.Load<Texture2D>("Titty");
+
+            boobies = new Boobie[]
             {
-                case InputDirection.RightNorth:
-                    Body.Y -= speed;
-                    break;
-                case InputDirection.RightSouth:
-                    Body.Y += speed;
-                    break;
-                case InputDirection.RightEast:
-                    Body.X += speed;
-                    break;
-                case InputDirection.RightWest:
-                    Body.X -= speed;
-                    break;
-            }
+                new Boobie(titty, 100f, 100f),
+                new Boobie(titty, 300f, 100f)
+            };
         }
 
-        public void Update()
+        public void Update(GameTime delta, InputManager input)
         {
 
         }
 
-        public void Render()
+        public void Render(GameTime delta, ScreenManager screen)
         {
-            Master.SM.Render(Titty, Body);
+            for (int i = 0; i < boobies.Length; i++)
+                boobies[i].Render(screen);
         }
     }
 }
