@@ -28,6 +28,19 @@ namespace TittyPongServer.NET
             App.Events.RaiseGuiLogMessageEvent($"Server started at: {GetLocalIPAddress()}:{LidgrenServer.Port}");
         }
 
+        public bool Send(byte[] msg, NetConnection client, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
+        {
+            var outgoingMessage = CreateMessage();
+            outgoingMessage.Write(msg);
+            var result = LidgrenServer.SendMessage(outgoingMessage, client, method);
+            return result == NetSendResult.Sent;
+        }
+        
+        public NetOutgoingMessage CreateMessage()
+        {
+            return LidgrenServer.CreateMessage();
+        }
+        
         private void ReceivedMessageEventHandler(object state)
         {
             var msg = (state as NetServer)?.ReadMessage();
@@ -49,5 +62,6 @@ namespace TittyPongServer.NET
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
+        
     }
 }

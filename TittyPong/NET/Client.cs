@@ -1,4 +1,6 @@
 using System;
+using Common;
+using Common.Messages;
 using Lidgren.Network;
 
 namespace TittyPong.NET
@@ -56,6 +58,22 @@ namespace TittyPong.NET
             if (Status() != NetConnectionStatus.Connected)
                 return false;
             var result = LidgrenClient.SendMessage(msg, method);
+            return result == NetSendResult.Sent;
+        }
+        
+        /// <summary>
+        /// Send a message to the server.
+        /// </summary>
+        /// <param name="msg">The outgoing message to send. Use 'CreateMessage' to instantiate a message object first.</param>
+        /// <param name="method">The delivery method. Default: NetDeliveryMethod.Unreliable</param>
+        /// <returns>True if the message was delivered, false if not</returns>
+        public bool Send(byte[] msg, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
+        {
+            var outgoingMessage = CreateMessage();
+            outgoingMessage.Write(msg);
+            if (Status() != NetConnectionStatus.Connected)
+                return false;
+            var result = LidgrenClient.SendMessage(outgoingMessage, method);
             return result == NetSendResult.Sent;
         }
 

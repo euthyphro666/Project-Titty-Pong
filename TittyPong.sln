@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPong", "TittyPong\Titt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPongServer", "TittyPongServer\TittyPongServer.csproj", "{0057E602-67A4-4304-AD67-A7D137171475}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +23,10 @@ Global
 		{0057E602-67A4-4304-AD67-A7D137171475}.Debug|x86.Build.0 = Debug|Any CPU
 		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.ActiveCfg = Release|Any CPU
 		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.Build.0 = Release|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
