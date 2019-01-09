@@ -1,11 +1,6 @@
-﻿using System;
-using Common;
-using Common.Messages;
-using Lidgren.Network;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Myra;
-using Myra.Graphics2D.UI;
 using TittyPong.Contracts;
 using TittyPong.Events;
 using TittyPong.Graphics;
