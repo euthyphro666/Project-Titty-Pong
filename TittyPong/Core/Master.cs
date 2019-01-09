@@ -15,13 +15,13 @@ namespace TittyPong.Core
     /// </summary>
     public class Master : Game
     {
-        public static ContentManager Assets { private set; get; }
-        public static EventManager EM { private set; get; }
-        public static Input IM { private set; get; }
-        public static Screen SM { private set; get; }
-        public static GameTime DeltaTime;
 
-        internal IManager State;
+        private ContentManager assets;
+        private EventManager events;
+        private InputManager input;
+        private ScreenManager screen;
+
+        private IManager state;
 
         private readonly Client MessageClient;
         private readonly MessageConsumer Consumer;
@@ -29,19 +29,17 @@ namespace TittyPong.Core
         public Master()
         {
             Content.RootDirectory = "Content";
-            Assets = Content;
+            assets = Content;
 
-            EM = new EventManager();
-            SM = new Screen();
-            IM = new Input();
+            events = new EventManager();
+            input = new InputManager(events);
+            screen = new ScreenManager(events);
 
-            SM.Init(this);
-            IM.Init();
-            
-            Consumer = new MessageConsumer(EM);
-            MessageClient = new Client(EM);
+            screen.Init(this);
+            input.Init();
+            Consumer = new MessageConsumer(events);
+            MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
-            
         }
 
 
@@ -54,10 +52,11 @@ namespace TittyPong.Core
 
         protected override void LoadContent()
         {
-            SM.LoadContent(Content);
+            screen.LoadContent(Content);
 
             //Initialize starting state
-            InitializeMenu();
+            //InitializeMenu();
+            InitializeGame();
         }
 
         protected override void UnloadContent()
@@ -66,28 +65,35 @@ namespace TittyPong.Core
 
         private void InitializeMenu()
         {
-            State = new TittyMenu();
+            state = new TittyMenu(assets, events);
         }
 
         private void InitializeGame()
         {
-            State = new TittyGame();
+            state = new TittyGame(assets, events);
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime delta)
         {
-            IM.Update();
-            DeltaTime = gameTime;
-            State?.Update();
-            base.Update(gameTime);
+            input.Update(delta);
+            state?.Update(delta, input);
+            base.Update(delta);
         }
 
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime delta)
         {
-            SM.Start();
-            State?.Render();
-            SM.Stop();
-            base.Draw(gameTime);
+            screen.Start();
+            state?.Render(delta, screen);
+            screen.Stop();
+            base.Draw(delta);
         }
+
+
+        //#region TestEvents
+        //private void OnConnectionButton(object sender, StringEventArgs e)
+        //{
+        //    InitializeGame();
+        //}
+        //#endregion
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TittyPong.Events;
 
 namespace TittyPong.IO
 {
@@ -37,7 +38,7 @@ namespace TittyPong.IO
         Reload,
         Save
     }
-    public class Input : IMouseEventListeners
+    public class InputManager : IMouseEventListeners
     {
 
         public event EventHandler<InputCommandEventArgs> CommandEvent;
@@ -69,9 +70,13 @@ namespace TittyPong.IO
         /// </summary>
         private Dictionary<InputDirection, Keys> KDM;
 
+        private EventManager events;
+
         private Dictionary<InputCommand, Keys> KCM;
-        public Input()
+        public InputManager(EventManager ev)
         {
+            events = ev;
+
             PlayerControls = new Controls[4];
             KBM = new Dictionary<InputButton, Keys>
             {
@@ -122,7 +127,7 @@ namespace TittyPong.IO
         }
 
 
-        public void Update()
+        public void Update(GameTime delta)
         {
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
