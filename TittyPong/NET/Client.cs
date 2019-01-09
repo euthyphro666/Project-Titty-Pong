@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Common;
 using Common.Messages;
 using Lidgren.Network;
@@ -11,6 +12,8 @@ namespace TittyPong.NET
         private readonly EventManager Events;
         private NetClient LidgrenClient;
 
+        private const int ServerPort = 6969;
+        
         public event EventHandler<ReceivedMessageEventArgs> ReceivedMessageEvent;
         
         public Client(EventManager events)
@@ -20,11 +23,19 @@ namespace TittyPong.NET
             {
                 NetworkThreadName = "TittyPong - Network Thread"
             };
+            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
+            
             LidgrenClient = new NetClient(config);
             LidgrenClient.Start();
             
             LidgrenClient.RegisterReceivedCallback(ReceivedMessage);
             Events.SendMessageEvent += HandleSendMessageEvent;
+            Events.ConnectEvent += HandleConnectEvent;
+        }
+
+        private void HandleConnectEvent(object sender, ConnectEventArgs e)
+        {
+           LidgrenClient.Connect(e.Ip, ServerPort);
         }
 
         private void HandleSendMessageEvent(object sender, ByteArrayEventArgs e)
@@ -46,11 +57,6 @@ namespace TittyPong.NET
             ReceivedMessageEvent?.Invoke(this, args);
         }
 
-        public void Connect(string address, int port)
-        {
-            LidgrenClient.Connect(address, port);
-        }
-
         public NetConnectionStatus Status()
         {
             return LidgrenClient.ConnectionStatus;
@@ -62,33 +68,16 @@ namespace TittyPong.NET
         /// <param name="msg">The outgoing message to send. Use 'CreateMessage' to instantiate a message object first.</param>
         /// <param name="method">The delivery method. Default: NetDeliveryMethod.Unreliable</param>
         /// <returns>True if the message was delivered, false if not</returns>
-        public bool Send(NetOutgoingMessage msg, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
-        {
-            if (Status() != NetConnectionStatus.Connected)
-                return false;
-            var result = LidgrenClient.SendMessage(msg, method);
-            return result == NetSendResult.Sent;
-        }
-        
-        /// <summary>
-        /// Send a message to the server.
-        /// </summary>
-        /// <param name="msg">The outgoing message to send. Use 'CreateMessage' to instantiate a message object first.</param>
-        /// <param name="method">The delivery method. Default: NetDeliveryMethod.Unreliable</param>
-        /// <returns>True if the message was delivered, false if not</returns>
         public bool Send(byte[] msg, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
         {
-            var outgoingMessage = CreateMessage();
+            var outgoingMessage = LidgrenClient.CreateMessage();
             outgoingMessage.Write(msg);
             if (Status() != NetConnectionStatus.Connected)
                 return false;
             var result = LidgrenClient.SendMessage(outgoingMessage, method);
+            LidgrenClient.FlushSendQueue();
             return result == NetSendResult.Sent;
         }
 
-        public NetOutgoingMessage CreateMessage()
-        {
-            return LidgrenClient.CreateMessage();
-        }
     }
 }

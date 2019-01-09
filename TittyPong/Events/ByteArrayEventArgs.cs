@@ -17,6 +17,7 @@ namespace TittyPong.Events
         public ByteArrayEventArgs(byte[] data, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
         {
             Data = data;
+            DeliveryMethod = method;
         }
     }
 }

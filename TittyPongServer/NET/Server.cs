@@ -18,8 +18,9 @@ namespace TittyPongServer.NET
             Events = events;
             var config = new NetPeerConfiguration("TittyPong")
             {
-                Port = 9191
+                Port = 6969
             };
+            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
             LidgrenServer = new NetServer(config);
             LidgrenServer.Start();
             

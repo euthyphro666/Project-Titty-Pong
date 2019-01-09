@@ -34,10 +34,15 @@ namespace TittyPongServer
             switch (msg.MessageType)
             {
                 case NetIncomingMessageType.StatusChanged:
+                    
+                    Events.OnGuiLogMessageEvent($"New status message: {e.ReceivedMessage.MessageType}:{(NetConnectionStatus)e.ReceivedMessage.ReadByte()} from {e.ReceivedMessage.SenderConnection}");
                     break;
                 case NetIncomingMessageType.Data:
                     var bytes = msg.ReadBytes(msg.LengthBytes);
                     HandleDataMessage(bytes.Deserialize<Message>(), e.ReceivedMessage.SenderConnection);
+                    break;
+                case NetIncomingMessageType.ConnectionApproval:
+                    e.ReceivedMessage.SenderConnection.Approve();
                     break;
             }
         }
