@@ -57,13 +57,8 @@
     <Compile Include="Events\ObjectEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Graphics\ScreenManager.cs" />
-    <Compile Include="IO\Commands.cs" />
     <Compile Include="IO\Controls.cs" />
     <Compile Include="IO\InputManager.cs" />
-    <Compile Include="IO\InputButtonEventArgs.cs" />
-    <Compile Include="IO\InputCommandEventArgs.cs" />
-    <Compile Include="IO\InputDirectionEventArgs.cs" />
-    <Compile Include="IO\InputMouseEventArgs.cs" />
     <Compile Include="NET\Client.cs" />
     <Compile Include="NET\MessageConsumer.cs" />
     <Compile Include="NET\ReceivedMessageEventArgs.cs" />
