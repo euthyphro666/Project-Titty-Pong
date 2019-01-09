@@ -13,7 +13,7 @@
     <AssemblyName>TittyPong</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -47,6 +47,7 @@
     <Compile Include="Contracts\IManager.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\Boobie.cs" />
+    <Compile Include="Events\ByteArrayEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Core\TittyGame.cs" />
     <Compile Include="Core\Master.cs" />
@@ -63,6 +64,9 @@
     <Compile Include="IO\InputCommandEventArgs.cs" />
     <Compile Include="IO\InputDirectionEventArgs.cs" />
     <Compile Include="IO\InputMouseEventArgs.cs" />
+    <Compile Include="NET\Client.cs" />
+    <Compile Include="NET\MessageConsumer.cs" />
+    <Compile Include="NET\ReceivedMessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\TittyMenu.cs" />
   </ItemGroup>
@@ -95,6 +99,12 @@
   <ItemGroup>
     <Folder Include="NET\" />
     <Folder Include="Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{c89bde7e-85e3-45d0-8496-1b7adebe6bab}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
