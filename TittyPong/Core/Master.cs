@@ -37,8 +37,8 @@ namespace TittyPong.Core
 
             screen.Init(this);
             input.Init();
-            Consumer = new MessageConsumer(EM);
-            MessageClient = new Client(EM);
+            Consumer = new MessageConsumer(events);
+            MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
         }
 
