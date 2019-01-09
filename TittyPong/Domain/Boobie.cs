@@ -9,7 +9,7 @@ namespace TittyPong.Domain
 {
     public class Boobie : Entity
     {
-        public Boobie(Texture2D img, float x, float y) : base(img, x, y)
+        public Boobie(Texture2D img, float x, float y, int w, int h) : base(img, x, y, w, h)
         {
 
         }

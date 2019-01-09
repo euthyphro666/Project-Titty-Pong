@@ -38,20 +38,8 @@ namespace TittyPong.IO
         Reload,
         Save
     }
-    public class InputManager : IMouseEventListeners
+    public class InputManager
     {
-
-        public event EventHandler<InputCommandEventArgs> CommandEvent;
-
-        public event EventHandler<InputDirectionEventArgs> DirectionEvent;
-        public event EventHandler<InputButtonEventArgs> ButtonDownEvent;
-        public event EventHandler<InputButtonEventArgs> ButtonHeldEvent;
-        public event EventHandler<InputButtonEventArgs> ButtonUpEvent;
-
-        public event EventHandler<InputMouseEventArgs> MouseDownEvent;
-        public event EventHandler<InputMouseEventArgs> MouseUpEvent;
-        public event EventHandler<InputMouseEventArgs> MouseHeldEvent;
-        public event EventHandler<InputMouseEventArgs> MouseHoverEvent;
 
         private MouseState LastMouseState;
         private Commands Command;
@@ -64,15 +52,15 @@ namespace TittyPong.IO
         /// <summary>
         /// Keyboard Button Mapping
         /// </summary>
-        private Dictionary<InputButton, Keys> KBM;
+        private readonly Dictionary<InputButton, Keys> KBM;
         /// <summary>
         /// Keyboard Direction Mapping
         /// </summary>
-        private Dictionary<InputDirection, Keys> KDM;
+        private readonly Dictionary<InputDirection, Keys> KDM;
 
         private EventManager events;
 
-        private Dictionary<InputCommand, Keys> KCM;
+        private readonly Dictionary<InputCommand, Keys> KCM;
         public InputManager(EventManager ev)
         {
             events = ev;
@@ -133,22 +121,35 @@ namespace TittyPong.IO
             var mState = Mouse.GetState();
             var mArgs = new InputMouseEventArgs(mState.X, mState.Y);
 
-            MouseHoverEvent?.Invoke(this, mArgs);
+            events.OnMouseHoverEvent(this, mArgs);
 
             //Command events
             foreach (var cmd in Enum.GetValues(typeof(InputCommand)).Cast<InputCommand>())
             {
                 var cmdState = kState.IsKeyDown(KCM[cmd]);
                 var cr = Command.SetCommandReportChange(cmd, cmdState);
-                var cmdEvent = cr == 3 ? CommandEvent : null;
-                cmdEvent?.Invoke(this, new InputCommandEventArgs(cmd, cmdState));
+                var args = new InputCommandEventArgs(cmd, cmdState);
+                switch (cr)
+                {
+                    case 3:
+                        events.OnCommandEvent(this, args);
+                        break;
+                }
             }
 
             //Mouse events
             var lastLeft = LastMouseState.LeftButton == ButtonState.Pressed;
             var left = mState.LeftButton == ButtonState.Pressed;
-            var handler = lastLeft ? (left ? MouseHeldEvent : MouseUpEvent) : (left ? MouseDownEvent : null);
-            handler?.Invoke(this, mArgs);
+            if(lastLeft)
+            {
+                if (left)
+                    events.OnMouseHeldEvent(this, mArgs);
+                else
+                    events.OnMouseUpEvent(this, mArgs);
+            }
+            else
+                if(left)
+                    events.OnMouseDownEvent(this, mArgs);
             LastMouseState = mState;
 
             //Keyboard / gamepad events
@@ -165,14 +166,25 @@ namespace TittyPong.IO
                     {
                         var btnState = kState.IsKeyDown(KBM[btn]);
                         var br = control.SetButtonReportChange(btn, btnState);
-                        var btnEvent = (br != 1) ? ((br != 2) ? (br != 3 ? null : ButtonUpEvent) : ButtonHeldEvent) : ButtonDownEvent;
-                        btnEvent?.Invoke(this, new InputButtonEventArgs(player, btn, btnState));
+                        var args = new InputButtonEventArgs(player, btn, btnState);
+                        switch (br)
+                        {
+                            case 1:
+                                events.OnButtonDownEvent(this, args);
+                                break;
+                            case 2:
+                                events.OnButtonHeldEvent(this, args);
+                                break;
+                            case 3:
+                                events.OnButtonUpEvent(this, args);
+                                break;
+                        }
                     }
                     foreach (var dir in Enum.GetValues(typeof(InputDirection)).Cast<InputDirection>())
                     {
                         var value = (kState.IsKeyDown(KDM[dir]) ? 1f : 0f);
                         if (control.SetDirectionReportChange(dir, value))
-                            DirectionEvent?.Invoke(this, new InputDirectionEventArgs(player, dir, value));
+                            events.OnDirectionEvent(this, new InputDirectionEventArgs(player, dir, value));
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
 using System;
@@ -21,6 +22,7 @@ namespace TittyPong.UI
         private ContentManager assets;
         private EventManager events;
 
+        #region UIFields
         private Desktop UIHost;
         private Grid UIGrid;
 
@@ -28,6 +30,9 @@ namespace TittyPong.UI
         private TextBlock AddressTxt;
         private TextField AddressFld;
         private Button ConnectBtn;
+
+        private ListBox ClientConnections;
+        #endregion
 
         public TittyMenu(ContentManager ass, EventManager ev)
         {
@@ -47,52 +52,80 @@ namespace TittyPong.UI
                 PaddingLeft = 100,
                 PaddingTop = 100
             };
-            UIGrid.ColumnsProportions.Add(new Grid.Proportion(Grid.ProportionType.Auto));
-            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Auto));
-            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Auto));
-            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Auto));
-            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Auto));
+            UIGrid.ColumnsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
+            UIGrid.ColumnsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 28.0f));
+            UIGrid.ColumnsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 10.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 8.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
 
             TitleTxt = new TextBlock
             {
-                Text = "Titty Pong ( . )( . )",
-                GridPositionX = 0,
-                GridPositionY = 0,
+                Text = "( . ) Titty Pong ( . )",
+                GridPositionX = 1,
+                GridPositionY = 1,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             AddressTxt = new TextBlock
             {
                 Text = "Address",
-                GridPositionX = 0,
-                GridPositionY = 1,
+                GridPositionX = 1,
+                GridPositionY = 2,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             AddressFld = new TextField
             {
-                GridPositionX = 0,
-                GridPositionY = 2,
-                Width = 512,
-                Height = 64,
+                GridPositionX = 1,
+                GridPositionY = 3,
+                Width = 256,
+                Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             ConnectBtn = new Button
             {
                 Text = "Connect",
-                GridPositionX = 0,
-                GridPositionY = 3,
+                GridPositionX = 1,
+                GridPositionY = 4,
+                Width = 128,
+                Height = 24,
+                ContentHorizontalAlignment = HorizontalAlignment.Center,
+                ContentVerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            ConnectBtn.Down += OnConnectionButton;
+            ClientConnections = new ListBox
+            {
+                Visible = true,
+                GridPositionX = 1,
+                GridPositionY = 5,
+                Width = 512,
+                Height = 128,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            ClientConnections.Items.Add(new ListItem("Client 1"));
+            ClientConnections.Items.Add(new ListItem("Client 2"));
+            ClientConnections.Items.Add(new ListItem("Client 3"));
 
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(AddressTxt);
             UIGrid.Widgets.Add(AddressFld);
             UIGrid.Widgets.Add(ConnectBtn);
+            UIGrid.Widgets.Add(ClientConnections);
             UIHost.Widgets.Add(UIGrid);
         }
         #endregion
 
         #region Events
+        private void RegisterEvents()
+        {
+            ConnectBtn.Down += OnConnectionButton;
+        }
+
+
         private void OnConnectionButton(object sender, EventArgs e)
         {
             events.OnConnectionInfoEvent(this, new StringEventArgs(AddressFld.Text));
