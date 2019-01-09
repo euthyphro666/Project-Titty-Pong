@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Myra;
 using Myra.Graphics2D.UI;
 using TittyPong.Contracts;
+using TittyPong.Events;
 using TittyPong.Graphics;
 using TittyPong.IO;
 using TittyPong.UI;
@@ -14,11 +15,12 @@ namespace TittyPong.Core
     /// </summary>
     public class Master : Game
     {
-        
-        internal static Input IM { private set; get; }
-        internal static Screen SM { private set; get; }
-        internal static ContentManager Assets { private set; get; }
-        internal static GameTime DeltaTime;
+
+        public static ContentManager Assets { private set; get; }
+        public static EventManager EM { private set; get; }
+        public static Input IM { private set; get; }
+        public static Screen SM { private set; get; }
+        public static GameTime DeltaTime;
 
         internal IManager State;
 
@@ -27,6 +29,7 @@ namespace TittyPong.Core
             Content.RootDirectory = "Content";
             Assets = Content;
 
+            EM = new EventManager();
             SM = new Screen();
             IM = new Input();
 

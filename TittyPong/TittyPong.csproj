@@ -45,10 +45,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\IManager.cs" />
-    <Compile Include="Core\Events.cs" />
+    <Compile Include="Events\EventManager.cs" />
     <Compile Include="Core\TittyGame.cs" />
     <Compile Include="Core\Master.cs" />
     <Compile Include="Core\Program.cs" />
+    <Compile Include="Events\IntEventArgs.cs" />
+    <Compile Include="Events\ObjectEventArgs.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Commands.cs" />
     <Compile Include="IO\Controls.cs" />
