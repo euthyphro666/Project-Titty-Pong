@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TittyPongServer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Titty Server ( . )( . )" Height="350" Width="525">
     <Grid>
-        <TextBox Name="logTextBox">  
+        <TextBox Name="LogTextBox">  
         </TextBox>  
     </Grid>
 </Window>

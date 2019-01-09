@@ -10,15 +10,17 @@ namespace TittyPongServer
 {
     public class Master
     {
-        private Server MessageServer;
+        private readonly Events Events;
+        private readonly Server MessageServer;
 
         
-        private List<string> Clients;
+        private readonly List<string> Clients;
         private Dictionary<string, NetConnection> ClientMap;
         
-        public Master()
+        public Master(Events events)
         {
-            MessageServer = new Server();
+            Events = events;
+            MessageServer = new Server(events);
             MessageServer.ReceivedMessageEvent += ReceivedMessageHandler;
 
             Clients = new List<string>();
@@ -52,6 +54,7 @@ namespace TittyPongServer
                     // Exclude the client that sent the request from the connected clients
                     var reply = new ConnectionResponse(){AvailableClients = Clients.Where(id => id != request.ClientId).ToList()};
                     MessageServer.Send(reply.Serialize(), sender);
+                    Events.OnGuiLogMessageEvent($"New client connected: {request.ClientId}");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

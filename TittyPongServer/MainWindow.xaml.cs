@@ -17,7 +17,7 @@ namespace TittyPongServer
 
         public void OnGuiLogMessageEvent(object sender, GuiLogMessageEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(new Action(() => { logTextBox.Text += e.Message + "\n";}));
+            Application.Current.Dispatcher.Invoke(new Action(() => { LogTextBox.Text += e.Message + "\n";}));
         }
     }
 }

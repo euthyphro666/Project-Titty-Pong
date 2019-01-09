@@ -8,13 +8,14 @@ namespace TittyPongServer.NET
 {
     public class Server
     {
+        private readonly Events Events;
         private NetServer LidgrenServer;
 
         public event EventHandler<ReceivedMessageEventArgs> ReceivedMessageEvent;
         
-        
-        public Server()
+        public Server(Events events)
         {
+            Events = events;
             var config = new NetPeerConfiguration("TittyPong")
             {
                 Port = 9191
@@ -25,7 +26,7 @@ namespace TittyPongServer.NET
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
             LidgrenServer.RegisterReceivedCallback(ReceivedMessageEventHandler);
 
-            App.Events.RaiseGuiLogMessageEvent($"Server started at: {GetLocalIPAddress()}:{LidgrenServer.Port}");
+            Events.OnGuiLogMessageEvent($"Server started at: {GetLocalIpAddress()}:{LidgrenServer.Port}");
         }
 
         public bool Send(byte[] msg, NetConnection client, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
@@ -50,7 +51,7 @@ namespace TittyPongServer.NET
             ReceivedMessageEvent?.Invoke(this, args);
         }
 
-        private static string GetLocalIPAddress()
+        private static string GetLocalIpAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)

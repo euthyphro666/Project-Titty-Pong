@@ -6,7 +6,7 @@ namespace TittyPongServer
     {
         public event EventHandler<GuiLogMessageEventArgs> GuiLogMessageEvent;
 
-        public void RaiseGuiLogMessageEvent(string msg)
+        public void OnGuiLogMessageEvent(string msg)
         {
             GuiLogMessageEvent?.Invoke(this, new GuiLogMessageEventArgs(){Message = msg});
         }

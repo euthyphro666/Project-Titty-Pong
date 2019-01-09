@@ -7,9 +7,9 @@ namespace TittyPongServer
     /// </summary>
     public partial class App
     {
-        private Master _master;
+        private Master Master;
 
-        public static Events Events;
+        public readonly Events Events;
 
         public App()
         {
@@ -21,7 +21,7 @@ namespace TittyPongServer
             
             Events.GuiLogMessageEvent += mainWindow.OnGuiLogMessageEvent;
             
-            _master = new Master();
+            Master = new Master(Events);
         }
     }
 }
