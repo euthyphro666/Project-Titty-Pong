@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Common;
+using Common.Messages;
+using Lidgren.Network;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Myra;
 using Myra.Graphics2D.UI;
@@ -6,6 +10,7 @@ using TittyPong.Contracts;
 using TittyPong.Events;
 using TittyPong.Graphics;
 using TittyPong.IO;
+using TittyPong.NET;
 using TittyPong.UI;
 
 namespace TittyPong.Core
@@ -15,7 +20,6 @@ namespace TittyPong.Core
     /// </summary>
     public class Master : Game
     {
-
         public static ContentManager Assets { private set; get; }
         public static EventManager EM { private set; get; }
         public static Input IM { private set; get; }
@@ -23,6 +27,9 @@ namespace TittyPong.Core
         public static GameTime DeltaTime;
 
         internal IManager State;
+
+        private readonly Client MessageClient;
+        private readonly MessageConsumer Consumer;
 
         public Master()
         {
@@ -35,7 +42,13 @@ namespace TittyPong.Core
 
             SM.Init(this);
             IM.Init();
+            
+            Consumer = new MessageConsumer(EM);
+            MessageClient = new Client(EM);
+            MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
+            
         }
+
 
         protected override void Initialize()
         {

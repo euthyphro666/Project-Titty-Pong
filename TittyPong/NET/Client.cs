@@ -2,17 +2,20 @@ using System;
 using Common;
 using Common.Messages;
 using Lidgren.Network;
+using TittyPong.Events;
 
 namespace TittyPong.NET
 {
     public class Client
     {
+        private readonly EventManager Events;
         private NetClient LidgrenClient;
 
         public event EventHandler<ReceivedMessageEventArgs> ReceivedMessageEvent;
         
-        public Client()
+        public Client(EventManager events)
         {
+            Events = events;
             var config = new NetPeerConfiguration("TittyPong")
             {
                 NetworkThreadName = "TittyPong - Network Thread"
@@ -21,6 +24,12 @@ namespace TittyPong.NET
             LidgrenClient.Start();
             
             LidgrenClient.RegisterReceivedCallback(ReceivedMessage);
+            Events.SendMessageEvent += HandleSendMessageEvent;
+        }
+
+        private void HandleSendMessageEvent(object sender, ByteArrayEventArgs e)
+        {
+            Send(e.Data, e.DeliveryMethod);
         }
 
         private void ReceivedMessage(object client)
