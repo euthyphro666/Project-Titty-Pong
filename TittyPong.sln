@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPong", "TittyPong\TittyPong.csproj", "{111D2670-17DA-44BB-AD7F-61909BC9432E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPongServer", "TittyPongServer\TittyPongServer.csproj", "{0057E602-67A4-4304-AD67-A7D137171475}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +19,14 @@ Global
 		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Debug|x86.Build.0 = Debug|x86
 		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Release|x86.ActiveCfg = Release|x86
 		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Release|x86.Build.0 = Release|x86
+		{0057E602-67A4-4304-AD67-A7D137171475}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0057E602-67A4-4304-AD67-A7D137171475}.Debug|x86.Build.0 = Debug|Any CPU
+		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.ActiveCfg = Release|Any CPU
+		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.Build.0 = Release|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

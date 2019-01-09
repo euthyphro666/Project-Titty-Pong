@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Myra;
-using Myra.Graphics2D.UI;
 using TittyPong.Contracts;
 using TittyPong.Events;
 using TittyPong.Graphics;
 using TittyPong.IO;
+using TittyPong.NET;
 using TittyPong.UI;
 
 namespace TittyPong.Core
@@ -23,6 +23,9 @@ namespace TittyPong.Core
 
         private IManager state;
 
+        private readonly Client MessageClient;
+        private readonly MessageConsumer Consumer;
+
         public Master()
         {
             Content.RootDirectory = "Content";
@@ -34,7 +37,11 @@ namespace TittyPong.Core
 
             screen.Init(this);
             input.Init();
+            Consumer = new MessageConsumer(events);
+            MessageClient = new Client(events);
+            MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
         }
+
 
         protected override void Initialize()
         {
