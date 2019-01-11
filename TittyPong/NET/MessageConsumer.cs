@@ -44,7 +44,7 @@ namespace TittyPong.NET
                 case MessageIds.ConnectionResponse:
                     var response = msg.Contents.ToString().Deserialize<ConnectionResponse>();
                     
-                    //response.AvailableClients.Remove(Client.ClientId);
+                    response.AvailableClients.Remove(Client.ClientId);
                     
                     Events.OnClientListReceived(this, new ClientListReceivedEventArgs(response.AvailableClients));
                     break;
