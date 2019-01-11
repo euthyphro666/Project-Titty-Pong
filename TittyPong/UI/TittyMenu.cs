@@ -118,6 +118,7 @@ namespace TittyPong.UI
         
         public void HandleClientListReceived(object sender, ClientListReceivedEventArgs ev)
         {
+            ClientConnections.Items.Clear();
             var clients = ev.Clients;
             foreach(var client in clients)
             {
