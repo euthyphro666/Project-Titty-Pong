@@ -17,8 +17,7 @@ namespace TittyPong.Events
         {
             ConnectionInfoEvent?.Invoke(sender, e);
         }
-
-        public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
+        
         public void OnSendMessageEvent(object sender, ByteArrayEventArgs e)
         {
             SendMessageEvent?.Invoke(sender, e);
