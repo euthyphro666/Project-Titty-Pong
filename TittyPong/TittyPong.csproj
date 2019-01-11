@@ -49,6 +49,7 @@
     <Compile Include="Domain\Boobie.cs" />
     <Compile Include="Domain\TittyState.cs" />
     <Compile Include="Events\ByteArrayEventArgs.cs" />
+    <Compile Include="Events\ClientListReceivedEventArgs.cs" />
     <Compile Include="Events\ConnectEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Core\TittyGame.cs" />

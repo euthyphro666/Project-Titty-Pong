@@ -116,13 +116,14 @@ namespace TittyPong.UI
             UIHost.Widgets.Add(UIGrid);
         }
         
-        public void HandleClientListReceived(object sender, ClientListReceivedArgs ev)
+        public void HandleClientListReceived(object sender, ClientListReceivedEventArgs ev)
         {
             var clients = ev.Clients;
             foreach(var client in clients)
             {
                 ClientConnections.Items.Add(new ListItem(client));
             }
+            
         }
         #endregion
 
@@ -131,7 +132,7 @@ namespace TittyPong.UI
         {
             ConnectBtn.Down += OnConnectionButton;
 
-            Events.ClientListReceivedEvent += HandleClientListReceivedEvent;
+            events.ClientListReceivedEvent += HandleClientListReceived;
         }
 
 
