@@ -47,6 +47,7 @@
     <Compile Include="Contracts\IManager.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\Boobie.cs" />
+    <Compile Include="Domain\TittyState.cs" />
     <Compile Include="Events\ByteArrayEventArgs.cs" />
     <Compile Include="Events\ConnectEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -57,14 +58,8 @@
     <Compile Include="Events\ObjectEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Graphics\ScreenManager.cs" />
-    <Compile Include="IO\Commands.cs" />
     <Compile Include="IO\Controls.cs" />
-    <Compile Include="IO\IMouseEventListeners.cs" />
     <Compile Include="IO\InputManager.cs" />
-    <Compile Include="IO\InputButtonEventArgs.cs" />
-    <Compile Include="IO\InputCommandEventArgs.cs" />
-    <Compile Include="IO\InputDirectionEventArgs.cs" />
-    <Compile Include="IO\InputMouseEventArgs.cs" />
     <Compile Include="NET\Client.cs" />
     <Compile Include="NET\MessageConsumer.cs" />
     <Compile Include="NET\MessageProducer.cs" />
@@ -91,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Font\booblr.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +95,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NET\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TittyPong.IO;
 
 namespace TittyPong.Events
 {
@@ -17,6 +18,7 @@ namespace TittyPong.Events
             ConnectionInfoEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
         public void OnSendMessageEvent(object sender, ByteArrayEventArgs e)
         {
             SendMessageEvent?.Invoke(sender, e);

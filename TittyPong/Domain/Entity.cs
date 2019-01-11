@@ -63,10 +63,10 @@ namespace TittyPong.Domain
             }
         }
 
-        public Entity(Texture2D spr, float x, float y)
+        public Entity(Texture2D spr, float x, float y, int w, int h)
         {
             sprite = spr;
-            body = new Rectangle((int)x, (int)y, sprite.Width, sprite.Height);
+            body = new Rectangle((int)x, (int)y, w, h);
             position = new Vector2(x, y);
             velocity = new Vector2();
         }

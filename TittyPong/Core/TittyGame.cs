@@ -18,7 +18,7 @@ namespace TittyPong.Core
     {
         private ContentManager assets;
         private EventManager events;
-        private Boobie[] boobies;
+        private TittyState state;
 
         public TittyGame(ContentManager ass, EventManager ev)
         {
@@ -27,10 +27,13 @@ namespace TittyPong.Core
 
             var titty = assets.Load<Texture2D>("Titty");
 
-            boobies = new Boobie[]
+            state = new TittyState
             {
-                new Boobie(titty, 100f, 100f),
-                new Boobie(titty, 300f, 100f)
+                Boobies = new Boobie[]
+                {
+                    new Boobie(titty, 100f, 100f, 64, 64),
+                    new Boobie(titty, 1754f, 100f, 64, 64)
+                }
             };
         }
 
@@ -41,8 +44,8 @@ namespace TittyPong.Core
 
         public void Render(GameTime delta, ScreenManager screen)
         {
-            for (int i = 0; i < boobies.Length; i++)
-                boobies[i].Render(screen);
+            for (int i = 0; i < state.Boobies.Length; i++)
+                state.Boobies[i].Render(screen);
         }
     }
 }
