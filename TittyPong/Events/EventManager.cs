@@ -14,6 +14,12 @@ namespace TittyPong.Events
         public event EventHandler<EventArgs> ConnectSuccessEvent;
         public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
         public event EventHandler<ConnectionInfoEventArgs> ConnectionInfoEvent;
+        public event EventHandler<ConnectionInfoEventArgs> ConnectToClientRequestEvent;
+
+        public void OnConnectToClientRequestEvent(object sender, ConnectionInfoEventArgs e)
+        {
+            ConnectToClientRequestEvent?.Invoke(sender, e);
+        }
 
         public void OnConnectionInfoEvent(object sender, ConnectionInfoEventArgs e)
         {

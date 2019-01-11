@@ -166,7 +166,9 @@ namespace TittyPong.UI
 
         private void HandleClientSelectionEvent(object sender, GenericEventArgs<MouseButtons> e)
         {
-            var clientSelection = ClientConnections.SelectedItem.Text;
+            var selectedClientId = ClientConnections.SelectedItem.Tag.ToString();
+            var selectedClientDisplay = ClientConnections.SelectedItem.Text;
+            events.OnConnectToClientRequestEvent(this, new ConnectionInfoEventArgs(selectedClientDisplay, selectedClientId));
 
         }
 
