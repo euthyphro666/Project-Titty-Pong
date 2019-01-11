@@ -4,6 +4,7 @@
     {
         public static MessageIds MessageId => MessageIds.ConnectionRequest;
         public string ClientId { get; set; }
+        public string DisplayName { get; set; }
     }
     
     

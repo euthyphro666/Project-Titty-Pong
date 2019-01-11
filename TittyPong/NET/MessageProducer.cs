@@ -11,6 +11,9 @@ namespace TittyPong.NET
     {
         private EventManager Events;
 
+        private string displayName;
+        
+        
         public MessageProducer(EventManager events)
         {
             Events = events;
@@ -21,9 +24,7 @@ namespace TittyPong.NET
 
         private void HandleConnectSuccessEvent(object sender, EventArgs e)
         {
-            
-            
-            var request = new ConnectionRequest() {ClientId = Client.ClientId};
+            var request = new ConnectionRequest() {ClientId = Client.ClientId, DisplayName = displayName};
             var msg = new Message(){MessageId = ConnectionRequest.MessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
@@ -31,7 +32,7 @@ namespace TittyPong.NET
         private void HandleConnectionInfoEvent(object sender, ConnectionInfoEventArgs e)
         {
             var ip = e.Address;
-            var display = e.DisplayName;
+            displayName = e.DisplayName;
             Events.OnConnectEvent(this, new ConnectEventArgs(ip));
         }
     }

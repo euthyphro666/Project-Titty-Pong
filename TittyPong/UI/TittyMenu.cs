@@ -144,7 +144,7 @@ namespace TittyPong.UI
             var clients = ev.Clients;
             foreach(var client in clients)
             {
-                ClientConnections.Items.Add(new ListItem(client));
+                ClientConnections.Items.Add(new ListItem(client.Value + " - " + client.Key));
             }
             
         }

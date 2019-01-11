@@ -14,8 +14,10 @@ namespace TittyPongServer
         private readonly Server MessageServer;
 
         
-        private readonly List<string> Clients;
-        private Dictionary<string, NetConnection> ClientMap;
+        private readonly List<string> ClientMacAddresses;
+        private readonly List<string> ClientDisplayNames;
+        private Dictionary<string, NetConnection> ClientMacAddressMap;
+        private Dictionary<string, string> ClientDisplayNameMap;
         
         public Master(Events events)
         {
@@ -23,8 +25,9 @@ namespace TittyPongServer
             MessageServer = new Server(events);
             MessageServer.ReceivedMessageEvent += ReceivedMessageHandler;
 
-            Clients = new List<string>();
-            ClientMap = new Dictionary<string, NetConnection>();
+            ClientMacAddresses = new List<string>();
+            ClientMacAddressMap = new Dictionary<string, NetConnection>();
+            ClientDisplayNameMap = new Dictionary<string, string>();
         }
 
         private void ReceivedMessageHandler(object sender, ReceivedMessageEventArgs e)
@@ -59,11 +62,12 @@ namespace TittyPongServer
             {
                 case MessageIds.ConnectionRequest:
                     var request = msg.Contents.ToString().Deserialize<ConnectionRequest>();
-                    Clients.Add(request.ClientId);
-                    ClientMap.Add(request.ClientId, sender);
+                    ClientMacAddresses.Add(request.ClientId);
+                    ClientMacAddressMap.Add(request.ClientId, sender);
+                    ClientDisplayNameMap.Add(request.ClientId, request.DisplayName);
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
-                    var reply = new ConnectionResponse(){AvailableClients = Clients.ToList()};
+                    var reply = new ConnectionResponse(){AvailableClients = ClientDisplayNameMap};
                     var responseMessage = new Message(){MessageId = ConnectionResponse.MessageId, Contents = reply};
                     
                     // Broadcast that a client connected

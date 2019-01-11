@@ -5,6 +5,6 @@ namespace Common.Messages
     public class ConnectionResponse
     {
         public static MessageIds MessageId => MessageIds.ConnectionResponse;
-        public List<string> AvailableClients { get; set; }
+        public Dictionary<string, string> AvailableClients { get; set; }
     }
 }
