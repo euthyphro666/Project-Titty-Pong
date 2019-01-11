@@ -80,6 +80,7 @@ namespace TittyPong.UI
             };
             AddressFld = new TextField
             {
+                Text = "192.168.1.223",
                 GridPositionX = 1,
                 GridPositionY = 3,
                 Width = 256,
@@ -107,16 +108,21 @@ namespace TittyPong.UI
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
-            ClientConnections.Items.Add(new ListItem("Client 1"));
-            ClientConnections.Items.Add(new ListItem("Client 2"));
-            ClientConnections.Items.Add(new ListItem("Client 3"));
-
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(AddressTxt);
             UIGrid.Widgets.Add(AddressFld);
             UIGrid.Widgets.Add(ConnectBtn);
             UIGrid.Widgets.Add(ClientConnections);
             UIHost.Widgets.Add(UIGrid);
+        }
+        
+        public void HandleClientListReceived(object sender, ClientListReceivedArgs ev)
+        {
+            var clients = ev.Clients;
+            foreach(var client in clients)
+            {
+                ClientConnections.Items.Add(new ListItem(client));
+            }
         }
         #endregion
 
