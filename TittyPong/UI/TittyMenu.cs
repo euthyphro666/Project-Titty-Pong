@@ -34,6 +34,8 @@ namespace TittyPong.UI
         private TextField AddressFld;
         private Button ConnectBtn;
 
+        private Dialog GameRequestDlg;
+
         private ListBox ClientConnections;
         #endregion
 
@@ -129,6 +131,13 @@ namespace TittyPong.UI
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
+            GameRequestDlg = new Dialog
+            {
+                Title = "Accept Game?",
+                GridPositionX = 1,
+                GridPositionY = 5
+            };
+
 
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(DisplayNameTxt);
@@ -138,33 +147,55 @@ namespace TittyPong.UI
             UIGrid.Widgets.Add(ConnectBtn);
             UIGrid.Widgets.Add(ClientConnections);
             UIHost.Widgets.Add(UIGrid);
+
+            //HandleClientRequestGame(null, new ConnectionInfoEventArgs("Some dude", "-----"));
         }
-        
+        #endregion
+
+        #region Events
+        public void HandleStartGameRequestReceived(object sender, ReceivedStartGameRequestEventArgs ev)
+        {
+            //Another client has challenged this client, show the dialog box with the prompt.
+            GameRequestDlg.Content = new TextBlock
+            {
+                Text = $"{ev.RequestingClientDisplayName} has challenged you to a match. Will you accept or are you a bitch?"
+            };
+            //Handles the dialog response.
+            GameRequestDlg.Closed += (s, e) =>
+            {
+                if (GameRequestDlg.Result)
+                {
+                    //Accepts the request and sends the result to the server
+                }
+            };
+            GameRequestDlg.ShowModal(UIHost);
+        }
+
+        /// <summary>
+        /// The server has sent a list of connected clients. The connected clients list needs to be populated.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
         public void HandleClientListReceived(object sender, ClientListReceivedEventArgs ev)
         {
             ClientConnections.Items.Clear();
             var clients = ev.ClientMacToDisplayDictionary;
-            foreach(var client in clients)
+            foreach (var client in clients)
             {
                 ClientConnections.Items.Add(new ListItem(client.Value)
                 {
                     Tag = client.Key
                 });
             }
-            
-        }
-        #endregion
 
-        #region Events
-        private void RegisterEvents()
-        {
-            ConnectBtn.Down += HandleConnectionButton;
-            ClientConnections.MouseUp += HandleClientSelectionEvent;
-
-            events.ClientListReceivedEvent += HandleClientListReceived;
-            events.ReceivedStartGameRequestEvent += // Request message handler
         }
 
+        /// <summary>
+        /// The user has double clicked a client in the client connections list, the ui then triggers an event starting
+        /// the game request sequence.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HandleClientSelectionEvent(object sender, GenericEventArgs<MouseButtons> e)
         {
             var selectedClientId = ClientConnections.SelectedItem.Tag.ToString();
@@ -172,9 +203,24 @@ namespace TittyPong.UI
 
         }
 
+        /// <summary>
+        /// The user has clicked the connect button and so the connection info is sent and the client connects to the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HandleConnectionButton(object sender, EventArgs e)
         {
-            events.OnConnectionInfoEvent(this, new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? ""));
+            var args = new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? "");
+            events.OnConnectionInfoEvent(this, args);
+        }
+
+        private void RegisterEvents()
+        {
+            ConnectBtn.Down += HandleConnectionButton;
+            ClientConnections.MouseUp += HandleClientSelectionEvent;
+
+            events.ClientListReceivedEvent += HandleClientListReceived;
+            events.ReceivedStartGameRequestEvent += HandleStartGameRequestReceived;
         }
         #endregion
 
@@ -188,7 +234,7 @@ namespace TittyPong.UI
             UIHost.Render();
         }
 
-        
-        
+
+
     }
 }
