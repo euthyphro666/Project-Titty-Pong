@@ -34,6 +34,8 @@ namespace TittyPong.UI
         private TextField AddressFld;
         private Button ConnectBtn;
 
+        private Dialog GameRequestDlg;
+
         private ListBox ClientConnections;
         #endregion
 
@@ -129,6 +131,13 @@ namespace TittyPong.UI
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
+            GameRequestDlg = new Dialog
+            {
+                Title = "Accept Game?",
+                GridPositionX = 1,
+                GridPositionY = 5
+            };
+
 
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(DisplayNameTxt);
@@ -138,24 +147,43 @@ namespace TittyPong.UI
             UIGrid.Widgets.Add(ConnectBtn);
             UIGrid.Widgets.Add(ClientConnections);
             UIHost.Widgets.Add(UIGrid);
+
+            //HandleClientRequestGame(null, new ConnectionInfoEventArgs("Some dude", "-----"));
         }
-        
+        #endregion
+
+        #region Events
+        public void HandleClientRequestGame(object sender, ConnectionInfoEventArgs ev)
+        {
+            //Another client has challenged this client, show the dialog box with the prompt.
+            GameRequestDlg.Content = new TextBlock
+            {
+                Text = $"{ev.DisplayName} has challenged you to a match. Will you accept or are you a bitch?"
+            };
+            GameRequestDlg.Closed += (s, e) => 
+            {
+                if (GameRequestDlg.Result)
+                {
+                    //Accepts the request and sends the result to the server
+                }
+            };
+            GameRequestDlg.ShowModal(UIHost);
+        }
+
         public void HandleClientListReceived(object sender, ClientListReceivedEventArgs ev)
         {
             ClientConnections.Items.Clear();
             var clients = ev.ClientMacToDisplayDictionary;
-            foreach(var client in clients)
+            foreach (var client in clients)
             {
                 ClientConnections.Items.Add(new ListItem(client.Value)
                 {
                     Tag = client.Key
                 });
             }
-            
-        }
-        #endregion
 
-        #region Events
+        }
+
         private void RegisterEvents()
         {
             ConnectBtn.Down += HandleConnectionButton;
