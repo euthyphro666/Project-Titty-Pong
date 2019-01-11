@@ -27,6 +27,8 @@ namespace TittyPong.UI
         private Grid UIGrid;
 
         private TextBlock TitleTxt;
+        private TextBlock DisplayNameTxt;
+        private TextField DisplayNameFld;
         private TextBlock AddressTxt;
         private TextField AddressFld;
         private Button ConnectBtn;
@@ -61,6 +63,8 @@ namespace TittyPong.UI
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 8.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
 
@@ -71,18 +75,34 @@ namespace TittyPong.UI
                 GridPositionY = 1,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
+            DisplayNameTxt = new TextBlock
+            {
+                Text = "Display Name",
+                GridPositionX = 1,
+                GridPositionY = 2,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            DisplayNameFld = new TextField
+            {
+                Text = "",
+                GridPositionX = 1,
+                GridPositionY = 3,
+                Width = 256,
+                Height = 32,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
             AddressTxt = new TextBlock
             {
                 Text = "Address",
                 GridPositionX = 1,
-                GridPositionY = 2,
+                GridPositionY = 4,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
             AddressFld = new TextField
             {
                 Text = "192.168.1.223",
                 GridPositionX = 1,
-                GridPositionY = 3,
+                GridPositionY = 5,
                 Width = 256,
                 Height = 32,
                 HorizontalAlignment = HorizontalAlignment.Center
@@ -91,7 +111,7 @@ namespace TittyPong.UI
             {
                 Text = "Connect",
                 GridPositionX = 1,
-                GridPositionY = 4,
+                GridPositionY = 6,
                 Width = 128,
                 Height = 24,
                 ContentHorizontalAlignment = HorizontalAlignment.Center,
@@ -102,13 +122,15 @@ namespace TittyPong.UI
             {
                 Visible = true,
                 GridPositionX = 1,
-                GridPositionY = 5,
+                GridPositionY = 7,
                 Width = 512,
                 Height = 128,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
             UIGrid.Widgets.Add(TitleTxt);
+            UIGrid.Widgets.Add(DisplayNameTxt);
+            UIGrid.Widgets.Add(DisplayNameFld);
             UIGrid.Widgets.Add(AddressTxt);
             UIGrid.Widgets.Add(AddressFld);
             UIGrid.Widgets.Add(ConnectBtn);
@@ -139,7 +161,7 @@ namespace TittyPong.UI
 
         private void OnConnectionButton(object sender, EventArgs e)
         {
-            events.OnConnectionInfoEvent(this, new StringEventArgs(AddressFld.Text));
+            events.OnConnectionInfoEvent(this, new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? ""));
         }
         #endregion
 

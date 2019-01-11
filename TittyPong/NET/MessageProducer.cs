@@ -28,9 +28,10 @@ namespace TittyPong.NET
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
-        private void HandleConnectionInfoEvent(object sender, StringEventArgs e)
+        private void HandleConnectionInfoEvent(object sender, ConnectionInfoEventArgs e)
         {
-            var ip = e.Data;
+            var ip = e.Address;
+            var display = e.DisplayName;
             Events.OnConnectEvent(this, new ConnectEventArgs(ip));
         }
     }
