@@ -39,6 +39,7 @@ namespace TittyPong.UI
             assets = ass;
             events = ev;
             InitUI();
+            RegisterEvents();
         }
 
         #region UI
@@ -123,6 +124,8 @@ namespace TittyPong.UI
         private void RegisterEvents()
         {
             ConnectBtn.Down += OnConnectionButton;
+
+            Events.ClientListReceivedEvent += HandleClientListReceivedEvent;
         }
 
 
@@ -142,5 +145,7 @@ namespace TittyPong.UI
             UIHost.Render();
         }
 
+        
+        
     }
 }

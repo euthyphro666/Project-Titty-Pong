@@ -44,6 +44,7 @@ namespace TittyPong.NET
                 case MessageIds.ConnectionResponse:
                     var response = msg.Contents.ToString().Deserialize<ConnectionResponse>();
                     //response.AvailableClients
+                    Events.OnClientListReceived(new ClientListReceivedEventArgs(response.AvailableClients));
                     break;
                 default:
                     // Log that we received an unhandled data message
