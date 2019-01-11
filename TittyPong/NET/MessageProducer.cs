@@ -21,14 +21,9 @@ namespace TittyPong.NET
 
         private void HandleConnectSuccessEvent(object sender, EventArgs e)
         {
-            var macAddr = 
-            (
-                from nic in NetworkInterface.GetAllNetworkInterfaces()
-                where nic.OperationalStatus == OperationalStatus.Up
-                select nic.GetPhysicalAddress().ToString()
-            ).FirstOrDefault();
             
-            var request = new ConnectionRequest() {ClientId = macAddr};
+            
+            var request = new ConnectionRequest() {ClientId = Client.ClientId};
             var msg = new Message(){MessageId = ConnectionRequest.MessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }

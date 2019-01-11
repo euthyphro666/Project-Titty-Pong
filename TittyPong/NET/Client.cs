@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading;
 using Common;
 using Common.Messages;
@@ -9,6 +11,13 @@ namespace TittyPong.NET
 {
     public class Client
     {
+        public static string ClientId => 
+        (
+        from nic in NetworkInterface.GetAllNetworkInterfaces()
+            where nic.OperationalStatus == OperationalStatus.Up
+            select nic.GetPhysicalAddress().ToString()
+            ).FirstOrDefault();
+        
         private readonly EventManager Events;
         private NetClient LidgrenClient;
 
