@@ -160,6 +160,7 @@ namespace TittyPong.UI
             {
                 Text = $"{ev.DisplayName} has challenged you to a match. Will you accept or are you a bitch?"
             };
+            //Handles the dialog response.
             GameRequestDlg.Closed += (s, e) => 
             {
                 if (GameRequestDlg.Result)
@@ -170,6 +171,11 @@ namespace TittyPong.UI
             GameRequestDlg.ShowModal(UIHost);
         }
 
+        /// <summary>
+        /// The server has sent a list of connected clients. The connected clients list needs to be populated.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
         public void HandleClientListReceived(object sender, ClientListReceivedEventArgs ev)
         {
             ClientConnections.Items.Clear();
@@ -184,14 +190,12 @@ namespace TittyPong.UI
 
         }
 
-        private void RegisterEvents()
-        {
-            ConnectBtn.Down += HandleConnectionButton;
-            ClientConnections.MouseUp += HandleClientSelectionEvent;
-
-            events.ClientListReceivedEvent += HandleClientListReceived;
-        }
-
+        /// <summary>
+        /// The user has double clicked a client in the client connections list, the ui then triggers an event starting
+        /// the game request sequence.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HandleClientSelectionEvent(object sender, GenericEventArgs<MouseButtons> e)
         {
             var selectedClientId = ClientConnections.SelectedItem.Tag.ToString();
@@ -200,9 +204,23 @@ namespace TittyPong.UI
 
         }
 
+        /// <summary>
+        /// The user has clicked the connect button and so the connection info is sent and the client connects to the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HandleConnectionButton(object sender, EventArgs e)
         {
-            events.OnConnectionInfoEvent(this, new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? ""));
+            var args = new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? "");
+            events.OnConnectionInfoEvent(this, args);
+        }
+
+        private void RegisterEvents()
+        {
+            ConnectBtn.Down += HandleConnectionButton;
+            ClientConnections.MouseUp += HandleClientSelectionEvent;
+
+            events.ClientListReceivedEvent += HandleClientListReceived;
         }
         #endregion
 
