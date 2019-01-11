@@ -86,6 +86,7 @@ namespace TittyPongServer
 
             var forwardedMessage = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
             MessageServer.Send(forwardedMessage.Serialize(), targetClient, NetDeliveryMethod.ReliableOrdered);
+            Events.OnGuiLogMessageEvent($"Client {request.RequestingClientDisplayName} - {request.RequestingClientMac} is challenging client {ClientMacToDisplayNameDictionary[request.TargetClientMac]} - {request.TargetClientMac} to a match!");
         }
 
         private NetConnection GetConnectionFromMac(string mac)
