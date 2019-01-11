@@ -33,6 +33,7 @@ namespace TittyPong.UI
         private TextBlock AddressTxt;
         private TextField AddressFld;
         private Button ConnectBtn;
+        private Button JoinBtn;
 
         private Dialog GameRequestDlg;
 
@@ -69,6 +70,7 @@ namespace TittyPong.UI
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 8.0f));
+            UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 2.0f));
             UIGrid.RowsProportions.Add(new Grid.Proportion(Grid.ProportionType.Part, 1.0f));
 
             TitleTxt = new TextBlock
@@ -130,12 +132,22 @@ namespace TittyPong.UI
                 Height = 128,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
+            JoinBtn = new Button
+            {
+                Text = "Join",
+                GridPositionX = 1,
+                GridPositionY = 8,
+                Width = 128,
+                Height = 24,
+                ContentHorizontalAlignment = HorizontalAlignment.Center,
+                ContentVerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            JoinBtn.Visible = false;
 
             GameRequestDlg = new Dialog
             {
                 Title = "Accept Game?",
-                GridPositionX = 1,
-                GridPositionY = 5
             };
 
 
@@ -146,6 +158,7 @@ namespace TittyPong.UI
             UIGrid.Widgets.Add(AddressFld);
             UIGrid.Widgets.Add(ConnectBtn);
             UIGrid.Widgets.Add(ClientConnections);
+            UIGrid.Widgets.Add(JoinBtn);
             UIHost.Widgets.Add(UIGrid);
 
             //HandleClientRequestGame(null, new ConnectionInfoEventArgs("Some dude", "-----"));
@@ -153,8 +166,20 @@ namespace TittyPong.UI
         #endregion
 
         #region Events
+        private void RegisterEvents()
+        {
+            ConnectBtn.Down += HandleConnectionButton;
+            ClientConnections.MouseUp += HandleClientSelectionEvent;
+            JoinBtn.Down += HandleJoinButtonEvent;
+            
+
+            events.ClientListReceivedEvent += HandleClientListReceived;
+            events.ReceivedStartGameRequestEvent += HandleStartGameRequestReceived;
+        }
+
         public void HandleStartGameRequestReceived(object sender, ReceivedStartGameRequestEventArgs ev)
         {
+            //if(GameRequestDlg.)
             //Another client has challenged this client, show the dialog box with the prompt.
             GameRequestDlg.Content = new TextBlock
             {
@@ -198,10 +223,21 @@ namespace TittyPong.UI
         /// <param name="e"></param>
         private void HandleClientSelectionEvent(object sender, GenericEventArgs<MouseButtons> e)
         {
+            JoinBtn.Visible = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleJoinButtonEvent(object sender, EventArgs e)
+        {
             var selectedClientId = ClientConnections.SelectedItem.Tag.ToString();
             events.OnStartGameRequestEvent(this, new StringEventArgs(selectedClientId));
-
+            JoinBtn.Enabled = false;
         }
+
 
         /// <summary>
         /// The user has clicked the connect button and so the connection info is sent and the client connects to the server.
@@ -212,16 +248,9 @@ namespace TittyPong.UI
         {
             var args = new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? "");
             events.OnConnectionInfoEvent(this, args);
+            ConnectBtn.Enabled = false;
         }
 
-        private void RegisterEvents()
-        {
-            ConnectBtn.Down += HandleConnectionButton;
-            ClientConnections.MouseUp += HandleClientSelectionEvent;
-
-            events.ClientListReceivedEvent += HandleClientListReceived;
-            events.ReceivedStartGameRequestEvent += HandleStartGameRequestReceived;
-        }
         #endregion
 
         public void Update(GameTime delta, InputManager input)
