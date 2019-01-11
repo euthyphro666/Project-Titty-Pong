@@ -25,6 +25,7 @@ namespace TittyPong.Core
 
         private readonly Client MessageClient;
         private readonly MessageConsumer Consumer;
+        private readonly MessageProducer Producer;
 
         public Master()
         {
@@ -35,11 +36,13 @@ namespace TittyPong.Core
             input = new InputManager(events);
             screen = new ScreenManager(events);
 
-            screen.Init(this);
-            input.Init();
             Consumer = new MessageConsumer(events);
+            Producer = new MessageProducer(events);
             MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
+
+            screen.Init(this);
+            input.Init();
         }
 
 
@@ -55,8 +58,8 @@ namespace TittyPong.Core
             screen.LoadContent(Content);
 
             //Initialize starting state
-            //InitializeMenu();
-            InitializeGame();
+            InitializeMenu();
+            //InitializeGame();
         }
 
         protected override void UnloadContent()
@@ -87,13 +90,6 @@ namespace TittyPong.Core
             screen.Stop();
             base.Draw(delta);
         }
-
-
-        //#region TestEvents
-        //private void OnConnectionButton(object sender, StringEventArgs e)
-        //{
-        //    InitializeGame();
-        //}
-        //#endregion
+        
     }
 }

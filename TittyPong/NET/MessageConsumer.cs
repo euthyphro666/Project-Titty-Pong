@@ -21,6 +21,10 @@ namespace TittyPong.NET
             switch (incomingMessage.MessageType)
             {
                 case NetIncomingMessageType.StatusChanged:
+                    var status = (NetConnectionStatus)e.ReceivedMessage.ReadByte();
+                    
+                    if (status == NetConnectionStatus.Connected)
+                        Events.OnConnectSuccessEvent(this);
                     break;
                 case NetIncomingMessageType.Data:
                     var msg = e.ReceivedMessage.ReadBytes(e.ReceivedMessage.LengthBytes).Deserialize<Message>();
