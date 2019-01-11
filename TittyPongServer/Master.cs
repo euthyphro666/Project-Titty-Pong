@@ -63,9 +63,11 @@ namespace TittyPongServer
                     ClientMap.Add(request.ClientId, sender);
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
-                    var reply = new ConnectionResponse(){AvailableClients = Clients.Where(id => id != request.ClientId).ToList()};
+                    var reply = new ConnectionResponse(){AvailableClients = Clients.ToList()};
                     var responseMessage = new Message(){MessageId = ConnectionResponse.MessageId, Contents = reply};
-                    MessageServer.Send(responseMessage.Serialize(), sender);
+                    
+                    // Broadcast that a client connected
+                    MessageServer.Broadcast(responseMessage.Serialize());
                     Events.OnGuiLogMessageEvent($"New client connected: {request.ClientId}");
                     break;
                 default:

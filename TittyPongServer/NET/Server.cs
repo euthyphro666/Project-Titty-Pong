@@ -38,6 +38,13 @@ namespace TittyPongServer.NET
             return result == NetSendResult.Sent;
         }
         
+        public void Broadcast(byte[] msg, NetDeliveryMethod method = NetDeliveryMethod.Unreliable)
+        {
+            var outgoingMessage = CreateMessage();
+            outgoingMessage.Write(msg);
+            LidgrenServer.SendToAll(outgoingMessage, method);
+        }
+        
         public NetOutgoingMessage CreateMessage()
         {
             return LidgrenServer.CreateMessage();
