@@ -20,6 +20,22 @@ namespace TittyPong.NET
 
             Events.ConnectionInfoEvent += HandleConnectionInfoEvent;
             Events.ConnectSuccessEvent += HandleConnectSuccessEvent;
+            Events.StartGameRequestEvent += HandleStartGameRequestEvent;
+        }
+
+        /// <summary>
+        /// Sends a request to the server to start a game with another client.
+        /// The other client will receive a start game request event and must accept or deny the request
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleStartGameRequestEvent(object sender, StringEventArgs e)
+        {
+            var target = e.Data;
+            var request = new StartGameRequest()
+                {TargetClientMac = target, RequestingClientMac = Client.ClientId, RequestingClientDisplayName = displayName};
+            var msg = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
+            Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
         private void HandleConnectSuccessEvent(object sender, EventArgs e)

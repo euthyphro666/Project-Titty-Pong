@@ -48,11 +48,20 @@ namespace TittyPong.NET
                     
                     Events.OnClientListReceived(this, new ClientListReceivedEventArgs(response.AvailableClients));
                     break;
+                case MessageIds.StartGameRequest:
+                    HandleStartGameRequest(msg);
+                    break;
                 default:
                     // Log that we received an unhandled data message
 //                    Events.
                     break;
             }
+        }
+
+        private void HandleStartGameRequest(Message msg)
+        {
+            var request = msg.Contents.ToString().Deserialize<StartGameRequest>();
+            Events.OnReceivedStartGameRequestEvent(this, new ReceivedStartGameRequestEventArgs(){RequestingClientMac = request.RequestingClientMac, RequestingClientDisplayName = request.RequestingClientDisplayName});
         }
     }
 }

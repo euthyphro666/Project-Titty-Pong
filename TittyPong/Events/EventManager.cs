@@ -14,11 +14,13 @@ namespace TittyPong.Events
         public event EventHandler<EventArgs> ConnectSuccessEvent;
         public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
         public event EventHandler<ConnectionInfoEventArgs> ConnectionInfoEvent;
-        public event EventHandler<ConnectionInfoEventArgs> ConnectToClientRequestEvent;
+        public event EventHandler<StringEventArgs> StartGameRequestEvent;
+        public event EventHandler<ReceivedStartGameRequestEventArgs> ReceivedStartGameRequestEvent;
+        
 
-        public void OnConnectToClientRequestEvent(object sender, ConnectionInfoEventArgs e)
+        public void OnStartGameRequestEvent(object sender, StringEventArgs e)
         {
-            ConnectToClientRequestEvent?.Invoke(sender, e);
+            StartGameRequestEvent?.Invoke(sender, e);
         }
 
         public void OnConnectionInfoEvent(object sender, ConnectionInfoEventArgs e)
@@ -44,6 +46,11 @@ namespace TittyPong.Events
         public void OnClientListReceived(object sender,ClientListReceivedEventArgs e)
         {
             ClientListReceivedEvent?.Invoke(sender, e);
+        }
+
+        public void OnReceivedStartGameRequestEvent(object sender, ReceivedStartGameRequestEventArgs e)
+        {
+            ReceivedStartGameRequestEvent?.Invoke(sender, e);
         }
     }
 }

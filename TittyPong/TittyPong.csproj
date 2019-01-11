@@ -58,6 +58,7 @@
     <Compile Include="Core\Program.cs" />
     <Compile Include="Events\IntEventArgs.cs" />
     <Compile Include="Events\ObjectEventArgs.cs" />
+    <Compile Include="Events\ReceivedStartGameRequestEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Graphics\ScreenManager.cs" />
     <Compile Include="IO\Controls.cs" />

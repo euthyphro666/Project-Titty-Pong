@@ -58,9 +58,9 @@ namespace TittyPongServer
             switch (msg.MessageId)
             {
                 case MessageIds.ConnectionRequest:
-                    var request = msg.Contents.ToString().Deserialize<ConnectionRequest>();
-                    ClientMacAddressToConnectionDictionary[request.ClientId] = sender;
-                    ClientMacToDisplayNameDictionary[request.ClientId] = request.DisplayName;
+                    var connectionRequest = msg.Contents.ToString().Deserialize<ConnectionRequest>();
+                    ClientMacAddressToConnectionDictionary[connectionRequest.ClientId] = sender;
+                    ClientMacToDisplayNameDictionary[connectionRequest.ClientId] = connectionRequest.DisplayName;
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
                     var reply = new ConnectionResponse(){AvailableClients = ClientMacToDisplayNameDictionary};
@@ -68,11 +68,30 @@ namespace TittyPongServer
                     
                     // Broadcast that a client connected
                     MessageServer.Broadcast(responseMessage.Serialize());
-                    Events.OnGuiLogMessageEvent($"New client connected: {request.ClientId}");
+                    Events.OnGuiLogMessageEvent($"New client connected: {connectionRequest.ClientId}");
+                    break;
+                case MessageIds.StartGameRequest:
+                    HandleStartGameRequest(msg);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void HandleStartGameRequest(Message msg)
+        {
+            var request = msg.Contents.ToString().Deserialize<StartGameRequest>();
+            var targetClient = GetConnectionFromMac(request.TargetClientMac);
+            if (targetClient == null) return; // Or return failed to request game message  // TODO
+
+            var forwardedMessage = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
+            MessageServer.Send(forwardedMessage.Serialize(), targetClient, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        private NetConnection GetConnectionFromMac(string mac)
+        {
+            ClientMacAddressToConnectionDictionary.TryGetValue(mac, out var connection);
+            return connection;
         }
     }
 }
