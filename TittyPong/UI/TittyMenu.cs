@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using Myra.Graphics2D.UI;
+using Myra.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,6 +129,7 @@ namespace TittyPong.UI
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
+
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(DisplayNameTxt);
             UIGrid.Widgets.Add(DisplayNameFld);
@@ -144,7 +146,10 @@ namespace TittyPong.UI
             var clients = ev.Clients;
             foreach(var client in clients)
             {
-                ClientConnections.Items.Add(new ListItem(client.Value + " - " + client.Key));
+                ClientConnections.Items.Add(new ListItem(client.Value)
+                {
+                    Tag = client.Key
+                });
             }
             
         }
@@ -153,13 +158,19 @@ namespace TittyPong.UI
         #region Events
         private void RegisterEvents()
         {
-            ConnectBtn.Down += OnConnectionButton;
+            ConnectBtn.Down += HandleConnectionButton;
+            ClientConnections.MouseUp += HandleClientSelectionEvent;
 
             events.ClientListReceivedEvent += HandleClientListReceived;
         }
 
+        private void HandleClientSelectionEvent(object sender, GenericEventArgs<MouseButtons> e)
+        {
+            var clientSelection = ClientConnections.SelectedItem.Text;
 
-        private void OnConnectionButton(object sender, EventArgs e)
+        }
+
+        private void HandleConnectionButton(object sender, EventArgs e)
         {
             events.OnConnectionInfoEvent(this, new ConnectionInfoEventArgs(DisplayNameFld.Text ?? "NOBODY", AddressFld.Text ?? ""));
         }
