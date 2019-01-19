@@ -4,7 +4,7 @@ namespace Common.Messages
 {
     public class ConnectionResponse
     {
-        public static MessageIds MessageId => MessageIds.ConnectionResponse;
+        public static CommunicationMessageIds CommunicationMessageId => CommunicationMessageIds.ConnectionResponse;
         public Dictionary<string, string> AvailableClients { get; set; }
     }
 }

@@ -55,30 +55,37 @@ namespace TittyPongServer
         {
             if(msg.Contents == null)
             {
-                Events.OnGuiLogMessageEvent($"Received data message '{msg.MessageId}' with null contents");
+                Events.OnGuiLogMessageEvent($"Received data message '{msg.CommunicationMessageId}' with null contents");
                 return;
             }
             
-            switch (msg.MessageId)
+            switch (msg.CommunicationMessageId)
             {
-                case MessageIds.ConnectionRequest:
+                case CommunicationMessageIds.ConnectionRequest:
                     var connectionRequest = msg.Contents.ToString().Deserialize<ConnectionRequest>();
                     ClientMacAddressToConnectionDictionary[connectionRequest.ClientId] = sender;
                     ClientMacToDisplayNameDictionary[connectionRequest.ClientId] = connectionRequest.DisplayName;
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
                     var reply = new ConnectionResponse(){AvailableClients = ClientMacToDisplayNameDictionary};
-                    var responseMessage = new Message(){MessageId = ConnectionResponse.MessageId, Contents = reply};
+                    var responseMessage = new Message(){CommunicationMessageId = ConnectionResponse.CommunicationMessageId, Contents = reply};
                     
                     // Broadcast that a client connected
                     MessageServer.Broadcast(responseMessage.Serialize());
                     Events.OnGuiLogMessageEvent($"New client connected: {connectionRequest.ClientId}");
                     break;
-                case MessageIds.StartGameRequest:
+                case CommunicationMessageIds.StartGameRequest:
                     HandleStartGameRequest(msg);
                     break;
-                case MessageIds.StartGameResponse:
+                case CommunicationMessageIds.StartGameResponse:
                     HandleStartGameResponse(msg);
+                    break;
+                case CommunicationMessageIds.RoomMessage:
+                    var updateMessage = msg.Contents.ToString().Deserialize<RoomMessage>();
+                    var roomId = updateMessage.RoomId;
+                    
+                    OpenRooms[roomId].HandleMessage(updateMessage);
+                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -105,7 +112,7 @@ namespace TittyPongServer
                 OpenRooms.Add(room.GetRoomId(), room);
                 
                 var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId()};
-                var message = new Message(){MessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
+                var message = new Message(){CommunicationMessageId = JoinRoomRequest.CommunicationMessageId, Contents = joinMessage};
                 MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
                 MessageServer.Send(message.Serialize(), respondingClient, NetDeliveryMethod.ReliableUnordered);
             }
@@ -127,7 +134,7 @@ namespace TittyPongServer
             var targetClient = GetConnectionFromMac(request.TargetClientMac);
             if (targetClient == null) return; // Or return failed to request game message  // TODO
 
-            var forwardedMessage = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
+            var forwardedMessage = new Message(){CommunicationMessageId = StartGameRequest.CommunicationMessageId, Contents = request};
             MessageServer.Send(forwardedMessage.Serialize(), targetClient, NetDeliveryMethod.ReliableOrdered);
             Events.OnGuiLogMessageEvent($"Client {request.RequestingClientDisplayName} - {request.RequestingClientMac} is challenging client {ClientMacToDisplayNameDictionary[request.TargetClientMac]} - {request.TargetClientMac} to a match!");
         }

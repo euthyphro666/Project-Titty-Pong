@@ -2,7 +2,7 @@ namespace Common.Messages
 {
     public class Message
     {
-        public MessageIds MessageId { get; set; }
+        public CommunicationMessageIds CommunicationMessageId { get; set; }
         public object Contents { get; set; }
     }
 }

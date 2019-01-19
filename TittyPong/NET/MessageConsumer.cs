@@ -39,16 +39,16 @@ namespace TittyPong.NET
 
         private void HandleDataMessage(Message msg)
         {
-            switch (msg.MessageId)
+            switch (msg.CommunicationMessageId)
             {
-                case MessageIds.ConnectionResponse:
+                case CommunicationMessageIds.ConnectionResponse:
                     var response = msg.Contents.ToString().Deserialize<ConnectionResponse>();
                     
                     response.AvailableClients.Remove(Client.ClientId);
                     
                     Events.OnClientListReceived(this, new ClientListReceivedEventArgs(response.AvailableClients));
                     break;
-                case MessageIds.StartGameRequest:
+                case CommunicationMessageIds.StartGameRequest:
                     HandleStartGameRequest(msg);
                     break;
                 default:

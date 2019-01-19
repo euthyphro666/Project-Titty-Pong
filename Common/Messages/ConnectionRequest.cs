@@ -2,7 +2,7 @@
 {
     public class ConnectionRequest
     {
-        public static MessageIds MessageId => MessageIds.ConnectionRequest;
+        public static CommunicationMessageIds CommunicationMessageId => CommunicationMessageIds.ConnectionRequest;
         public string ClientId { get; set; }
         public string DisplayName { get; set; }
     }
