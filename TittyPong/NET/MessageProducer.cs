@@ -21,6 +21,18 @@ namespace TittyPong.NET
             Events.ConnectionInfoEvent += HandleConnectionInfoEvent;
             Events.ConnectSuccessEvent += HandleConnectSuccessEvent;
             Events.StartGameRequestEvent += HandleStartGameRequestEvent;
+            Events.StartGameResponseEvent += HandleStartGameResponseEvent;
+        }
+
+        private void HandleStartGameResponseEvent(object sender, StartGameResponseEventArgs e)
+        {
+            var msg = new StartGameResponse
+            {
+                RequestingClientMac = e.RequestingClientMac,
+                RespondingClientMac = e.RespondingClientMac,
+                StartGameAccepted = e.StartGameAccepted
+            };
+            Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
         /// <summary>
