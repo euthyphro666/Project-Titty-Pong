@@ -48,6 +48,7 @@
         <Compile Include="Messages\MessageFactory.cs" />
         <Compile Include="Messages\MessageIds.cs" />
         <Compile Include="Messages\StartGameRequest.cs" />
+        <Compile Include="Messages\StartGameResponse.cs" />
         <Compile Include="ObjectSerializer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

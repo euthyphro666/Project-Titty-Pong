@@ -191,6 +191,9 @@ namespace TittyPong.UI
                 if (GameRequestDlg.Result)
                 {
                     //Accepts the request and sends the result to the server
+                    
+                    // send both macs and the accept true or false value
+                    
                 }
             };
             GameRequestDlg.ShowModal(UIHost);
