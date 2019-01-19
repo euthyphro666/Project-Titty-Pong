@@ -5,6 +5,7 @@ namespace Common.Messages
         ConnectionRequest,
         ConnectionResponse,
         StartGameRequest,
-        StartGameResponse
+        StartGameResponse,
+        JoinRoomRequest
     }
 }

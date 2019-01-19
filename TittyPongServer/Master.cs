@@ -4,6 +4,7 @@ using System.Linq;
 using Common;
 using Common.Messages;
 using Lidgren.Network;
+using TittyPongServer.Game_Room;
 using TittyPongServer.NET;
 
 namespace TittyPongServer
@@ -73,11 +74,45 @@ namespace TittyPongServer
                 case MessageIds.StartGameRequest:
                     HandleStartGameRequest(msg);
                     break;
+                case MessageIds.StartGameResponse:
+                    HandleStartGameResponse(msg);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        /// <summary>
+        /// Handles a start game response from a client.
+        /// This is received from client B when client A sends a start game request to B.
+        /// </summary>
+        /// <param name="msg">The response message</param>
+        private void HandleStartGameResponse(Message msg)
+        {
+            var response = msg.Contents.ToString().Deserialize<StartGameResponse>();
+
+            var requestingClient = ClientMacAddressToConnectionDictionary[response.RequestingClientMac];
+            var respondingClient = ClientMacAddressToConnectionDictionary[response.RespondingClientMac];
+
+            // Check if the request was accepted
+            if (response.StartGameAccepted)
+            {
+                // Send join room message
+                var room = new Room();
+                
+            }
+            else
+            {
+                // send requesting client the denial message
+            }
+
+        }
+
+        /// <summary>
+        /// Handles the start game request from a client.
+        /// Used to forward a request to a client from another client.
+        /// </summary>
+        /// <param name="msg"></param>
         private void HandleStartGameRequest(Message msg)
         {
             var request = msg.Contents.ToString().Deserialize<StartGameRequest>();
