@@ -16,7 +16,12 @@ namespace TittyPong.Events
         public event EventHandler<ConnectionInfoEventArgs> ConnectionInfoEvent;
         public event EventHandler<StringEventArgs> StartGameRequestEvent;
         public event EventHandler<ReceivedStartGameRequestEventArgs> ReceivedStartGameRequestEvent;
+        public event EventHandler<StartGameResponseEventArgs> StartGameResponseEvent;
         
+        public void OnStartGameResponseEvent(object sender, StartGameResponseEventArgs e)
+        {
+            StartGameResponseEvent?.Invoke(sender, e);
+        }
 
         public void OnStartGameRequestEvent(object sender, StringEventArgs e)
         {

@@ -14,6 +14,7 @@ using TittyPong.Core;
 using TittyPong.Events;
 using TittyPong.Graphics;
 using TittyPong.IO;
+using TittyPong.NET;
 
 namespace TittyPong.UI
 {
@@ -150,7 +151,6 @@ namespace TittyPong.UI
                 Title = "Accept Game?",
             };
 
-
             UIGrid.Widgets.Add(TitleTxt);
             UIGrid.Widgets.Add(DisplayNameTxt);
             UIGrid.Widgets.Add(DisplayNameFld);
@@ -168,9 +168,9 @@ namespace TittyPong.UI
         #region Events
         private void RegisterEvents()
         {
-            ConnectBtn.Down += HandleConnectionButton;
+            ConnectBtn.MouseDown += HandleConnectionButton;
             ClientConnections.MouseUp += HandleClientSelectionEvent;
-            JoinBtn.Down += HandleJoinButtonEvent;
+            JoinBtn.MouseDown += HandleJoinButtonEvent;
             
 
             events.ClientListReceivedEvent += HandleClientListReceived;
@@ -188,10 +188,14 @@ namespace TittyPong.UI
             //Handles the dialog response.
             GameRequestDlg.Closed += (s, e) =>
             {
-                if (GameRequestDlg.Result)
+                //Sends the result of the dialog box to the server
+                var args = new StartGameResponseEventArgs
                 {
-                    //Accepts the request and sends the result to the server
-                }
+                    RequestingClientMac = ev.RequestingClientMac,
+                    RespondingClientMac = Client.ClientId,
+                    StartGameAccepted = GameRequestDlg.Result
+                };
+                events.OnStartGameResponseEvent(this, args);
             };
             GameRequestDlg.ShowModal(UIHost);
         }

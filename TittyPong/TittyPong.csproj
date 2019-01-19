@@ -59,6 +59,7 @@
     <Compile Include="Events\IntEventArgs.cs" />
     <Compile Include="Events\ObjectEventArgs.cs" />
     <Compile Include="Events\ReceivedStartGameRequestEventArgs.cs" />
+    <Compile Include="Events\StartGameResponseEventArgs.cs" />
     <Compile Include="Events\StringEventArgs.cs" />
     <Compile Include="Graphics\ScreenManager.cs" />
     <Compile Include="IO\Controls.cs" />
@@ -77,13 +78,11 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Myra, Version=0.7.7.151, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Myra.0.7.7.151\lib\net45\Myra.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Myra, Version=0.8.1.159, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Myra.0.8.1.159\lib\net45\Myra.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -94,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
