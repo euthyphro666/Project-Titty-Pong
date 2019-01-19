@@ -17,6 +17,8 @@ namespace TittyPongServer
         private readonly List<string> ClientDisplayNames;
         private Dictionary<string, NetConnection> ClientMacAddressToConnectionDictionary;
         private Dictionary<string, string> ClientMacToDisplayNameDictionary;
+
+        private Dictionary<Guid, Room> OpenRooms;
         
         public Master(Events events)
         {
@@ -26,6 +28,7 @@ namespace TittyPongServer
 
             ClientMacAddressToConnectionDictionary = new Dictionary<string, NetConnection>();
             ClientMacToDisplayNameDictionary = new Dictionary<string, string>();
+            OpenRooms = new Dictionary<Guid, Room>();
         }
 
         private void ReceivedMessageHandler(object sender, ReceivedMessageEventArgs e)
@@ -99,7 +102,12 @@ namespace TittyPongServer
             {
                 // Send join room message
                 var room = new Room();
+                OpenRooms.Add(room.GetRoomId(), room);
                 
+                var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId()};
+                var message = new Message(){MessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
+                MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
+                MessageServer.Send(message.Serialize(), respondingClient, NetDeliveryMethod.ReliableUnordered);
             }
             else
             {

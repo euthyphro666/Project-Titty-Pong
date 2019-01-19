@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Messages\ConnectionRequest.cs" />
     <Compile Include="Messages\ConnectionResponse.cs" />
+    <Compile Include="Messages\GameInputUpdate.cs" />
+    <Compile Include="Messages\JoinRoomRequest.cs" />
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\MessageFactory.cs" />
     <Compile Include="Messages\MessageIds.cs" />

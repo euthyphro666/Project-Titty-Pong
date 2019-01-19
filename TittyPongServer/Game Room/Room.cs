@@ -4,7 +4,7 @@ namespace TittyPongServer.Game_Room
 {
     public class Room
     {
-        public Guid RoomId;
+        private readonly Guid RoomId;
 
         public Room()
         {
