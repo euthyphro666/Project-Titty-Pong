@@ -4,6 +4,7 @@ namespace Common.Messages
     {
         ConnectionRequest,
         ConnectionResponse,
-        StartGameRequest
+        StartGameRequest,
+        StartGameResponse
     }
 }
