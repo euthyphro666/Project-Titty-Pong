@@ -45,7 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\IManager.cs" />
+    <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\StateManager.cs" />
+    <Compile Include="Core\TittyDebugger.cs" />
     <Compile Include="Core\TittyMenu.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\Boobie.cs" />
