@@ -46,14 +46,14 @@ namespace TittyPong.NET
             var target = e.Data;
             var request = new StartGameRequest()
                 {TargetClientMac = target, RequestingClientMac = Client.ClientId, RequestingClientDisplayName = displayName};
-            var msg = new Message(){CommunicationMessageId = StartGameRequest.MessageId, Contents = request};
+            var msg = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
         private void HandleConnectSuccessEvent(object sender, EventArgs e)
         {
             var request = new ConnectionRequest() {ClientId = Client.ClientId, DisplayName = displayName};
-            var msg = new Message(){CommunicationMessageId = ConnectionRequest.CommunicationMessageId, Contents = request};
+            var msg = new Message(){MessageId = ConnectionRequest.CommunicationMessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 

@@ -57,11 +57,11 @@ namespace TittyPongServer
         {
             if(msg.Contents == null)
             {
-                Events.OnGuiLogMessageEvent($"Received data message '{msg.CommunicationMessageId}' with null contents");
+                Events.OnGuiLogMessageEvent($"Received data message '{msg.MessageId}' with null contents");
                 return;
             }
             
-            switch (msg.CommunicationMessageId)
+            switch (msg.MessageId)
             {
                 case CommunicationMessageIds.ConnectionRequest:
                     var connectionRequest = msg.Contents.ToString().Deserialize<ConnectionRequest>();
@@ -70,11 +70,18 @@ namespace TittyPongServer
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
                     var reply = new ConnectionResponse(){AvailableClients = ClientMacToDisplayNameDictionary};
-                    var responseMessage = new Message(){CommunicationMessageId = ConnectionResponse.MessageId, Contents = reply};
+                    var responseMessage = new Message(){MessageId = ConnectionResponse.MessageId, Contents = reply};
                     
                     // Broadcast that a client connected
                     MessageServer.Broadcast(responseMessage.Serialize());
-                    Events.OnGuiLogMessageEvent($"New client connected: {connectionRequest.ClientId}");
+                    var clients = "";
+                    foreach (var name in ClientMacToDisplayNameDictionary)
+                    {
+                        clients += name.Value + ", ";
+                    }
+                    
+                    Events.OnGuiLogMessageEvent($"New client connected: {connectionRequest.ClientId}\n" +
+                                                $"Available Clients: {clients}");
                     break;
                 case CommunicationMessageIds.StartGameRequest:
                     HandleStartGameRequest(msg);
@@ -120,7 +127,7 @@ namespace TittyPongServer
                 OpenRooms.Add(room.GetRoomId(), room);
                 
                 var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId()};
-                var message = new Message(){CommunicationMessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
+                var message = new Message(){MessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
                 MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
                 MessageServer.Send(message.Serialize(), respondingClient, NetDeliveryMethod.ReliableUnordered);
             }
@@ -128,7 +135,7 @@ namespace TittyPongServer
             {
                 // send requesting client the denial message
                 var refuseMessage = new StartGameRefused();
-                var message = new Message() { CommunicationMessageId = StartGameRefused.MessageId, Contents = refuseMessage};
+                var message = new Message() { MessageId = StartGameRefused.MessageId, Contents = refuseMessage};
                 MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
             }
 
@@ -145,7 +152,7 @@ namespace TittyPongServer
             var targetClient = GetConnectionFromMac(request.TargetClientMac);
             if (targetClient == null) return; // Or return failed to request game message  // TODO
 
-            var forwardedMessage = new Message(){CommunicationMessageId = StartGameRequest.MessageId, Contents = request};
+            var forwardedMessage = new Message(){MessageId = StartGameRequest.MessageId, Contents = request};
             MessageServer.Send(forwardedMessage.Serialize(), targetClient, NetDeliveryMethod.ReliableOrdered);
             Events.OnGuiLogMessageEvent($"Client {request.RequestingClientDisplayName} - {request.RequestingClientMac} is challenging client {ClientMacToDisplayNameDictionary[request.TargetClientMac]} - {request.TargetClientMac} to a match!");
         }

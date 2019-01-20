@@ -39,7 +39,7 @@ namespace TittyPong.NET
 
         private void HandleDataMessage(Message msg)
         {
-            switch (msg.CommunicationMessageId)
+            switch (msg.MessageId)
             {
                 case CommunicationMessageIds.ConnectionResponse:
                     var response = msg.Contents.ToString().Deserialize<ConnectionResponse>();
