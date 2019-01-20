@@ -50,6 +50,7 @@
     <Compile Include="Messages\MessageIds.cs" />
     <Compile Include="Messages\RoomConfirmation.cs" />
     <Compile Include="Messages\RoomMessage.cs" />
+    <Compile Include="Messages\StartGameRefused.cs" />
     <Compile Include="Messages\StartGameRequest.cs" />
     <Compile Include="Messages\StartGameResponse.cs" />
     <Compile Include="ObjectSerializer.cs" />
