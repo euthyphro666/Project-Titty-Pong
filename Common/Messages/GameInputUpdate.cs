@@ -6,6 +6,7 @@ namespace Common.Messages
     {
         public static RoomMessageIds MessageId => RoomMessageIds.GameInputUpdate;
         // Figure this type out later
+        public string ClientId { get; set; }
         public object Input { get; set; }
     }
 }

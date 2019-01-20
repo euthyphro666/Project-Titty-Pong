@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace TittyPongServer
 {
@@ -27,6 +28,8 @@ namespace TittyPongServer
     {
         public string ClientAId { get; set; }
         public string ClientBId { get; set; }
-        public object GameData { get; set; }
+        public Vector2 ClientAPosition { get; set; }
+        public Vector2 ClientBPosition { get; set; }
+        public Vector2 PongPosition { get; set; }
     }
 }

@@ -29,7 +29,8 @@ namespace TittyPongServer.Game_Room
         // The main game loop
         public void QueueInput(GameInputUpdate update)
         {
-            
+            update.ClientId;
+            update.Input;
         }
 
         // Reads input messages and applies transforms to client objects
@@ -38,7 +39,7 @@ namespace TittyPongServer.Game_Room
         {
             // Apply input queue
             // send results
-            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){ClientAId = ClientAId, ClientBId = ClientBId, GameData=??});
+            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){ClientAId = ClientAId, ClientBId = ClientBId, ClientAPosition = ??, ClientBPosition = ??, PongPosition = ??});
         }
     }
 }
