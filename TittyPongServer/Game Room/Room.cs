@@ -7,19 +7,22 @@ namespace TittyPongServer.Game_Room
     public class Room
     {
         private readonly Guid RoomId;
-
+        private readonly GameSession Game;
+        
         private string ClientAId;
         private string ClientBId;
 
         private bool ClientAConfirmed;
         private bool ClientBConfirmed;
         
-        public Room(string clientAId, string clientBId)
+        public Room(Events events, string clientAId, string clientBId)
         {
             ClientAId = clientAId;
             ClientBId = clientBId;
             ClientAConfirmed = ClientBConfirmed = false;
             RoomId = Guid.NewGuid();
+            
+            Game = new GameSession(events, ClientAId, ClientBId);
         }
 
         public Guid GetRoomId()
@@ -45,11 +48,13 @@ namespace TittyPongServer.Game_Room
                     if (ClientAConfirmed && ClientBConfirmed)
                     {
                       // start game  
+                      Game.Start();
                     } 
                     
                     break;
                 case RoomMessageIds.GameInputUpdate:
                     var update = msg.Contents.ToString().Deserialize<GameInputUpdate>();
+                    Game.QueueInput(update);
                     break;
             }
         }
