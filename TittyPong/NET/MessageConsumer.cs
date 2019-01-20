@@ -55,6 +55,15 @@ namespace TittyPong.NET
                 case CommunicationMessageIds.JoinRoomRequest:
                     var joinRoom = msg.Contents.ToString().Deserialize<JoinRoomRequest>();
                     Events.OnJoinRoomEvent(this, new JoinRoomEventArgs { RoomId = joinRoom.RoomId });
+                    var reply = new Message
+                    {
+                        MessageId = CommunicationMessageIds.RoomMessage,
+                        Contents = new RoomConfirmation
+                        {
+                            ClientMac = Client.ClientId
+                        }
+                    };
+                    Events.OnSendMessageEvent(this, new ByteArrayEventArgs(reply.Serialize()));
                     break;
                 case CommunicationMessageIds.RoomMessage:
                     var roomMsg = msg.Contents.ToString().Deserialize<RoomMessage>();
