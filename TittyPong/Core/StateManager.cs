@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using TittyPong.Contracts;
 using TittyPong.Events;
+using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
 
@@ -16,7 +17,11 @@ namespace TittyPong.Core
     {
         private ContentManager Assets;
         private EventManager Events;
+
         public TittyMenu Menu;
+        public TittyGame Game;
+        public TittyLoading Load;
+
         public IManager State;
 
         public StateManager(ContentManager assets, EventManager events)
@@ -26,6 +31,14 @@ namespace TittyPong.Core
 
             Menu = new TittyMenu(Assets, Events);
             State = Menu;
+
+            Events.JoinRoomEvent += HandleJoinRoomEvent;
+        }
+
+        private void HandleJoinRoomEvent(object sender, JoinRoomEventArgs e)
+        {
+            Game = new TittyGame(Assets, Events, e.RoomId);
+            SwitchState(States.Game);
         }
 
         public void SwitchState(States state)
@@ -36,10 +49,10 @@ namespace TittyPong.Core
                     State = Menu;
                     break;
                 case States.Loading:
-                    State = new TittyLoading(Assets, Events);
+                    State = Load;
                     break;
                 case States.Game:
-                    State = new TittyGame(Assets, Events);
+                    State = Game;
                     break;
             }
         }

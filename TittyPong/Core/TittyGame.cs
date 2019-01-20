@@ -19,11 +19,13 @@ namespace TittyPong.Core
         private ContentManager assets;
         private EventManager events;
         private TittyState state;
+        private Guid RoomId;
 
-        public TittyGame(ContentManager ass, EventManager ev)
+        public TittyGame(ContentManager ass, EventManager ev, Guid roomId)
         {
             assets = ass;
             events = ev;
+            RoomId = roomId;
 
             var titty = assets.Load<Texture2D>("Titty");
 

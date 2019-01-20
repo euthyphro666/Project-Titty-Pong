@@ -3,6 +3,7 @@ using Common;
 using Common.Messages;
 using Lidgren.Network;
 using TittyPong.Events;
+using TittyPong.Events.Args;
 
 namespace TittyPong.NET
 {
@@ -51,12 +52,36 @@ namespace TittyPong.NET
                 case CommunicationMessageIds.StartGameRequest:
                     HandleStartGameRequest(msg);
                     break;
+                case CommunicationMessageIds.JoinRoomRequest:
+                    var joinRoom = msg.Contents.ToString().Deserialize<JoinRoomRequest>();
+                    Events.OnJoinRoomEvent(this, new JoinRoomEventArgs { RoomId = joinRoom.RoomId });
+                    break;
+                case CommunicationMessageIds.RoomMessage:
+                    var roomMsg = msg.Contents.ToString().Deserialize<RoomMessage>();
+                    HandleRoomMessage(roomMsg);
+                    break;
                 default:
                     // Log that we received an unhandled data message
 //                    Events.
                     break;
             }
         }
+        private void HandleRoomMessage(RoomMessage msg)
+        {
+            switch (msg.RoomMessageId)
+            {
+                case RoomMessageIds.RoomConfirmation:
+                    break;
+                case RoomMessageIds.GameInputUpdate:
+                    break;
+                default:
+                    // Log that we received an unhandled data message
+                    //                    Events.
+                    break;
+            }
+        }
+
+
 
         private void HandleStartGameRequest(Message msg)
         {

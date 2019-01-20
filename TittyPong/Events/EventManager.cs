@@ -3,12 +3,19 @@ using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using TittyPong.Events.Args;
 using TittyPong.IO;
 
 namespace TittyPong.Events
 {
     public class EventManager
     {
+        public event EventHandler<JoinRoomEventArgs> JoinRoomEvent;
+        public void OnJoinRoomEvent(object sender, JoinRoomEventArgs e)
+        {
+            JoinRoomEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<ChangeStateEventArgs> ChangeStateEvent;
         public void OnChangeStateEvent(object sender, ChangeStateEventArgs e)
         {
