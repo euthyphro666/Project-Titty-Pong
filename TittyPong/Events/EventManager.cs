@@ -9,50 +9,56 @@ namespace TittyPong.Events
 {
     public class EventManager
     {
-        public event EventHandler<ClientListReceivedEventArgs> ClientListReceivedEvent;
-        public event EventHandler<ConnectEventArgs> ConnectEvent;
-        public event EventHandler<EventArgs> ConnectSuccessEvent;
-        public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
-        public event EventHandler<ConnectionInfoEventArgs> ConnectionInfoEvent;
-        public event EventHandler<StringEventArgs> StartGameRequestEvent;
-        public event EventHandler<ReceivedStartGameRequestEventArgs> ReceivedStartGameRequestEvent;
+        public event EventHandler<ChangeStateEventArgs> ChangeStateEvent;
+        public void OnChangeStateEvent(object sender, ChangeStateEventArgs e)
+        {
+            ChangeStateEvent?.Invoke(sender, e);
+        }
+
+
         public event EventHandler<StartGameResponseEventArgs> StartGameResponseEvent;
-        
         public void OnStartGameResponseEvent(object sender, StartGameResponseEventArgs e)
         {
             StartGameResponseEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<StringEventArgs> StartGameRequestEvent;
         public void OnStartGameRequestEvent(object sender, StringEventArgs e)
         {
             StartGameRequestEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<ConnectionInfoEventArgs> ConnectionInfoEvent;
         public void OnConnectionInfoEvent(object sender, ConnectionInfoEventArgs e)
         {
             ConnectionInfoEvent?.Invoke(sender, e);
         }
-        
+
+        public event EventHandler<ByteArrayEventArgs> SendMessageEvent;
         public void OnSendMessageEvent(object sender, ByteArrayEventArgs e)
         {
             SendMessageEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<ConnectEventArgs> ConnectEvent;
         public void OnConnectEvent(object sender, ConnectEventArgs connectEventArgs)
         {
             ConnectEvent?.Invoke(sender, connectEventArgs);
         }
 
+        public event EventHandler<EventArgs> ConnectSuccessEvent;
         public void OnConnectSuccessEvent(object sender)
         {
             ConnectSuccessEvent?.Invoke(sender, EventArgs.Empty);
         }
 
+        public event EventHandler<ClientListReceivedEventArgs> ClientListReceivedEvent;
         public void OnClientListReceived(object sender,ClientListReceivedEventArgs e)
         {
             ClientListReceivedEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<ReceivedStartGameRequestEventArgs> ReceivedStartGameRequestEvent;
         public void OnReceivedStartGameRequestEvent(object sender, ReceivedStartGameRequestEventArgs e)
         {
             ReceivedStartGameRequestEvent?.Invoke(sender, e);

@@ -6,7 +6,6 @@ using TittyPong.Events;
 using TittyPong.Graphics;
 using TittyPong.IO;
 using TittyPong.NET;
-using TittyPong.UI;
 
 namespace TittyPong.Core
 {
@@ -21,7 +20,7 @@ namespace TittyPong.Core
         private InputManager input;
         private ScreenManager screen;
 
-        private IManager state;
+        private StateManager State;
 
         private readonly Client MessageClient;
         private readonly MessageConsumer Consumer;
@@ -41,9 +40,20 @@ namespace TittyPong.Core
             MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
 
+            State = new StateManager(assets, events);
+
+            RegisterEvents();
+
             screen.Init(this);
             input.Init();
         }
+
+        #region Events
+        public void RegisterEvents()
+        {
+            events.ChangeStateEvent += HandleStateSwitchEvent;
+        }
+        #endregion
 
 
         protected override void Initialize()
@@ -56,37 +66,28 @@ namespace TittyPong.Core
         protected override void LoadContent()
         {
             screen.LoadContent(Content);
-
-            //Initialize starting state
-            InitializeMenu();
-            //InitializeGame();
         }
 
         protected override void UnloadContent()
         {
         }
 
-        private void InitializeMenu()
+        public void HandleStateSwitchEvent(object sender, ChangeStateEventArgs e)
         {
-            state = new TittyMenu(assets, events);
-        }
-
-        private void InitializeGame()
-        {
-            state = new TittyGame(assets, events);
+            State.SwitchState(e.State);
         }
 
         protected override void Update(GameTime delta)
         {
             input.Update(delta);
-            state?.Update(delta, input);
+            State?.Update(delta, input);
             base.Update(delta);
         }
 
         protected override void Draw(GameTime delta)
         {
             screen.Start();
-            state?.Render(delta, screen);
+            State?.Render(delta, screen);
             screen.Stop();
             base.Draw(delta);
         }

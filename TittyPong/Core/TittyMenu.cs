@@ -16,7 +16,7 @@ using TittyPong.Graphics;
 using TittyPong.IO;
 using TittyPong.NET;
 
-namespace TittyPong.UI
+namespace TittyPong.Core
 {
     public class TittyMenu : IManager
     {
@@ -172,7 +172,6 @@ namespace TittyPong.UI
             ClientConnections.MouseUp += HandleClientSelectionEvent;
             JoinBtn.MouseDown += HandleJoinButtonEvent;
             
-
             events.ClientListReceivedEvent += HandleClientListReceived;
             events.ReceivedStartGameRequestEvent += HandleStartGameRequestReceived;
         }
@@ -240,6 +239,7 @@ namespace TittyPong.UI
             var selectedClientId = ClientConnections.SelectedItem.Tag.ToString();
             events.OnStartGameRequestEvent(this, new StringEventArgs(selectedClientId));
             JoinBtn.Enabled = false;
+            events.OnChangeStateEvent(this, new ChangeStateEventArgs { State = States.Loading });
         }
 
 
