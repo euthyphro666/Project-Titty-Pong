@@ -185,7 +185,7 @@ namespace TittyPong.Core
             {
                 Text = $"{ev.RequestingClientDisplayName} has challenged you to a match. Will you accept or are you a bitch?"
             };
-            //Handles the dialog response
+            //Handles the dialog response, have to use click to get the correct event
             GameRequestDlg.ButtonOk.Click += (s, e) =>
             {
                 Logger.Log($"Game responded with {GameRequestDlg.Result}.");
