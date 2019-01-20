@@ -186,10 +186,8 @@ namespace TittyPong.Core
                 Text = $"{ev.RequestingClientDisplayName} has challenged you to a match. Will you accept or are you a bitch?"
             };
             //Handles the dialog response
-            GameRequestDlg.VisibleChanged += (s, e) =>
+            GameRequestDlg.ButtonOk.Click += (s, e) =>
             {
-                if (!GameRequestDlg.Visible)
-                    return;
                 Logger.Log($"Game responded with {GameRequestDlg.Result}.");
                 //Sends the result of the dialog box to the server
                 var args = new StartGameResponseEventArgs
@@ -201,6 +199,7 @@ namespace TittyPong.Core
                 events.OnStartGameResponseEvent(this, args);
                 events.OnChangeStateEvent(this, new ChangeStateEventArgs { State = States.Loading });
             };
+            
             GameRequestDlg.ShowModal(UIHost);
         }
 

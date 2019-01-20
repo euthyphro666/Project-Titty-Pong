@@ -26,12 +26,14 @@ namespace TittyPong.NET
 
         private void HandleStartGameResponseEvent(object sender, StartGameResponseEventArgs e)
         {
-            var msg = new StartGameResponse
+            var startGameResponse = new StartGameResponse
             {
                 RequestingClientMac = e.RequestingClientMac,
                 RespondingClientMac = e.RespondingClientMac,
                 StartGameAccepted = e.StartGameAccepted
             };
+            
+            var msg = new Message(){MessageId = StartGameResponse.MessageId, Contents = startGameResponse};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
