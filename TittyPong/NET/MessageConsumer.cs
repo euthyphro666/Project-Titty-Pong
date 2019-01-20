@@ -60,7 +60,8 @@ namespace TittyPong.NET
                         MessageId = CommunicationMessageIds.RoomMessage,
                         Contents = new RoomConfirmation
                         {
-                            ClientMac = Client.ClientId
+                            ClientMac = Client.ClientId,
+                            RoomId = joinRoom.RoomId
                         }
                     };
                     Events.OnSendMessageEvent(this, new ByteArrayEventArgs(reply.Serialize()));
