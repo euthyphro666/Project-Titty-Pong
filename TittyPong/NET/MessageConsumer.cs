@@ -61,10 +61,10 @@ namespace TittyPong.NET
                         Contents = new RoomMessage
                         {
                             RoomMessageId = RoomMessageIds.RoomConfirmation,
+                            RoomId = joinRoom.RoomId,
                             Contents = new RoomConfirmation
                             {
-                                ClientMac = Client.ClientId,
-                                RoomId = joinRoom.RoomId
+                                ClientMac = Client.ClientId
                             }
                         }
                     };
