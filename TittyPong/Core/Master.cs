@@ -40,7 +40,6 @@ namespace TittyPong.Core
             MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
 
-            State = new StateManager(assets, events);
 
             RegisterEvents();
 
@@ -60,6 +59,7 @@ namespace TittyPong.Core
         {
             IsMouseVisible = true;
             MyraEnvironment.Game = this;
+            State = new StateManager(assets, events);
             base.Initialize();
         }
 
