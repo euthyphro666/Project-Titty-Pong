@@ -6,13 +6,14 @@ namespace Common.Messages
         ConnectionResponse,
         StartGameRequest,
         StartGameResponse,
+        StartGameRefused,
         JoinRoomRequest,
         RoomMessage
     }
 
     public enum RoomMessageIds
     {
-        GameInputUpdate
-        
+        RoomConfirmation,
+        GameInputUpdate,
     }
 }

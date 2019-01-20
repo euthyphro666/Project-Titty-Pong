@@ -29,6 +29,8 @@ namespace TittyPongServer
             ClientMacAddressToConnectionDictionary = new Dictionary<string, NetConnection>();
             ClientMacToDisplayNameDictionary = new Dictionary<string, string>();
             OpenRooms = new Dictionary<Guid, Room>();
+
+            Events.UpdateClientsEvent += HandleUpdateClientsEvent;
         }
 
         private void ReceivedMessageHandler(object sender, ReceivedMessageEventArgs e)
@@ -68,7 +70,7 @@ namespace TittyPongServer
                     // Use ToList to create a copy of the client list for thread safety?
                     // Exclude the client that sent the request from the connected clients
                     var reply = new ConnectionResponse(){AvailableClients = ClientMacToDisplayNameDictionary};
-                    var responseMessage = new Message(){CommunicationMessageId = ConnectionResponse.CommunicationMessageId, Contents = reply};
+                    var responseMessage = new Message(){CommunicationMessageId = ConnectionResponse.MessageId, Contents = reply};
                     
                     // Broadcast that a client connected
                     MessageServer.Broadcast(responseMessage.Serialize());
@@ -91,6 +93,12 @@ namespace TittyPongServer
                     throw new ArgumentOutOfRangeException();
             }
         }
+        
+        private void HandleUpdateClientsEvent(object sender, UpdateClientsEventArgs e)
+        {
+            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientAId]);
+            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientBId]);
+        }
 
         /// <summary>
         /// Handles a start game response from a client.
@@ -108,17 +116,20 @@ namespace TittyPongServer
             if (response.StartGameAccepted)
             {
                 // Send join room message
-                var room = new Room();
+                var room = new Room(Events, response.RequestingClientMac, response.RespondingClientMac);
                 OpenRooms.Add(room.GetRoomId(), room);
                 
                 var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId()};
-                var message = new Message(){CommunicationMessageId = JoinRoomRequest.CommunicationMessageId, Contents = joinMessage};
+                var message = new Message(){CommunicationMessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
                 MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
                 MessageServer.Send(message.Serialize(), respondingClient, NetDeliveryMethod.ReliableUnordered);
             }
             else
             {
                 // send requesting client the denial message
+                var refuseMessage = new StartGameRefused();
+                var message = new Message() { CommunicationMessageId = StartGameRefused.MessageId, Contents = refuseMessage};
+                MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
             }
 
         }
@@ -134,7 +145,7 @@ namespace TittyPongServer
             var targetClient = GetConnectionFromMac(request.TargetClientMac);
             if (targetClient == null) return; // Or return failed to request game message  // TODO
 
-            var forwardedMessage = new Message(){CommunicationMessageId = StartGameRequest.CommunicationMessageId, Contents = request};
+            var forwardedMessage = new Message(){CommunicationMessageId = StartGameRequest.MessageId, Contents = request};
             MessageServer.Send(forwardedMessage.Serialize(), targetClient, NetDeliveryMethod.ReliableOrdered);
             Events.OnGuiLogMessageEvent($"Client {request.RequestingClientDisplayName} - {request.RequestingClientMac} is challenging client {ClientMacToDisplayNameDictionary[request.TargetClientMac]} - {request.TargetClientMac} to a match!");
         }

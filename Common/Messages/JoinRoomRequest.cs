@@ -4,7 +4,7 @@ namespace Common.Messages
 {
     public class JoinRoomRequest
     {
-        public static CommunicationMessageIds CommunicationMessageId => CommunicationMessageIds.JoinRoomRequest;
+        public static CommunicationMessageIds MessageId => CommunicationMessageIds.JoinRoomRequest;
         public Guid RoomId { get; set; }
     }
 }
