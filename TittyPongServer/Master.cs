@@ -29,6 +29,8 @@ namespace TittyPongServer
             ClientMacAddressToConnectionDictionary = new Dictionary<string, NetConnection>();
             ClientMacToDisplayNameDictionary = new Dictionary<string, string>();
             OpenRooms = new Dictionary<Guid, Room>();
+
+            Events.UpdateClientsEvent += HandleUpdateClientsEvent;
         }
 
         private void ReceivedMessageHandler(object sender, ReceivedMessageEventArgs e)
@@ -90,6 +92,12 @@ namespace TittyPongServer
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+        
+        private void HandleUpdateClientsEvent(object sender, UpdateClientsEventArgs e)
+        {
+            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientAId]);
+            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientBId]);
         }
 
         /// <summary>

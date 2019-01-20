@@ -38,7 +38,7 @@ namespace TittyPongServer.Game_Room
         {
             // Apply input queue
             // send results
-            Events.UpdateClients(new UpdateClientEventArgs(){ClientA = ClientAId, ClientB = ClientBId, Positions=??});
+            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){ClientAId = ClientAId, ClientBId = ClientBId, GameData=??});
         }
     }
 }
