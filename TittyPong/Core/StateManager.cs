@@ -49,7 +49,7 @@ namespace TittyPong.Core
                     State = Menu;
                     break;
                 case States.Loading:
-                    State = Load;
+                    State = new TittyLoading(Assets, Events);
                     break;
                 case States.Game:
                     State = Game;
