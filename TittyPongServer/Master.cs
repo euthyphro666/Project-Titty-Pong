@@ -119,6 +119,9 @@ namespace TittyPongServer
             else
             {
                 // send requesting client the denial message
+                var refuseMessage = new StartGameRefused();
+                var message = new Message() { CommunicationMessageId = StartGameRefused.MessageId, Contents = refuseMessage};
+                MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
             }
 
         }
