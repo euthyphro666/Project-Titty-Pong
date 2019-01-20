@@ -13,7 +13,7 @@ namespace TittyPong.Core
 
         public static void Log(string msg)
         {
-            Events.OnLoggingEvent(null, new StringEventArgs("Start game request received."));
+            Events.OnLoggingEvent(null, new StringEventArgs(msg));
         }
     }
 }
