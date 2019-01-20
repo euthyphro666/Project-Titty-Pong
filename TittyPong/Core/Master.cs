@@ -80,14 +80,14 @@ namespace TittyPong.Core
         protected override void Update(GameTime delta)
         {
             input.Update(delta);
-            State?.Update(delta, input);
+            State.Update(delta, input);
             base.Update(delta);
         }
 
         protected override void Draw(GameTime delta)
         {
             screen.Start();
-            State?.Render(delta, screen);
+            State.Render(delta, screen);
             screen.Stop();
             base.Draw(delta);
         }
