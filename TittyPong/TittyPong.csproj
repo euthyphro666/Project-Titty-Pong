@@ -71,7 +71,6 @@
     <Compile Include="NET\MessageProducer.cs" />
     <Compile Include="NET\ReceivedMessageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\TittyMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=null">
