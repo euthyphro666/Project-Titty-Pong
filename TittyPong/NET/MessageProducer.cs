@@ -46,7 +46,7 @@ namespace TittyPong.NET
             var target = e.Data;
             var request = new StartGameRequest()
                 {TargetClientMac = target, RequestingClientMac = Client.ClientId, RequestingClientDisplayName = displayName};
-            var msg = new Message(){CommunicationMessageId = StartGameRequest.CommunicationMessageId, Contents = request};
+            var msg = new Message(){CommunicationMessageId = StartGameRequest.MessageId, Contents = request};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
