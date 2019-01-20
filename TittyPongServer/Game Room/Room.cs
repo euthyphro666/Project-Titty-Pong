@@ -10,12 +10,15 @@ namespace TittyPongServer.Game_Room
 
         private string ClientAId;
         private string ClientBId;
+
+        private bool ClientAConfirmed;
+        private bool ClientBConfirmed;
         
         public Room(string clientAId, string clientBId)
         {
             ClientAId = clientAId;
             ClientBId = clientBId;
-            
+            ClientAConfirmed = ClientBConfirmed = false;
             RoomId = Guid.NewGuid();
         }
 
@@ -32,6 +35,19 @@ namespace TittyPongServer.Game_Room
         {
             switch (msg.RoomMessageId)
             {
+                case RoomMessageIds.RoomConfirmation:
+                    var confirmation = msg.Contents.ToString().Deserialize<RoomConfirmation>();
+                    if (confirmation.ClientMac == ClientAId)
+                        ClientAConfirmed = true;
+                    else if (confirmation.ClientMac == ClientBId)
+                        ClientBConfirmed = true;
+
+                    if (ClientAConfirmed && ClientBConfirmed)
+                    {
+                      // start game  
+                    } 
+                    
+                    break;
                 case RoomMessageIds.GameInputUpdate:
                     var update = msg.Contents.ToString().Deserialize<GameInputUpdate>();
                     break;

@@ -108,7 +108,7 @@ namespace TittyPongServer
             if (response.StartGameAccepted)
             {
                 // Send join room message
-                var room = new Room();
+                var room = new Room(response.RequestingClientMac, response.RespondingClientMac);
                 OpenRooms.Add(room.GetRoomId(), room);
                 
                 var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId()};

@@ -12,7 +12,7 @@ namespace Common.Messages
 
     public enum RoomMessageIds
     {
-        GameInputUpdate
-        
+        RoomConfirmation,
+        GameInputUpdate,
     }
 }
