@@ -96,8 +96,8 @@ namespace TittyPongServer
         
         private void HandleUpdateClientsEvent(object sender, UpdateClientsEventArgs e)
         {
-            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientAId]);
-            MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientBId]);
+            //MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientAId]);
+           // MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientBId]);
         }
 
         /// <summary>
