@@ -195,6 +195,7 @@ namespace TittyPong.Core
                     StartGameAccepted = GameRequestDlg.Result
                 };
                 events.OnStartGameResponseEvent(this, args);
+                events.OnChangeStateEvent(this, new ChangeStateEventArgs { State = States.Loading });
             };
             GameRequestDlg.ShowModal(UIHost);
         }
