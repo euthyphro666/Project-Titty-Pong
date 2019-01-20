@@ -84,6 +84,10 @@ namespace TittyPong.Core
             LoadingImg = Assets.Load<Texture2D>($"Loading/frame ({LoadingImgCounter})");
             LoadingBdy = new Rectangle(810 - 150, 540 - 150, 300, 150);
 
+
+            UIGrid.Widgets.Add(TitleTxt);
+            UIGrid.Widgets.Add(LoadingTxt);
+            UIHost.Widgets.Add(UIGrid);
         }
         #endregion
 
