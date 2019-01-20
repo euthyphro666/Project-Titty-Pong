@@ -178,6 +178,7 @@ namespace TittyPong.Core
 
         public void HandleStartGameRequestReceived(object sender, ReceivedStartGameRequestEventArgs ev)
         {
+            Logger.Log("Start game request received.");
             //if(GameRequestDlg.)
             //Another client has challenged this client, show the dialog box with the prompt.
             GameRequestDlg.Content = new TextBlock
@@ -187,6 +188,7 @@ namespace TittyPong.Core
             //Handles the dialog response.
             GameRequestDlg.Closed += (s, e) =>
             {
+                Logger.Log($"Game responded with {GameRequestDlg.Result}.");
                 //Sends the result of the dialog box to the server
                 var args = new StartGameResponseEventArgs
                 {

@@ -10,6 +10,13 @@ namespace TittyPong.Events
 {
     public class EventManager
     {
+
+        public event EventHandler<StringEventArgs> LoggingEvent;
+        public void OnLoggingEvent(object sender, StringEventArgs e)
+        {
+            LoggingEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<JoinRoomEventArgs> JoinRoomEvent;
         public void OnJoinRoomEvent(object sender, JoinRoomEventArgs e)
         {

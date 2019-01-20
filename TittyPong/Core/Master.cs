@@ -40,6 +40,9 @@ namespace TittyPong.Core
             MessageClient = new Client(events);
             MessageClient.ReceivedMessageEvent += Consumer.ConsumeMessage;
 
+            //Begin debugging
+            Logger.Events = events;
+            //End debugging
 
             RegisterEvents();
 

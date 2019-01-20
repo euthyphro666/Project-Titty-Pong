@@ -113,6 +113,8 @@ namespace TittyPong.Core
 
         public void Render(GameTime delta, ScreenManager screen)
         {
+            UIHost.Bounds = new Rectangle(0, 0, (int)screen.Width(), (int)screen.Height());
+            UIHost.Render();
             screen.Render(LoadingImg, LoadingBdy);
         }
     }

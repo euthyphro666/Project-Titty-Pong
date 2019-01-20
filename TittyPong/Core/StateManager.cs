@@ -21,6 +21,7 @@ namespace TittyPong.Core
         public TittyMenu Menu;
         public TittyGame Game;
         public TittyLoading Load;
+        public TittyDebugger Debug;
 
         public IManager State;
 
@@ -29,6 +30,8 @@ namespace TittyPong.Core
             Assets = assets;
             Events = events;
 
+
+            Debug = new TittyDebugger(Assets, Events);
             Menu = new TittyMenu(Assets, Events);
             State = Menu;
 
@@ -65,6 +68,7 @@ namespace TittyPong.Core
         public void Render(GameTime delta, ScreenManager screen)
         {
             State?.Render(delta, screen);
+            Debug.Render(delta, screen);
         }
     }
     public enum States
