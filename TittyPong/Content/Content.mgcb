@@ -361,6 +361,12 @@
 /processorParam:TextureFormat=Color
 /build:Loading/frame (9).jpg
 
+#begin Sounds/TittyCollision.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/TittyCollision.mp3
+
 #begin Titty.png
 /importer:TextureImporter
 /processor:TextureProcessor

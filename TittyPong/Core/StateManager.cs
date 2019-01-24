@@ -38,7 +38,7 @@ namespace TittyPong.Core
             Events.JoinRoomEvent += HandleJoinRoomEvent;
         }
 
-        private void HandleJoinRoomEvent(object sender, JoinRoomEventArgs e)
+        public void HandleJoinRoomEvent(object sender, JoinRoomEventArgs e)
         {
             Game = new TittyGame(Assets, Events, e.RoomId);
             SwitchState(States.Game);

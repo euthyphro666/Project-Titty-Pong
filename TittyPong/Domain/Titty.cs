@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TittyPong.Domain
 {
-    public class Boobie : Entity
+    public class Titty : Entity
     {
-        public Boobie(Texture2D img, float x, float y, int w, int h) : base(img, x, y, w, h)
+        public Titty(Texture2D img, float x, float y, int w, int h) : base(img, x, y, w, h)
         {
 
         }

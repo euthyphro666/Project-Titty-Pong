@@ -50,7 +50,8 @@
     <Compile Include="Core\TittyDebugger.cs" />
     <Compile Include="Core\TittyMenu.cs" />
     <Compile Include="Domain\Entity.cs" />
-    <Compile Include="Domain\Boobie.cs" />
+    <Compile Include="Domain\Nippy.cs" />
+    <Compile Include="Domain\Titty.cs" />
     <Compile Include="Domain\TittyState.cs" />
     <Compile Include="Events\Args\ByteArrayEventArgs.cs" />
     <Compile Include="Events\Args\ChangeStateEventArgs.cs" />
@@ -83,8 +84,8 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Myra, Version=0.8.1.159, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Myra.0.8.1.159\lib\net45\Myra.dll</HintPath>
+    <Reference Include="Myra, Version=0.8.2.161, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Myra.0.8.2.161\lib\net45\Myra.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -122,6 +123,7 @@
     <Content Include="Content\Loading\frame %287%29.jpg" />
     <Content Include="Content\Loading\frame %288%29.jpg" />
     <Content Include="Content\Loading\frame %289%29.jpg" />
+    <Content Include="Content\Sounds\TittyCollision.mp3" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

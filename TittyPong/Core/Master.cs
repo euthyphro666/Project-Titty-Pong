@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Myra;
+using System;
 using TittyPong.Contracts;
 using TittyPong.Events;
 using TittyPong.Graphics;
@@ -69,10 +70,14 @@ namespace TittyPong.Core
         protected override void LoadContent()
         {
             screen.LoadContent(Content);
+
+            State.Game = new TittyGame(assets, events, Guid.Empty);
+            State.SwitchState(States.Game);
         }
 
         protected override void UnloadContent()
         {
+            
         }
 
         public void HandleStateSwitchEvent(object sender, ChangeStateEventArgs e)

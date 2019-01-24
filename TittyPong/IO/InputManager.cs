@@ -43,10 +43,16 @@ namespace TittyPong.IO
             }
         }
 
+        private KeyboardState KState;
+
+        public bool IsKeyDown(PlayerIndex player, Keys key)
+        {
+            return KState.IsKeyDown(key);
+        }
 
         public void Update(GameTime delta)
         {
-
+            KState = Keyboard.GetState();
         }
     }
 }

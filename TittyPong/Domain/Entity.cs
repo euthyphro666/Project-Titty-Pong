@@ -70,6 +70,12 @@ namespace TittyPong.Domain
             position = new Vector2(x, y);
             velocity = new Vector2();
         }
+
+        public bool IsCollided(Entity e)
+        {
+            return body.Intersects(e.body);
+        }
+
         public void Render(ScreenManager screen)
         {
             screen.Render(sprite, body);

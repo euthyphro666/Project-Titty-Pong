@@ -9,7 +9,8 @@ namespace TittyPong.Domain
     public class TittyState
     {
 
-        public Boobie[] Boobies;
-        
+        public Titty[] Boobies;
+        public Nippy Nipple;
+
     }
 }
