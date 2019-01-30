@@ -9,7 +9,9 @@ using TittyPong.Contracts;
 using TittyPong.Events;
 using TittyPong.Events.Args;
 using TittyPong.Graphics;
+using TittyPong.Domain;
 using TittyPong.IO;
+using TittyPong.NET;
 
 namespace TittyPong.Core
 {
@@ -40,7 +42,13 @@ namespace TittyPong.Core
 
         public void HandleJoinRoomEvent(object sender, JoinRoomEventArgs e)
         {
-            Game = new TittyGame(Assets, Events, e.RoomId);
+            var session = new GameSession(e.ClientAId, e.ClientBId)
+            {
+                RoomId = e.RoomId,
+                ClientADisplayName = e.ClientADisplay,
+                ClientBDisplayName = e.ClientBDisplay
+            };
+            Game = new TittyGame(Assets, Events, session);
             SwitchState(States.Game);
         }
 
