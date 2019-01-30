@@ -63,7 +63,7 @@ namespace TittyPongServer.Game_Room
             var state = new GameState(){ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
           Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){State = state});
           
-          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {clientAInput.State} \nClient B: {ClientB.PlayerId()} Input: {clientBInput.State}");
+          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {clientAInput?.State} \nClient B: {ClientB.PlayerId()} Input: {clientBInput?.State}");
         }
     }
 }
