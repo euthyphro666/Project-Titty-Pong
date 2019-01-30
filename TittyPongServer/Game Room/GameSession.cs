@@ -2,6 +2,7 @@ using System.Timers;
 using Common;
 using Common.Game_Data;
 using Common.Messages;
+using Microsoft.Xna.Framework;
 
 namespace TittyPongServer.Game_Room
 {
@@ -17,10 +18,10 @@ namespace TittyPongServer.Game_Room
         public GameSession(Events events, string clientAId, string clientBId)
         {
             Events = events;
-            ClientA = new Player(clientAId);
-            ClientB = new Player(clientBId);
-            Nipple = new Pong();
-            
+            ClientA = new Player(clientAId) {PlayerClient = {Position = new Vector2(100, 100)}};
+            ClientB = new Player(clientBId) {PlayerClient = {Position = new Vector2(1754, 100)}};
+            Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
+
             GameTimer = new Timer(17); // Roughly 60 times a second
             GameTimer.Elapsed += Update;
             GameTimer.AutoReset = true;
