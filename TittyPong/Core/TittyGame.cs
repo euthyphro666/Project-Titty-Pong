@@ -28,6 +28,8 @@ namespace TittyPong.Core
         private InputMessenger messenger;
         private GameSession Session;
 
+        private Texture2D Titty;
+
 
         #region Sound Testing
 
@@ -41,22 +43,29 @@ namespace TittyPong.Core
             events = ev;
             Session = session;
 
-            var titty = assets.Load<Texture2D>("Titty");
+            Titty = assets.Load<Texture2D>("Titty");
 
             state = new TittyState
             {
                 Boobies = new Titty[]
                 {
-                    new Titty(titty, 100f, 100f, 64, 64),
-                    new Titty(titty, 1754f, 100f, 64, 64)
+                    new Titty(Titty, 100f, 100f, 64, 64),
+                    new Titty(Titty, 1754f, 100f, 64, 64)
                 },
-                Nipple = new Nippy(titty, 929f, 924f, 16, 16)
+                Nipple = new Nippy(Titty, 929f, 924f, 16, 16)
             };
 
             TittyFx = assets.Load<SoundEffect>("Sounds\\TittyCollision");
 
+            events.RoomUpdateEvent += HandleRoomUpdateEvent;
+
             messenger = new InputMessenger(events);
             messenger.Start();
+        }
+
+        private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
+        {
+            Session.State = e.State;
         }
 
         public void Update(GameTime delta, InputManager input)
@@ -119,9 +128,12 @@ namespace TittyPong.Core
 
         public void Render(GameTime delta, ScreenManager screen)
         {
-            for (int i = 0; i < state.Boobies.Length; i++)
-                state.Boobies[i].Render(screen);
-            state.Nipple.Render(screen);
+            //for (int i = 0; i < state.Boobies.Length; i++)
+            //    state.Boobies[i].Render(screen);
+            //state.Nipple.Render(screen);
+            screen.Render(Titty, Session.State.ClientA.Position);
+            screen.Render(Titty, Session.State.ClientB.Position);
+            screen.Render(Titty, Session.State.Nipple.Position);
         }
 
         public void Dispose()

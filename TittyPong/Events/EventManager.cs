@@ -11,6 +11,12 @@ namespace TittyPong.Events
     public class EventManager
     {
 
+        public event EventHandler<GameStateArgs> RoomUpdateEvent;
+        public void OnRoomUpdateEvent(object sender, GameStateArgs e)
+        {
+            RoomUpdateEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<InputEventArgs> InputEvent;
         public void OnInputEvent(object sender, InputEventArgs e)
         {

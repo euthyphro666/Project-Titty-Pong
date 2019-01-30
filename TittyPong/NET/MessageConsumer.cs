@@ -91,6 +91,10 @@ namespace TittyPong.NET
         {
             switch (msg.RoomMessageId)
             {
+                case RoomMessageIds.Update:
+                    var state = msg.Contents.ToString().Deserialize<RoomUpdate>().State;
+                    Events.OnRoomUpdateEvent(this, new GameStateArgs { State = state });
+                    break;
                 case RoomMessageIds.RoomConfirmation:
                     break;
                 case RoomMessageIds.GameInputUpdate:
