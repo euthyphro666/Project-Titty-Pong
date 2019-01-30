@@ -49,7 +49,7 @@ namespace TittyPong.NET.Game
                     else
                         break;
                 }
-                Thread.Sleep(5);
+                Thread.Sleep(2);
             }   
         }
 
