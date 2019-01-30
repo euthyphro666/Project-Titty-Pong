@@ -15,7 +15,11 @@ namespace TittyPong.Core
         static void Main()
         {
             using (var master = new Master())
+            {
+                master.IsFixedTimeStep = true;
                 master.Run();
+
+            }
         }
     }
 #endif
