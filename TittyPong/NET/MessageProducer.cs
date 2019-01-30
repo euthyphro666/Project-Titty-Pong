@@ -35,7 +35,8 @@ namespace TittyPong.NET
                 Input =  e.State
             };
             var roomMessage = new RoomMessage(){RoomMessageId = GameInputUpdate.MessageId, RoomId = e.RoomId, Contents = msg};
-            Events.OnSendMessageEvent(this, new ByteArrayEventArgs(roomMessage.Serialize()));
+            var fullMsg = new Message(){MessageId = CommunicationMessageIds.RoomMessage, Contents = roomMessage};
+            Events.OnSendMessageEvent(this, new ByteArrayEventArgs(fullMsg.Serialize()));
         }
 
         private void HandleStartGameResponseEvent(object sender, StartGameResponseEventArgs e)
