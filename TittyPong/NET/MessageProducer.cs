@@ -24,10 +24,10 @@ namespace TittyPong.NET
             Events.ConnectSuccessEvent += HandleConnectSuccessEvent;
             Events.StartGameRequestEvent += HandleStartGameRequestEvent;
             Events.StartGameResponseEvent += HandleStartGameResponseEvent;
-            Events.InputEvent += HandleInputEvent;
+            Events.SendInputEvent += HandleSendInputEvent;
         }
 
-        private void HandleInputEvent(object sender, InputEventArgs e)
+        private void HandleSendInputEvent(object sender, InputEventArgs e)
         {
             var msg = new GameInputUpdate
             {

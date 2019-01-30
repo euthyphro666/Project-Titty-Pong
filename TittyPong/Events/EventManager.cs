@@ -17,6 +17,12 @@ namespace TittyPong.Events
             InputEvent?.Invoke(sender, e);
         }
 
+        public event EventHandler<InputEventArgs> SendInputEvent;
+        public void OnSendInputEvent(object sender, InputEventArgs e)
+        {
+            SendInputEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<StringEventArgs> LoggingEvent;
         public void OnLoggingEvent(object sender, StringEventArgs e)
         {

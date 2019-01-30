@@ -16,6 +16,7 @@ using TittyPong.Events;
 using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
+using TittyPong.NET;
 
 namespace TittyPong.Core
 {
@@ -24,6 +25,7 @@ namespace TittyPong.Core
         private ContentManager assets;
         private EventManager events;
         private TittyState state;
+        private InputMessenger messenger;
         private Guid RoomId;
 
 
@@ -52,6 +54,9 @@ namespace TittyPong.Core
             };
 
             TittyFx = assets.Load<SoundEffect>("Sounds\\TittyCollision");
+
+            messenger = new InputMessenger(events);
+            messenger.Start();
         }
 
         public void Update(GameTime delta, InputManager input)

@@ -73,6 +73,7 @@
     <Compile Include="IO\Controls.cs" />
     <Compile Include="IO\InputManager.cs" />
     <Compile Include="NET\Client.cs" />
+    <Compile Include="NET\InputMessenger.cs" />
     <Compile Include="NET\MessageConsumer.cs" />
     <Compile Include="NET\MessageProducer.cs" />
     <Compile Include="NET\ReceivedMessageEventArgs.cs" />

@@ -71,7 +71,7 @@ namespace TittyPong.Core
         {
             screen.LoadContent(Content);
 
-            State.Game = new TittyGame(assets, events, Guid.Empty);
+            //State.Game = new TittyGame(assets, events, Guid.Empty);
             //State.SwitchState(States.Game);
         }
 
