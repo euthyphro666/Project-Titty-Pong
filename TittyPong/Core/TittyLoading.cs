@@ -117,5 +117,8 @@ namespace TittyPong.Core
             UIHost.Render();
             screen.Render(LoadingImg, LoadingBdy);
         }
+        public void Dispose()
+        {
+        }
     }
 }

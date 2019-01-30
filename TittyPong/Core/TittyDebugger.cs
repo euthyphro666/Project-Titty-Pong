@@ -80,5 +80,8 @@ namespace TittyPong.Core
             UIHost.Bounds = new Rectangle(0, 0, (int)screen.Width(), (int)screen.Height());
             UIHost.Render();
         }
+        public void Dispose()
+        {
+        }
     }
 }

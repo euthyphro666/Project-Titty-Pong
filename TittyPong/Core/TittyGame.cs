@@ -124,5 +124,10 @@ namespace TittyPong.Core
                 state.Boobies[i].Render(screen);
             state.Nipple.Render(screen);
         }
+
+        public void Dispose()
+        {
+            messenger.Stop();
+        }
     }
 }

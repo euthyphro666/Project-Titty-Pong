@@ -77,7 +77,7 @@ namespace TittyPong.Core
 
         protected override void UnloadContent()
         {
-            
+            State.Dispose();
         }
 
         public void HandleStateSwitchEvent(object sender, ChangeStateEventArgs e)

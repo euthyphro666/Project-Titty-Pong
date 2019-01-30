@@ -70,6 +70,12 @@ namespace TittyPong.Core
             State?.Render(delta, screen);
             Debug.Render(delta, screen);
         }
+
+        public void Dispose()
+        {
+            State?.Dispose();
+            Debug.Dispose();
+        }
     }
     public enum States
     {

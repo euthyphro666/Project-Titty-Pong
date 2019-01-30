@@ -13,5 +13,6 @@ namespace TittyPong.Contracts
     {
         void Update(GameTime delta, InputManager input);
         void Render(GameTime delta, ScreenManager screen);
+        void Dispose();
     }
 }
