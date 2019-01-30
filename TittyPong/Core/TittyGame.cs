@@ -68,12 +68,12 @@ namespace TittyPong.Core
             Session.State = e.State;
         }
 
-        bool SendInput = false;
+        int SendInput = 0;
         public void Update(GameTime delta, InputManager input)
         {
-            //SendInput = !SendInput;
-            //if (!SendInput)
-            //    return;
+            SendInput = SendInput > 2 ? 0 : SendInput + 1;
+            if (SendInput > 0)
+                return;
             //var SPEED = 15;
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
