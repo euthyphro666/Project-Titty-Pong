@@ -50,11 +50,20 @@ namespace TittyPongServer.Game_Room
         private void Update(object sender, ElapsedEventArgs e)
         {
             // Apply input queue
+            var clientAInput = ClientA.TryGetNextInput();
+            var clientBInput = ClientA.TryGetNextInput();
+
+            if (clientAInput != null)
+                ClientA.Update(clientAInput);
+            
+            if (clientBInput != null)
+                ClientB.Update(clientBInput);
+            
             // send results
             var state = new GameState(){ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
           Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){State = state});
           
-          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {ClientA.TryGetNextInput().Serialize().DeserializeToJsonString()} \nClient B: {ClientB.PlayerId()} Input: {ClientB.TryGetNextInput().Serialize().DeserializeToJsonString()}");
+          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {clientAInput.State} \nClient B: {ClientB.PlayerId()} Input: {clientBInput.State}");
         }
     }
 }
