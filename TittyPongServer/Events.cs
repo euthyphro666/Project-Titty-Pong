@@ -27,6 +27,7 @@ namespace TittyPongServer
 
     public class UpdateClientsEventArgs : EventArgs
     {
+        public Guid RoomId { get; set; }
         public GameState State { get; set; }
     }
 }

@@ -17,5 +17,6 @@ namespace Common.Messages
         Invalid,
         RoomConfirmation,
         GameInputUpdate,
+        Update,
     }
 }

@@ -22,7 +22,7 @@ namespace TittyPongServer.Game_Room
             ClientAConfirmed = ClientBConfirmed = false;
             RoomId = Guid.NewGuid();
             
-            Game = new GameSession(events, ClientAId, ClientBId);
+            Game = new GameSession(events, RoomId, ClientAId, ClientBId);
         }
 
         public Guid GetRoomId()

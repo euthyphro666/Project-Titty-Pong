@@ -103,8 +103,16 @@ namespace TittyPongServer
         
         private void HandleUpdateClientsEvent(object sender, UpdateClientsEventArgs e)
         {
-            MessageServer.Send(e.State.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
-            MessageServer.Send(e.State.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
+            var msg = new Message()
+            {
+                MessageId = CommunicationMessageIds.RoomMessage, 
+                Contents = new RoomMessage(){RoomMessageId = RoomUpdate.MessageId, RoomId = e.RoomId, 
+                    Contents = new RoomUpdate(){State = e.State}}
+                    
+            };
+            
+            MessageServer.Send(msg.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
+            MessageServer.Send(msg.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
         }
 
         /// <summary>

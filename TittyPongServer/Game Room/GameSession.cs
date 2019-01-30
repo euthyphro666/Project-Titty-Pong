@@ -1,3 +1,4 @@
+using System;
 using System.Timers;
 using Common;
 using Common.Game_Data;
@@ -9,15 +10,17 @@ namespace TittyPongServer.Game_Room
     public class GameSession
     {
         private readonly Events Events;
+        private readonly Guid RoomId;
         private readonly Player ClientA;
         private readonly Player ClientB;
         private readonly Pong Nipple;
 
         private Timer GameTimer;
         
-        public GameSession(Events events, string clientAId, string clientBId)
+        public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
             Events = events;
+            RoomId = roomId;
             ClientA = new Player(clientAId) {PlayerClient = {Position = new Vector2(100, 100)}};
             ClientB = new Player(clientBId) {PlayerClient = {Position = new Vector2(1754, 100)}};
             Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
@@ -62,7 +65,7 @@ namespace TittyPongServer.Game_Room
             
             // send results
             var state = new GameState(){ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
-          Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){State = state});
+          Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){RoomId = RoomId, State = state});
           
           Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {clientAInput?.State} \nClient B: {ClientB.PlayerId()} Input: {clientBInput?.State}");
         }
