@@ -54,7 +54,14 @@ namespace TittyPong.NET
                     break;
                 case CommunicationMessageIds.JoinRoomRequest:
                     var joinRoom = msg.Contents.ToString().Deserialize<JoinRoomRequest>();
-                    Events.OnJoinRoomEvent(this, new JoinRoomEventArgs { RoomId = joinRoom.RoomId });
+                    Events.OnJoinRoomEvent(this, new JoinRoomEventArgs
+                    {
+                        RoomId = joinRoom.RoomId,
+                        ClientAId = joinRoom.ClientAId,
+                        ClientBId = joinRoom.ClientBId,
+                        ClientADisplay = joinRoom.ClientADisplayName,
+                        ClientBDisplay = joinRoom.ClientBDisplayName
+                    });
                     var reply = new Message
                     {
                         MessageId = CommunicationMessageIds.RoomMessage,

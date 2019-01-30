@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TittyPong.Events;
 using TittyPong.Events.Args;
 
-namespace TittyPong.NET
+namespace TittyPong.NET.Game
 {
     public class InputMessenger
     {

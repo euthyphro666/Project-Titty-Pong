@@ -16,7 +16,7 @@ using TittyPong.Events;
 using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
-using TittyPong.NET;
+using TittyPong.NET.Game;
 
 namespace TittyPong.Core
 {
@@ -26,7 +26,7 @@ namespace TittyPong.Core
         private EventManager events;
         private TittyState state;
         private InputMessenger messenger;
-        private Guid RoomId;
+        private GameSession Session;
 
 
         #region Sound Testing
@@ -35,11 +35,11 @@ namespace TittyPong.Core
 
         #endregion
 
-        public TittyGame(ContentManager ass, EventManager ev, Guid roomId)
+        public TittyGame(ContentManager ass, EventManager ev, GameSession session)
         {
             assets = ass;
             events = ev;
-            RoomId = roomId;
+            Session = session;
 
             var titty = assets.Load<Texture2D>("Titty");
 
@@ -61,14 +61,14 @@ namespace TittyPong.Core
 
         public void Update(GameTime delta, InputManager input)
         {
-            var SPEED = 15;
+            //var SPEED = 15;
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
             if (up ^ down)
             {
-                var dir = up ? -1 : 1;
-                var y = state.Boobies[0].Y + (dir * SPEED);
-                state.Boobies[0].Y = Clamp(y, 0, 1080 - 64);
+                //var dir = up ? -1 : 1;
+                //var y = state.Boobies[0].Y + (dir * SPEED);
+                //state.Boobies[0].Y = Clamp(y, 0, 1080 - 64);
                 SendInputUpdateMessage(up ? InputState.Direction.Up : InputState.Direction.Down);
             }
 
@@ -80,12 +80,12 @@ namespace TittyPong.Core
             //    var y = state.Boobies[1].Y + (dir * SPEED);
             //    state.Boobies[1].Y = Clamp(y, 0, 1080 - 64);
             //}
-            UpdatePaddle();
+            //UpdatePaddle();
         }
 
         private void SendInputUpdateMessage(InputState.Direction dir)
         {
-            events.OnInputEvent(this, new InputEventArgs { RoomId = RoomId, State = new InputState { State = dir } });
+            events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = new InputState { State = dir } });
         }
 
         private void UpdatePaddle()
@@ -109,7 +109,6 @@ namespace TittyPong.Core
                 nip.Diretion = !nip.Diretion;
 
             }
-
         }
 
         private float Clamp(float value, float min, float max)
