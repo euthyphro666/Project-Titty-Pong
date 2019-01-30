@@ -35,6 +35,11 @@ namespace TittyPong.Domain
                 {
                     Id = ClientBId,
                     Position = new Vector2(1754f, 100f)
+                },
+                Nipple = new Pong
+                {
+                    Force = new Vector2(),
+                    Position = new Vector2(1920 / 2, 1080 / 2)
                 }
             };
         }
