@@ -50,6 +50,7 @@
     <Compile Include="Core\TittyDebugger.cs" />
     <Compile Include="Core\TittyMenu.cs" />
     <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\GameSession.cs" />
     <Compile Include="Domain\Nippy.cs" />
     <Compile Include="Domain\Titty.cs" />
     <Compile Include="Domain\TittyState.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Events\Args\ClientListReceivedEventArgs.cs" />
     <Compile Include="Events\Args\ConnectEventArgs.cs" />
     <Compile Include="Events\Args\ConnectionInfoEventArgs.cs" />
+    <Compile Include="Events\Args\GameStateArgs.cs" />
     <Compile Include="Events\Args\InputEventArgs.cs" />
     <Compile Include="Events\Args\JoinRoomEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -73,7 +75,6 @@
     <Compile Include="IO\Controls.cs" />
     <Compile Include="IO\InputManager.cs" />
     <Compile Include="NET\Client.cs" />
-    <Compile Include="NET\Game\GameSession.cs" />
     <Compile Include="NET\Game\InputMessenger.cs" />
     <Compile Include="NET\MessageConsumer.cs" />
     <Compile Include="NET\MessageProducer.cs" />
