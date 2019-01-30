@@ -1,5 +1,6 @@
 using System.Timers;
 using Common;
+using Common.Game_Data;
 using Common.Messages;
 
 namespace TittyPongServer.Game_Room
@@ -9,6 +10,7 @@ namespace TittyPongServer.Game_Room
         private readonly Events Events;
         private readonly Player ClientA;
         private readonly Player ClientB;
+        private readonly Pong Nipple;
 
         private Timer GameTimer;
         
@@ -17,6 +19,8 @@ namespace TittyPongServer.Game_Room
             Events = events;
             ClientA = new Player(clientAId);
             ClientB = new Player(clientBId);
+            Nipple = new Pong();
+            
             GameTimer = new Timer(17); // Roughly 60 times a second
             GameTimer.Elapsed += Update;
             GameTimer.AutoReset = true;
@@ -47,7 +51,9 @@ namespace TittyPongServer.Game_Room
         {
             // Apply input queue
             // send results
-          //  Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){ClientAId = ClientAId, ClientBId = ClientBId, ClientAPosition = ??, ClientBPosition = ??, PongPosition = ??});
+            var state = new GameState(){ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
+          Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){State = state});
+          
           Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {ClientA.TryGetNextInput().Serialize().DeserializeToJsonString()} \nClient B: {ClientB.PlayerId()} Input: {ClientB.TryGetNextInput().Serialize().DeserializeToJsonString()}");
         }
     }

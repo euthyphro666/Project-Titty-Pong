@@ -1,4 +1,5 @@
 using System;
+using Common.Game_Data;
 using Microsoft.Xna.Framework;
 
 namespace TittyPongServer
@@ -26,10 +27,6 @@ namespace TittyPongServer
 
     public class UpdateClientsEventArgs : EventArgs
     {
-        public string ClientAId { get; set; }
-        public string ClientBId { get; set; }
-        public Vector2 ClientAPosition { get; set; }
-        public Vector2 ClientBPosition { get; set; }
-        public Vector2 PongPosition { get; set; }
+        public GameState State { get; set; }
     }
 }

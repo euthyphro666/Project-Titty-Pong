@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using Common.Game_Data;
 
 namespace TittyPongServer.Game_Room
 {
     public class Player
     {
-        private string Id { get; set; }
         private readonly Queue<object> Inputs;
 
+        public Client PlayerClient { get; set; }
+        
         public Player(string id)
         {
-            Id = id;
+            PlayerClient = new Client(){Id = id};
             Inputs = new Queue<object>();
         }
 
@@ -25,7 +27,7 @@ namespace TittyPongServer.Game_Room
 
         public string PlayerId()
         {
-            return Id;
+            return PlayerClient.Id;
         }
     }
 }

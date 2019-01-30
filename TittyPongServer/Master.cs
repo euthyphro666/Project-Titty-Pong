@@ -103,8 +103,8 @@ namespace TittyPongServer
         
         private void HandleUpdateClientsEvent(object sender, UpdateClientsEventArgs e)
         {
-            //MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientAId]);
-           // MessageServer.Send(e.GameData.Serialize(), ClientMacAddressToConnectionDictionary[e.ClientBId]);
+            MessageServer.Send(e.State.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
+            MessageServer.Send(e.State.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace TittyPongServer
                 var room = new Room(Events, response.RequestingClientMac, response.RespondingClientMac);
                 OpenRooms.Add(room.GetRoomId(), room);
                 
-                var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId(), ClientA = response.RequestingClientMac, ClientB = response.RespondingClientMac};
+                var joinMessage = new JoinRoomRequest(){RoomId = room.GetRoomId(), ClientAId = response.RequestingClientMac, ClientADisplayName = ClientMacToDisplayNameDictionary[response.RequestingClientMac], ClientBId = response.RespondingClientMac, ClientBDisplayName = ClientMacToDisplayNameDictionary[response.RespondingClientMac]};
                 var message = new Message(){MessageId = JoinRoomRequest.MessageId, Contents = joinMessage};
                 MessageServer.Send(message.Serialize(), requestingClient, NetDeliveryMethod.ReliableUnordered);
                 MessageServer.Send(message.Serialize(), respondingClient, NetDeliveryMethod.ReliableUnordered);
