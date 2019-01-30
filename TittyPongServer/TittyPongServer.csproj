@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Events.cs" />
     <Compile Include="Game Room\GameSession.cs" />
+    <Compile Include="Game Room\Player.cs" />
     <Compile Include="Game Room\Room.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
