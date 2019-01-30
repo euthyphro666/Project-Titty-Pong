@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Common;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using TittyPong.Contracts;
 using TittyPong.Domain;
 using TittyPong.Events;
+using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
 
@@ -62,17 +64,23 @@ namespace TittyPong.Core
                 var dir = up ? -1 : 1;
                 var y = state.Boobies[0].Y + (dir * SPEED);
                 state.Boobies[0].Y = Clamp(y, 0, 1080 - 64);
+                SendInputUpdateMessage(up ? InputState.Direction.Up : InputState.Direction.Down);
             }
 
-            up = input.IsKeyDown(PlayerIndex.One, Keys.Up);
-            down = input.IsKeyDown(PlayerIndex.One, Keys.Down);
-            if (up ^ down)
-            {
-                var dir = up ? -1 : 1;
-                var y = state.Boobies[1].Y + (dir * SPEED);
-                state.Boobies[1].Y = Clamp(y, 0, 1080 - 64);
-            }
+            //up = input.IsKeyDown(PlayerIndex.One, Keys.Up);
+            //down = input.IsKeyDown(PlayerIndex.One, Keys.Down);
+            //if (up ^ down)
+            //{
+            //    var dir = up ? -1 : 1;
+            //    var y = state.Boobies[1].Y + (dir * SPEED);
+            //    state.Boobies[1].Y = Clamp(y, 0, 1080 - 64);
+            //}
             UpdatePaddle();
+        }
+
+        private void SendInputUpdateMessage(InputState.Direction dir)
+        {
+            events.OnInputEvent(this, new InputEventArgs { State = new InputState { State = dir } });
         }
 
         private void UpdatePaddle()
@@ -90,6 +98,9 @@ namespace TittyPong.Core
             if(nip.IsCollided(state.Boobies[0]) || nip.IsCollided(state.Boobies[1]))
             {
                 //Play bounce sound
+                var instance = TittyFx.CreateInstance();
+                instance.Play();
+
                 nip.Diretion = !nip.Diretion;
 
             }

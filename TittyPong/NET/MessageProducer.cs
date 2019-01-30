@@ -4,6 +4,7 @@ using System.Net.NetworkInformation;
 using Common;
 using Common.Messages;
 using TittyPong.Events;
+using TittyPong.Events.Args;
 
 namespace TittyPong.NET
 {
@@ -22,6 +23,17 @@ namespace TittyPong.NET
             Events.ConnectSuccessEvent += HandleConnectSuccessEvent;
             Events.StartGameRequestEvent += HandleStartGameRequestEvent;
             Events.StartGameResponseEvent += HandleStartGameResponseEvent;
+            Events.InputEvent += HandleInputEvent;
+        }
+
+        private void HandleInputEvent(object sender, InputEventArgs e)
+        {
+            var msg = new GameInputUpdate
+            {
+                ClientId = Client.ClientId,
+                Input =  e.State
+            };
+            Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 
         private void HandleStartGameResponseEvent(object sender, StartGameResponseEventArgs e)

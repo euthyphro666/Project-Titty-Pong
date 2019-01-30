@@ -58,6 +58,7 @@
     <Compile Include="Events\Args\ClientListReceivedEventArgs.cs" />
     <Compile Include="Events\Args\ConnectEventArgs.cs" />
     <Compile Include="Events\Args\ConnectionInfoEventArgs.cs" />
+    <Compile Include="Events\Args\InputEventArgs.cs" />
     <Compile Include="Events\Args\JoinRoomEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Core\TittyGame.cs" />
@@ -123,7 +124,7 @@
     <Content Include="Content\Loading\frame %287%29.jpg" />
     <Content Include="Content\Loading\frame %288%29.jpg" />
     <Content Include="Content\Loading\frame %289%29.jpg" />
-    <Content Include="Content\Sounds\TittyCollision.mp3" />
+    <Content Include="Content\Sounds\TittyCollision.wav" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

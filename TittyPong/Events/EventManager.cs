@@ -11,6 +11,12 @@ namespace TittyPong.Events
     public class EventManager
     {
 
+        public event EventHandler<InputEventArgs> InputEvent;
+        public void OnInputEvent(object sender, InputEventArgs e)
+        {
+            InputEvent?.Invoke(sender, e);
+        }
+
         public event EventHandler<StringEventArgs> LoggingEvent;
         public void OnLoggingEvent(object sender, StringEventArgs e)
         {
@@ -77,5 +83,6 @@ namespace TittyPong.Events
         {
             ReceivedStartGameRequestEvent?.Invoke(sender, e);
         }
+
     }
 }
