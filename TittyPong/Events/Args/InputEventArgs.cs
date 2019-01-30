@@ -10,5 +10,6 @@ namespace TittyPong.Events.Args
     public class InputEventArgs : EventArgs
     {
         public InputState State { get; set; }
+        public Guid RoomId { get; set; }
     }
 }

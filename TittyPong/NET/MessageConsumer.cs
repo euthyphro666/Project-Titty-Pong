@@ -85,6 +85,7 @@ namespace TittyPong.NET
             switch (msg.RoomMessageId)
             {
                 case RoomMessageIds.RoomConfirmation:
+                    Events.OnLoggingEvent(this, new StringEventArgs("Received room confirmation message"));
                     break;
                 case RoomMessageIds.GameInputUpdate:
                     break;

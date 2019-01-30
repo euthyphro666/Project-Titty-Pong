@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using Common;
 using Common.Messages;
+using Microsoft.Xna.Framework;
 using TittyPong.Events;
 using TittyPong.Events.Args;
 
@@ -33,6 +34,7 @@ namespace TittyPong.NET
                 ClientId = Client.ClientId,
                 Input =  e.State
             };
+            var roomMessage = new RoomMessage(){RoomMessageId = GameInputUpdate.MessageId, RoomId = e.RoomId, Contents = msg};
             Events.OnSendMessageEvent(this, new ByteArrayEventArgs(msg.Serialize()));
         }
 

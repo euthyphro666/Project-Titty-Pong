@@ -80,7 +80,7 @@ namespace TittyPong.Core
 
         private void SendInputUpdateMessage(InputState.Direction dir)
         {
-            events.OnInputEvent(this, new InputEventArgs { State = new InputState { State = dir } });
+            events.OnInputEvent(this, new InputEventArgs { RoomId = RoomId, State = new InputState { State = dir } });
         }
 
         private void UpdatePaddle()

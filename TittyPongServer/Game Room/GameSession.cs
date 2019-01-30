@@ -1,4 +1,5 @@
 using System.Timers;
+using Common;
 using Common.Messages;
 
 namespace TittyPongServer.Game_Room
@@ -47,7 +48,7 @@ namespace TittyPongServer.Game_Room
             // Apply input queue
             // send results
           //  Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){ClientAId = ClientAId, ClientBId = ClientBId, ClientAPosition = ??, ClientBPosition = ??, PongPosition = ??});
-          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {ClientA.TryGetNextInput()} \nClient B: {ClientB.PlayerId()} Input: {ClientB.TryGetNextInput()}");
+          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {ClientA.TryGetNextInput().Serialize().DeserializeToJsonString()} \nClient B: {ClientB.PlayerId()} Input: {ClientB.TryGetNextInput().Serialize().DeserializeToJsonString()}");
         }
     }
 }
