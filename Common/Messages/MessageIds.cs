@@ -2,6 +2,7 @@ namespace Common.Messages
 {
     public enum CommunicationMessageIds
     {
+        Invalid,
         ConnectionRequest,
         ConnectionResponse,
         StartGameRequest,
@@ -13,6 +14,7 @@ namespace Common.Messages
 
     public enum RoomMessageIds
     {
+        Invalid,
         RoomConfirmation,
         GameInputUpdate,
     }
