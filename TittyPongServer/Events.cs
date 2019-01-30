@@ -11,12 +11,12 @@ namespace TittyPongServer
 
         public void OnGuiLogMessageEvent(string msg)
         {
-            GuiLogMessageEvent?.Invoke(this, new GuiLogMessageEventArgs(){Message = msg});
+            GuiLogMessageEvent?.BeginInvoke(this, new GuiLogMessageEventArgs(){Message = msg}, null, null);
         }
 
         public void OnUpdateClientsEvent(UpdateClientsEventArgs updateClientEventArgs)
         {
-            throw new NotImplementedException();
+            UpdateClientsEvent?.Invoke(this, updateClientEventArgs);
         }
     }
 

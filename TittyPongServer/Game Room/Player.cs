@@ -9,12 +9,13 @@ namespace TittyPongServer.Game_Room
     public class Player
     {
         private readonly Queue<InputState> Inputs;
+        private static int MoveSpeed = 5;
 
         public Client PlayerClient { get; set; }
-        
+
         public Player(string id)
         {
-            PlayerClient = new Client(){Id = id};
+            PlayerClient = new Client() {Id = id};
             Inputs = new Queue<InputState>();
         }
 
@@ -23,34 +24,35 @@ namespace TittyPongServer.Game_Room
             Inputs.Enqueue(input);
         }
 
-        public InputState TryGetNextInput()
-        {
-            return Inputs.Count > 0 ? Inputs.Dequeue() : null;
-        }
-
         public string PlayerId()
         {
             return PlayerClient.Id;
         }
 
-        public void Update(InputState input)
+        public void Update()
         {
-            switch (input.State)
+            while (Inputs.Count > 0)
             {
-                case InputState.Direction.None:
-                    break;
-                case InputState.Direction.Up:
-                    PlayerClient.Position = new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y + 1);
-                    break;
-                case InputState.Direction.Down:
-                    PlayerClient.Position = new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y - 1);
-                    break;
-                case InputState.Direction.Left:
-                    break;
-                case InputState.Direction.Right:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                var input = Inputs.Dequeue();
+                switch (input.State)
+                {
+                    case InputState.Direction.None:
+                        break;
+                    case InputState.Direction.Up:
+                        PlayerClient.Position =
+                            new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y - MoveSpeed);
+                        break;
+                    case InputState.Direction.Down:
+                        PlayerClient.Position =
+                            new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y + MoveSpeed);
+                        break;
+                    case InputState.Direction.Left:
+                        break;
+                    case InputState.Direction.Right:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
     }

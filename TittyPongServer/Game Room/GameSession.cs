@@ -16,7 +16,7 @@ namespace TittyPongServer.Game_Room
         private readonly Pong Nipple;
 
         private Timer GameTimer;
-        
+
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
             Events = events;
@@ -25,7 +25,7 @@ namespace TittyPongServer.Game_Room
             ClientB = new Player(clientBId) {PlayerClient = {Position = new Vector2(1754, 100)}};
             Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
 
-            GameTimer = new Timer(17); // Roughly 60 times a second
+            GameTimer = new Timer(17); // Roughly 30 times a second
             GameTimer.Elapsed += Update;
             GameTimer.AutoReset = true;
         }
@@ -35,7 +35,7 @@ namespace TittyPongServer.Game_Room
             GameTimer.Start();
             Events.OnGuiLogMessageEvent($"Starting game for clients: {ClientA.PlayerId()} and {ClientB.PlayerId()}");
         }
-        
+
         // The main game loop
         public void QueueInput(GameInputUpdate update)
         {
@@ -53,21 +53,15 @@ namespace TittyPongServer.Game_Room
         // Raises event to send positions to clients 60 times a second
         private void Update(object sender, ElapsedEventArgs e)
         {
-            // Apply input queue
-            var clientAInput = ClientA.TryGetNextInput();
-            var clientBInput = ClientA.TryGetNextInput();
+                ClientA.Update();
+                ClientB.Update();
 
-            if (clientAInput != null)
-                ClientA.Update(clientAInput);
-            
-            if (clientBInput != null)
-                ClientB.Update(clientBInput);
-            
             // send results
-            var state = new GameState(){ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
-          Events.OnUpdateClientsEvent(new UpdateClientsEventArgs(){RoomId = RoomId, State = state});
-          
-          Events.OnGuiLogMessageEvent($"Update client inputs: \nClient A: {ClientA.PlayerId()} Input: {clientAInput?.State} \nClient B: {ClientB.PlayerId()} Input: {clientBInput?.State}");
+            var state = new GameState()
+                {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
+
+            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, State = state});
+
         }
     }
 }
