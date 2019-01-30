@@ -73,6 +73,17 @@ namespace TittyPong.Graphics
             return GDM.PreferredBackBufferHeight;
         }
 
+        //Todo: Make this better
+        public static Rectangle Body = new Rectangle();
+        public void Render(Texture2D sprite, Vector2 pos, int w, int h)
+        {
+            Body.X = (int)pos.X;
+            Body.Y = (int)pos.Y;
+            Body.Width = w;
+            Body.Height = h;
+            if (ContextOpen)
+                SB.Draw(sprite, Body, Color.White);
+        }
         public void Render(Texture2D sprite, Vector2 pos)
         {
             if (ContextOpen)

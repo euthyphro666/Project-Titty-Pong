@@ -131,9 +131,9 @@ namespace TittyPong.Core
             //for (int i = 0; i < state.Boobies.Length; i++)
             //    state.Boobies[i].Render(screen);
             //state.Nipple.Render(screen);
-            screen.Render(Titty, Session.State.ClientA.Position);
-            screen.Render(Titty, Session.State.ClientB.Position);
-            screen.Render(Titty, Session.State.Nipple.Position);
+            screen.Render(Titty, Session.State.ClientA.Position, 64, 64);
+            screen.Render(Titty, Session.State.ClientB.Position, 64, 64);
+            screen.Render(Titty, Session.State.Nipple.Position, 16, 16);
         }
 
         public void Dispose()
