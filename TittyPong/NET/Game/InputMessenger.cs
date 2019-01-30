@@ -17,14 +17,12 @@ namespace TittyPong.NET.Game
         private ConcurrentQueue<InputEventArgs> States;
         private Thread SendThread;
         private bool IsRunning;
-        private ManualResetEvent Reset;
 
         public InputMessenger(EventManager events)
         {
             Events = events;
             States = new ConcurrentQueue<InputEventArgs>();
             SendThread = new Thread(Run);
-            Reset = new ManualResetEvent(true);
 
             Events.InputEvent += HandleInputEvent;
         }
@@ -32,7 +30,6 @@ namespace TittyPong.NET.Game
         private void HandleInputEvent(object sender, InputEventArgs e)
         {
             States.Enqueue(e);
-            Reset.Set();
         }
 
         public void Start()
@@ -52,7 +49,7 @@ namespace TittyPong.NET.Game
                     else
                         break;
                 }
-                Reset.WaitOne();
+                Thread.Sleep(5);
             }   
         }
 
