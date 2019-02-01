@@ -58,8 +58,8 @@ namespace TittyPongServer.Game_Room
         // Raises event to send positions to clients 60 times a second
         private void Update(object sender)
         {
-                ClientA.Update();
-                ClientB.Update();
+            ClientA.Update();
+            ClientB.Update();
 
             // send results
             var state = new GameState()

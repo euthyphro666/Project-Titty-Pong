@@ -110,9 +110,9 @@ namespace TittyPongServer
                     Contents = new RoomUpdate(){State = e.State}}
                     
             };
-            
-            MessageServer.Send(msg.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
-            MessageServer.Send(msg.Serialize(), ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
+            var bytes = msg.Serialize();
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
         }
 
         /// <summary>
