@@ -10,11 +10,14 @@ namespace TittyPong.Domain
 {
     public class GameSession
     {
+
         public string ClientAId { get; set; }//left
         public string ClientBId { get; set; }//right
 
         public string ClientADisplayName { get; set; }
         public string ClientBDisplayName { get; set; }
+
+        public bool IsClientA;
 
         public Guid RoomId { get; set; }
 
@@ -24,6 +27,10 @@ namespace TittyPong.Domain
         {
             clientAId = ClientAId;
             ClientBId = ClientBId;
+
+            if (ClientAId == TittyPong.NET.Client.ClientId)
+                IsClientA = true;
+
             State = new GameState
             {
                 ClientA = new Client
@@ -42,6 +49,12 @@ namespace TittyPong.Domain
                     Position = new Vector2(1920 / 2, 1080 / 2)
                 }
             };
+        }
+
+
+        public Client GetThisClient()
+        {
+            return IsClientA ? State.ClientA : State.ClientB;
         }
     }
 }

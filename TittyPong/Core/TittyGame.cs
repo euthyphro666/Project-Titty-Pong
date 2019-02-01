@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Game_Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -29,6 +30,9 @@ namespace TittyPong.Core
         private GameSession Session;
 
         private Texture2D Titty;
+
+        private Queue<InputState> InputStatesSinceServerSync;
+        private GameState LastServerGameState;
 
 
         #region Sound Testing
@@ -65,6 +69,14 @@ namespace TittyPong.Core
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
+            LastServerGameState = e.State;
+
+            var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
+            var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
+            var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
+            var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
+
+            events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY}), ClientB differs by ({driftBX}, {driftBY}),"));
             Session.State = e.State;
         }
 
@@ -79,9 +91,12 @@ namespace TittyPong.Core
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
             if (up ^ down)
             {
-                //var dir = up ? -1 : 1;
-                //var y = state.Boobies[0].Y + (dir * SPEED);
-                //state.Boobies[0].Y = Clamp(y, 0, 1080 - 64);
+                var dir = up ? -1 : 1;
+                var y = Session.GetThisClient().Position.Y + (5 * dir);
+                y = Clamp(y, 0, 1080 - 64);
+                var x = Session.GetThisClient().Position.X;
+
+                Session.GetThisClient().Position = new Vector2(x, y);
                 SendInputUpdateMessage(up ? InputState.Direction.Up : InputState.Direction.Down);
             }
 
@@ -90,7 +105,7 @@ namespace TittyPong.Core
             //if (up ^ down)
             //{
             //    var dir = up ? -1 : 1;
-            //    var y = state.Boobies[1].Y + (dir * SPEED);
+            //var y = state.Boobies[1].Y + (dir * SPEED);
             //    state.Boobies[1].Y = Clamp(y, 0, 1080 - 64);
             //}
             //UpdatePaddle();
