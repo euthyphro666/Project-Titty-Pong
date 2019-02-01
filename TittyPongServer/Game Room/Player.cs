@@ -3,12 +3,14 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Common;
 using Common.Game_Data;
+using Common.Messages;
 using Microsoft.Xna.Framework;
 
 namespace TittyPongServer.Game_Room
 {
     public class Player
     {
+        public int LastProcessedInputNumber { get; private set; }
         private readonly ConcurrentQueue<InputState> Inputs;
         private static int MoveSpeed = 5;
 
@@ -34,9 +36,10 @@ namespace TittyPongServer.Game_Room
         {
             while (Inputs.Count > 0)
             {
-                Inputs.TryDequeue(out var input);
-                if (input == null) return;
-                switch (input.State)
+                Inputs.TryDequeue(out var inputUpdate);
+                if (inputUpdate == null) return;
+                
+                switch (inputUpdate.State)
                 {
                     case InputState.Direction.None:
                         break;
@@ -55,6 +58,8 @@ namespace TittyPongServer.Game_Room
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
+                LastProcessedInputNumber = inputUpdate.InputNumber;
             }
         }
     }

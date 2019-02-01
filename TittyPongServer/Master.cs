@@ -107,12 +107,25 @@ namespace TittyPongServer
             {
                 MessageId = CommunicationMessageIds.RoomMessage, 
                 Contents = new RoomMessage(){RoomMessageId = RoomUpdate.MessageId, RoomId = e.RoomId, 
-                    Contents = new RoomUpdate(){State = e.State}}
+                    Contents = new RoomUpdate(){State = e.ClientAState}}
                     
             };
             var bytes = msg.Serialize();
-            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.State.ClientA.Id]);
-            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.State.ClientB.Id]);
+            
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.ClientAState.ClientA.Id]);
+            
+            
+            msg = new Message()
+            {
+                MessageId = CommunicationMessageIds.RoomMessage, 
+                Contents = new RoomMessage(){RoomMessageId = RoomUpdate.MessageId, RoomId = e.RoomId, 
+                    Contents = new RoomUpdate(){State = e.ClientBState}}
+                    
+            };
+            
+            bytes = msg.Serialize();
+            
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.ClientBState.ClientB.Id]);
         }
 
         /// <summary>

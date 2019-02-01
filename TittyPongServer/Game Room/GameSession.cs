@@ -62,10 +62,14 @@ namespace TittyPongServer.Game_Room
             ClientB.Update();
 
             // send results
-            var state = new GameState()
+            GameState clientAState, clientBState;
+            clientAState = clientBState = new GameState()
                 {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
 
-            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, State = state});
+            clientAState.LastProcessedInputNumber = ClientA.LastProcessedInputNumber;
+            clientBState.LastProcessedInputNumber = ClientB.LastProcessedInputNumber;
+
+            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, ClientAState = clientAState, ClientBState = clientBState});
             GameTimer.Change(17, 0);
 
         }

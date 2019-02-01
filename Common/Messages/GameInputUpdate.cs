@@ -8,8 +8,6 @@ namespace Common.Messages
         // Figure this type out later
         public string ClientId { get; set; }
         
-        public int InputNumber { get; set; }
-        
         public InputState Input { get; set; }
     }
 }
