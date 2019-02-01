@@ -1,6 +1,5 @@
 using System;
-using System.Timers;
-using Common;
+using System.Threading;
 using Common.Game_Data;
 using Common.Messages;
 using Microsoft.Xna.Framework;
@@ -16,6 +15,7 @@ namespace TittyPongServer.Game_Room
         private readonly Pong Nipple;
 
         private Timer GameTimer;
+        private Thread GameThread;
 
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
@@ -25,14 +25,19 @@ namespace TittyPongServer.Game_Room
             ClientB = new Player(clientBId) {PlayerClient = {Position = new Vector2(1754, 100)}};
             Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
 
-            GameTimer = new Timer(17); // Roughly 30 times a second
-            GameTimer.Elapsed += Update;
-            GameTimer.AutoReset = true;
+            GameThread = new Thread(GameThreadStart);
+            
+        }
+
+        private void GameThreadStart()
+        {
+            GameTimer = new Timer(Update);
+            GameTimer.Change(17, 0);
         }
 
         public void Start()
         {
-            GameTimer.Start();
+            GameThread.Start();
             Events.OnGuiLogMessageEvent($"Starting game for clients: {ClientA.PlayerId()} and {ClientB.PlayerId()}");
         }
 
@@ -51,7 +56,7 @@ namespace TittyPongServer.Game_Room
 
         // Reads input messages and applies transforms to client objects
         // Raises event to send positions to clients 60 times a second
-        private void Update(object sender, ElapsedEventArgs e)
+        private void Update(object sender)
         {
                 ClientA.Update();
                 ClientB.Update();
@@ -61,6 +66,7 @@ namespace TittyPongServer.Game_Room
                 {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
 
             Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, State = state});
+            GameTimer.Change(17, 0);
 
         }
     }
