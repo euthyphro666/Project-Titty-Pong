@@ -16,6 +16,7 @@ namespace TittyPong.NET.Game
         private EventManager Events;
         private ConcurrentQueue<InputState> States;
         private Thread SendThread;
+        private Guid RoomId;
         private bool IsRunning;
         private int SendsPerSecond;
 
@@ -32,6 +33,7 @@ namespace TittyPong.NET.Game
         private void HandleInputEvent(object sender, InputEventArgs e)
         {
             States.Enqueue(e.State);
+            RoomId = e.RoomId;
         }
 
         public void Start()
@@ -49,7 +51,8 @@ namespace TittyPong.NET.Game
                 while (numberToDequeue-- > 0)
                     if (States.TryDequeue(out var e))
                         inputsToSend.Add(e);
-                Events.OnSendInputEvent(this, new InputSendEventArgs { States = inputsToSend });
+                if(inputsToSend.Count > 0)
+                    Events.OnSendInputEvent(this, new InputSendEventArgs { States = inputsToSend, RoomId = this.RoomId});
                 Thread.Sleep(1000 / SendsPerSecond);
             }   
         }
