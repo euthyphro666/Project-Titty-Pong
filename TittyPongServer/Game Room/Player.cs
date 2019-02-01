@@ -12,7 +12,7 @@ namespace TittyPongServer.Game_Room
     {
         public int LastProcessedInputNumber { get; private set; }
         private readonly ConcurrentQueue<InputState> Inputs;
-        private static int MoveSpeed = 5;
+        private static int MoveSpeed = 20;
 
         public Client PlayerClient { get; set; }
 

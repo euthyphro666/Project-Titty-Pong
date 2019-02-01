@@ -17,7 +17,7 @@ namespace TittyPongServer.Game_Room
         private Timer GameTimer;
         private Thread GameThread;
 
-        private const int UpdateTimeStep = 1000 / 10; // 1 second / times per second
+        private const int UpdateTimeStep = 1000 / 20; // 1 second / times per second
 
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
@@ -65,16 +65,21 @@ namespace TittyPongServer.Game_Room
             ClientB.Update();
 
             // send results
-            GameState clientAState, clientBState;
-            clientAState = clientBState = new GameState()
+            var clientAState = new GameState()
                 {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
 
             clientAState.LastProcessedInputNumber = ClientA.LastProcessedInputNumber;
+            
+            var clientBState= new GameState()
+                {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};
             clientBState.LastProcessedInputNumber = ClientB.LastProcessedInputNumber;
 
             Events.OnUpdateClientsEvent(new UpdateClientsEventArgs()
                 {RoomId = RoomId, ClientAState = clientAState, ClientBState = clientBState});
             GameTimer.Change(UpdateTimeStep, 0);
+            
+            
+            Events.OnGuiLogMessageEvent($"Update: ClientA Last Input = {ClientA.LastProcessedInputNumber} ClientB Last Input = {ClientB.LastProcessedInputNumber}");
         }
     }
 }
