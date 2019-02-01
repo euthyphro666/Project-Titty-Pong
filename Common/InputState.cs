@@ -19,5 +19,7 @@ namespace Common
 
         public Direction State { get; set; }
         
+        public int InputNumber { get; set; }
+
     }
 }
