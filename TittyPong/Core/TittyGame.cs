@@ -1,4 +1,4 @@
-using Common;
+﻿using Common;
 using Common.Game_Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -32,7 +32,7 @@ namespace TittyPong.Core
 
         private Queue<InputState> InputStatesSinceServerSync;
         private int LastInputState;
-        private float SPEED = 5f;
+        private float SPEED = 20f;
 
 
         #region Sound Testing
