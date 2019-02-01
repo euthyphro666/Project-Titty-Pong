@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Common.Maths;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -81,6 +82,16 @@ namespace TittyPong.Graphics
             Body.Y = (int)pos.Y;
             Body.Width = w;
             Body.Height = h;
+            if (ContextOpen)
+                SB.Draw(sprite, Body, Color.White);
+        }
+        //TODO: the body should be defined inside the circle and updated given changes to position.
+        public void Render(Texture2D sprite, Circle circle)
+        {
+            Body.X = (int) circle.Position.X;
+            Body.Y = (int) circle.Position.Y;
+            Body.Width = (int) circle.Radius;
+            Body.Height = (int) circle.Radius;
             if (ContextOpen)
                 SB.Draw(sprite, Body, Color.White);
         }
