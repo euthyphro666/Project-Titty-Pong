@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Maths;
 
 namespace TittyPong.Domain
 {
@@ -35,17 +36,17 @@ namespace TittyPong.Domain
                 ClientA = new Client
                 {
                     Id = ClientAId,
-                    Position = new Vector2(100f, 100f)
+                    Body = new Circle(100f, 100f, 32)
                 },
                 ClientB = new Client
                 {
                     Id = ClientBId,
-                    Position = new Vector2(1754f, 100f)
+                    Body = new Circle(1754f, 100f, 32)
                 },
                 Nipple = new Pong
                 {
                     Force = new Vector2(),
-                    Position = new Vector2(1920 / 2, 1080 / 2)
+                    Body = new Circle(1920 / 2, 1080 / 2, 8)
                 }
             };
         }

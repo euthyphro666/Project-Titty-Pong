@@ -49,7 +49,7 @@ namespace TittyPongServer.Game_Room
                 
                 LastProcessedInputNumber = inputUpdate.InputNumber;
             }
-            PlayerClient.Position = new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y + sum * MoveSpeed);
+            PlayerClient.Body.Position = new Vector2(PlayerClient.Body.Position.X, PlayerClient.Body.Position.Y + sum * MoveSpeed);
         }
     }
 }

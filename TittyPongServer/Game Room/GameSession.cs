@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Common.Game_Data;
+using Common.Maths;
 using Common.Messages;
 using Microsoft.Xna.Framework;
 
@@ -17,15 +18,15 @@ namespace TittyPongServer.Game_Room
         private Timer GameTimer;
         private Thread GameThread;
 
-        private const int UpdateTimeStep = 1000 / 10; // 1 second / times per second
+        private const int UpdateTimeStep = 1000 / 20; // 1 second / times per second
 
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
             Events = events;
             RoomId = roomId;
-            ClientA = new Player(clientAId) {PlayerClient = {Position = new Vector2(100, 100)}};
-            ClientB = new Player(clientBId) {PlayerClient = {Position = new Vector2(1754, 100)}};
-            Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
+            ClientA = new Player(clientAId) {PlayerClient = {Body = new Circle(100, 100, 32)}};
+            ClientB = new Player(clientBId) {PlayerClient = {Body = new Circle(1754, 100, 32)}};
+            Nipple = new Pong {Body = new Circle(1920 / 2, 1080 / 2, 8), Force = new Vector2(10,10)};
 
             GameThread = new Thread(GameThreadStart);
         }
@@ -63,6 +64,8 @@ namespace TittyPongServer.Game_Room
             ClientA.Update();
             ClientB.Update();
 
+            Nipple.Update(ClientA.PlayerClient.Body, ClientB.PlayerClient.Body);
+            
             // send results
             var clientAState = new GameState()
                 {ClientA = ClientA.PlayerClient, ClientB = ClientB.PlayerClient, Nipple = Nipple};

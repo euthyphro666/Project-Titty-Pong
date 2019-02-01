@@ -76,7 +76,7 @@ namespace TittyPong.Core
         private void HandleNewInputState(InputState.Direction dir)
         {
             var scale = (dir == InputState.Direction.Up) ? -1 : 1;
-            Session.GetThisClient().Position += (Vector2.UnitY * SPEED * scale);
+            Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
 
             var state = new InputState { State = dir, InputNumber = ++LastInputState };
             InputStatesSinceServerSync.Enqueue(state);
@@ -87,10 +87,10 @@ namespace TittyPong.Core
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
 
-            var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
-            var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
-            var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
-            var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
+            var driftAX = e.State.ClientA.Body.X - Session.State.ClientA.Body.X;
+            var driftAY = e.State.ClientA.Body.Y - Session.State.ClientA.Body.Y;
+            var driftBX = e.State.ClientB.Body.X - Session.State.ClientB.Body.X;
+            var driftBY = e.State.ClientB.Body.Y - Session.State.ClientB.Body.Y;
 
             Console.WriteLine("V---------------------- New State ----------------------V");
             Console.WriteLine($"ClientA differs by ({driftAX}, {driftAY})");
@@ -118,16 +118,16 @@ namespace TittyPong.Core
                 else
                 {
                     var scale = (statesArry[i].State == InputState.Direction.Up) ? -1 : 1;
-                    Session.GetThisClient().Position += (Vector2.UnitY * SPEED * scale);
+                    Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
                 }
             }
         }
 
         public void Render(GameTime delta, ScreenManager screen)
         {
-            screen.Render(Titty, Session.State.ClientA.Position, 64, 64);
-            screen.Render(Titty, Session.State.ClientB.Position, 64, 64);
-            screen.Render(Titty, Session.State.Nipple.Position, 16, 16);
+            screen.Render(Titty, Session.State.ClientA.Body.Position, 64, 64);
+            screen.Render(Titty, Session.State.ClientB.Body.Position, 64, 64);
+            screen.Render(Titty, Session.State.Nipple.Body.Position, 16, 16);
         }
 
         public void Dispose()
