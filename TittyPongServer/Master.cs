@@ -92,8 +92,16 @@ namespace TittyPongServer
                 case CommunicationMessageIds.RoomMessage:
                     var updateMessage = msg.Contents.ToString().Deserialize<RoomMessage>();
                     var roomId = updateMessage.RoomId;
-                    
-                    OpenRooms[roomId].HandleMessage(updateMessage);
+                    try
+                    {
+                        OpenRooms[roomId].HandleMessage(updateMessage);
+                    }
+                    catch (Exception e)
+                    {
+                        
+                        Events.OnGuiLogMessageEvent($"[ERROR] Received message for room that doesn't exist. RoomId: {roomId} Message: {msg.Contents.ToString()}");
+                        // TODO send a message to clients saying the room was unavailable
+                    }
                     
                     break;
                 default:
