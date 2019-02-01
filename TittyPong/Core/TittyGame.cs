@@ -1,4 +1,4 @@
-﻿using Common;
+using Common;
 using Common.Game_Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -92,16 +92,15 @@ namespace TittyPong.Core
             var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
             var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
 
-            events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY})"));
-            events.OnLoggingEvent(this, new StringEventArgs($"ClientB differs by ({driftBX}, {driftBY})"));
-            events.OnLoggingEvent(this, new StringEventArgs($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})"));
-
+            Console.WriteLine("V---------------------- New State ----------------------V");
+            Console.WriteLine($"ClientA differs by ({driftAX}, {driftAY})");
+            Console.WriteLine($"ClientB differs by ({driftBX}, {driftBY})");
+            Console.WriteLine($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})");
 
             var oldState = Session.State;
             Session.State = e.State;
             ApplyOldInput();
             //Todo: apply interpolation
-
         }
 
         private void ApplyOldInput()
