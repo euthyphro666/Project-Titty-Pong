@@ -86,16 +86,22 @@ namespace TittyPong.Core
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
-            var oldState = Session.State;// new GameState(Session.State);
+
+            var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
+            var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
+            var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
+            var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
+
+            events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY})"));
+            events.OnLoggingEvent(this, new StringEventArgs($"ClientB differs by ({driftBX}, {driftBY})"));
+            events.OnLoggingEvent(this, new StringEventArgs($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})"));
+
+
+            var oldState = Session.State;
             Session.State = e.State;
             ApplyOldInput();
+            //Todo: apply interpolation
 
-            //var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
-            //var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
-            //var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
-            //var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
-
-            //events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY}), ClientB differs by ({driftBX}, {driftBY}),"));
         }
 
         private void ApplyOldInput()
