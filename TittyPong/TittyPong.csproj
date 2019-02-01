@@ -61,6 +61,7 @@
     <Compile Include="Events\Args\ConnectionInfoEventArgs.cs" />
     <Compile Include="Events\Args\GameStateArgs.cs" />
     <Compile Include="Events\Args\InputEventArgs.cs" />
+    <Compile Include="Events\Args\InputSendEventArgs.cs" />
     <Compile Include="Events\Args\JoinRoomEventArgs.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Core\TittyGame.cs" />
