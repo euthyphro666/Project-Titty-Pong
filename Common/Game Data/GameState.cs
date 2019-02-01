@@ -9,5 +9,13 @@ namespace Common.Game_Data
         public Client ClientA { get; set; }
         public Client ClientB { get; set; }
         public Pong Nipple { get; set; }
+
+        public GameState(GameState state)
+        {
+            LastProcessedInputNumber = state.LastProcessedInputNumber;
+            ClientA = new Client(state.ClientA);
+            ClientB = new Client(state.ClientB);
+            Nipple = new Pong(state.Nipple);
+        }
     }
 }

@@ -31,8 +31,8 @@ namespace TittyPong.Core
         private Texture2D Titty;
 
         private Queue<InputState> InputStatesSinceServerSync;
-        private GameState LastServerGameState;
         private int LastInputState;
+        private float SPEED = 5f;
 
 
         #region Sound Testing
@@ -53,7 +53,6 @@ namespace TittyPong.Core
             events.RoomUpdateEvent += HandleRoomUpdateEvent;
 
             InputStatesSinceServerSync = new Queue<InputState>();
-            LastServerGameState = session.State;
 
             messenger = new InputMessenger(events);
             messenger.Start();
@@ -61,7 +60,6 @@ namespace TittyPong.Core
             LastInputState = 0;
         }
 
-        
         public void Update(GameTime delta, InputManager input)
         {
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
@@ -73,28 +71,45 @@ namespace TittyPong.Core
         private void HandleNewInputState(InputState.Direction dir)
         {
             var scale = (dir == InputState.Direction.Up) ? -1 : 1;
-            var y = Session.GetThisClient().Position.Y + (5 * scale);
-            y = Clamp(y, 0, 1080 - 64);
-            var x = Session.GetThisClient().Position.X;
+            Session.GetThisClient().Position += (Vector2.UnitY * SPEED * scale);
 
-            Session.GetThisClient().Position = new Vector2(x, y);
             InputStatesSinceServerSync.Enqueue(new InputState{ State = dir, InputNumber = ++LastInputState });
-
             events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = new InputState { State = dir } });
         }
 
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
-            LastServerGameState = e.State;
-
-            var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
-            var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
-            var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
-            var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
-
-            events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY}), ClientB differs by ({driftBX}, {driftBY}),"));
+            var oldState = new GameState(Session.State);
             Session.State = e.State;
+            ApplyOldInput();
+
+            //var driftAX = e.State.ClientA.Position.X - Session.State.ClientA.Position.X;
+            //var driftAY = e.State.ClientA.Position.Y - Session.State.ClientA.Position.Y;
+            //var driftBX = e.State.ClientB.Position.X - Session.State.ClientB.Position.X;
+            //var driftBY = e.State.ClientB.Position.Y - Session.State.ClientB.Position.Y;
+
+            //events.OnLoggingEvent(this, new StringEventArgs($"ClientA differs by ({driftAX}, {driftAY}), ClientB differs by ({driftBX}, {driftBY}),"));
+        }
+
+        private void ApplyOldInput()
+        {
+            var statesArry = InputStatesSinceServerSync.ToArray();
+            var dequeuing = true;
+            for(int i = 0; i < statesArry.Length; i++)
+            {
+                if(dequeuing)
+                {
+                    if (statesArry[i].InputNumber >= Session.State.LastProcessedInputNumber)
+                        dequeuing = false;
+                    InputStatesSinceServerSync.Dequeue();
+                }
+                else
+                {
+                    var scale = (statesArry[i].State == InputState.Direction.Up) ? -1 : 1;
+                    Session.GetThisClient().Position += (Vector2.UnitY * SPEED * scale);
+                }
+            }
         }
 
         private float Clamp(float value, float min, float max)
