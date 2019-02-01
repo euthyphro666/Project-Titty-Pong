@@ -17,7 +17,7 @@ namespace TittyPongServer.Game_Room
         private Timer GameTimer;
         private Thread GameThread;
 
-        private const int UpdateTimeStep = 50;
+        private const int UpdateTimeStep = 1000 / 20; // 1 second / times per second
 
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
@@ -28,7 +28,6 @@ namespace TittyPongServer.Game_Room
             Nipple = new Pong {Position = new Vector2(1920 / 2, 1080 / 2)};
 
             GameThread = new Thread(GameThreadStart);
-            
         }
 
         private void GameThreadStart()
@@ -49,10 +48,12 @@ namespace TittyPongServer.Game_Room
             if (update.ClientId == ClientA.PlayerId())
             {
                 ClientA.QueueInput(update.Input);
+                Events.OnGuiLogMessageEvent($"Client A: Direction: {update.Input} Input Number: {update.Input.InputNumber}");
             }
             else if (update.ClientId == ClientB.PlayerId())
             {
                 ClientB.QueueInput(update.Input);
+                Events.OnGuiLogMessageEvent($"Client B: Direction: {update.Input} Input Number: {update.Input.InputNumber}");
             }
         }
 
@@ -71,9 +72,9 @@ namespace TittyPongServer.Game_Room
             clientAState.LastProcessedInputNumber = ClientA.LastProcessedInputNumber;
             clientBState.LastProcessedInputNumber = ClientB.LastProcessedInputNumber;
 
-            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, ClientAState = clientAState, ClientBState = clientBState});
+            Events.OnUpdateClientsEvent(new UpdateClientsEventArgs()
+                {RoomId = RoomId, ClientAState = clientAState, ClientBState = clientBState});
             GameTimer.Change(UpdateTimeStep, 0);
-
         }
     }
 }

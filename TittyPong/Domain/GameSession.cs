@@ -25,8 +25,8 @@ namespace TittyPong.Domain
 
         public GameSession(string clientAId, string clientBId)
         {
-            clientAId = ClientAId;
-            ClientBId = ClientBId;
+            ClientAId = clientAId;
+            ClientBId = clientBId;
             
             IsClientA = ClientAId == NET.Client.ClientId;
 
