@@ -48,6 +48,7 @@
     <Compile Include="Game Data\GameState.cs" />
     <Compile Include="Game Data\Pong.cs" />
     <Compile Include="InputState.cs" />
+    <Compile Include="Maths\Circle.cs" />
     <Compile Include="Messages\ConnectionRequest.cs" />
     <Compile Include="Messages\ConnectionResponse.cs" />
     <Compile Include="Messages\GameInputUpdate.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Messages\StartGameResponse.cs" />
     <Compile Include="ObjectSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Maths\TittyMaths.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

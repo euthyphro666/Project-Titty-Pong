@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Maths;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TittyPong.Events;
 using TittyPong.Events.Args;
-using TittyPong.Utils;
 
 namespace TittyPong.NET.Game
 {
