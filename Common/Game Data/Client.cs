@@ -7,7 +7,8 @@ namespace Common.Game_Data
     {
         public string Id { get; set; }
         public Vector2 Position { get; set; }
-        
+
+        public Client() { }
         public Client(Client client)
         {
             Id = client.Id;

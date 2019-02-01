@@ -10,6 +10,7 @@ namespace Common.Game_Data
         public Client ClientB { get; set; }
         public Pong Nipple { get; set; }
 
+        public GameState() { }
         public GameState(GameState state)
         {
             LastProcessedInputNumber = state.LastProcessedInputNumber;
