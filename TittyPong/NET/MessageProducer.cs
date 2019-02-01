@@ -27,12 +27,12 @@ namespace TittyPong.NET
             Events.SendInputEvent += HandleSendInputEvent;
         }
 
-        private void HandleSendInputEvent(object sender, InputEventArgs e)
+        private void HandleSendInputEvent(object sender, InputSendEventArgs e)
         {
             var msg = new GameInputUpdate
             {
                 ClientId = Client.ClientId,
-                Inputs =  e.State
+                Inputs =  e.States
             };
             var roomMessage = new RoomMessage(){RoomMessageId = GameInputUpdate.MessageId, RoomId = e.RoomId, Contents = msg};
             var fullMsg = new Message(){MessageId = CommunicationMessageIds.RoomMessage, Contents = roomMessage};

@@ -14,22 +14,24 @@ namespace TittyPong.NET.Game
     public class InputMessenger
     {
         private EventManager Events;
-        private ConcurrentQueue<InputEventArgs> States;
+        private ConcurrentQueue<InputState> States;
         private Thread SendThread;
         private bool IsRunning;
+        private int SendsPerSecond;
 
         public InputMessenger(EventManager events)
         {
             Events = events;
-            States = new ConcurrentQueue<InputEventArgs>();
+            States = new ConcurrentQueue<InputState>();
             SendThread = new Thread(Run);
+            SendsPerSecond = 20;
 
             Events.InputEvent += HandleInputEvent;
         }
 
         private void HandleInputEvent(object sender, InputEventArgs e)
         {
-            States.Enqueue(e);
+            States.Enqueue(e.State);
         }
 
         public void Start()
@@ -42,14 +44,13 @@ namespace TittyPong.NET.Game
         {
             while(IsRunning)
             {
-                while (!States.IsEmpty)
-                {
+                var numberToDequeue = States.Count;
+                var inputsToSend = new List<InputState>();
+                while (numberToDequeue-- > 0)
                     if (States.TryDequeue(out var e))
-                        Events.OnSendInputEvent(this, e);
-                    else
-                        break;
-                }
-                Thread.Sleep(2);
+                        inputsToSend.Add(e);
+                Events.OnSendInputEvent(this, new InputSendEventArgs { States = inputsToSend });
+                Thread.Sleep(1000 / SendsPerSecond);
             }   
         }
 
