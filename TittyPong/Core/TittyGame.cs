@@ -123,11 +123,6 @@ namespace TittyPong.Core
             }
         }
 
-        private float Clamp(float value, float min, float max)
-        {
-            return value > min ? ((value > max) ? max : value) : min;
-        }
-
         public void Render(GameTime delta, ScreenManager screen)
         {
             screen.Render(Titty, Session.State.ClientA.Position, 64, 64);
