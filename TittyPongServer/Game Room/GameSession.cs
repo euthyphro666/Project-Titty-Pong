@@ -17,6 +17,8 @@ namespace TittyPongServer.Game_Room
         private Timer GameTimer;
         private Thread GameThread;
 
+        private const int UpdateTimeStep = 50;
+
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
             Events = events;
@@ -32,7 +34,7 @@ namespace TittyPongServer.Game_Room
         private void GameThreadStart()
         {
             GameTimer = new Timer(Update);
-            GameTimer.Change(17, 0);
+            GameTimer.Change(UpdateTimeStep, 0);
         }
 
         public void Start()
@@ -70,7 +72,7 @@ namespace TittyPongServer.Game_Room
             clientBState.LastProcessedInputNumber = ClientB.LastProcessedInputNumber;
 
             Events.OnUpdateClientsEvent(new UpdateClientsEventArgs() {RoomId = RoomId, ClientAState = clientAState, ClientBState = clientBState});
-            GameTimer.Change(17, 0);
+            GameTimer.Change(UpdateTimeStep, 0);
 
         }
     }
