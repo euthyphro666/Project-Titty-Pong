@@ -22,9 +22,12 @@ namespace TittyPongServer.Game_Room
             Inputs = new ConcurrentQueue<InputState>();
         }
 
-        public void QueueInput(InputState input)
+        public void QueueInput(List<InputState> inputs)
         {
-            Inputs.Enqueue(input);
+            foreach (var input in inputs)
+            {
+                Inputs.Enqueue(input);
+            }
         }
 
         public string PlayerId()

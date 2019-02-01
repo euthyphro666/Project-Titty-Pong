@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Common.Messages
 {
@@ -6,6 +7,6 @@ namespace Common.Messages
     {
         public static RoomMessageIds MessageId => RoomMessageIds.GameInputUpdate;
         public string ClientId { get; set; }
-        public InputState Input { get; set; }
+        public List<InputState> Inputs { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace TittyPong.NET
             var msg = new GameInputUpdate
             {
                 ClientId = Client.ClientId,
-                Input =  e.State
+                Inputs =  e.State
             };
             var roomMessage = new RoomMessage(){RoomMessageId = GameInputUpdate.MessageId, RoomId = e.RoomId, Contents = msg};
             var fullMsg = new Message(){MessageId = CommunicationMessageIds.RoomMessage, Contents = roomMessage};

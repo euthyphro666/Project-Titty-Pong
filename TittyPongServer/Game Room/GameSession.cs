@@ -47,13 +47,13 @@ namespace TittyPongServer.Game_Room
         {
             if (update.ClientId == ClientA.PlayerId())
             {
-                ClientA.QueueInput(update.Input);
-                Events.OnGuiLogMessageEvent($"Client A: Direction: {update.Input} Input Number: {update.Input.InputNumber}");
+                ClientA.QueueInput(update.Inputs);
+                //Events.OnGuiLogMessageEvent($"Client A: Direction: {update.Inputs} Input Number: {update.Inputs.InputNumber}");
             }
             else if (update.ClientId == ClientB.PlayerId())
             {
-                ClientB.QueueInput(update.Input);
-                Events.OnGuiLogMessageEvent($"Client B: Direction: {update.Input} Input Number: {update.Input.InputNumber}");
+                ClientB.QueueInput(update.Inputs);
+                //Events.OnGuiLogMessageEvent($"Client B: Direction: {update.Inputs} Input Number: {update.Inputs.InputNumber}");
             }
         }
 
