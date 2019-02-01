@@ -27,9 +27,8 @@ namespace TittyPong.Domain
         {
             clientAId = ClientAId;
             ClientBId = ClientBId;
-
-            if (ClientAId == TittyPong.NET.Client.ClientId)
-                IsClientA = true;
+            
+            IsClientA = ClientAId == NET.Client.ClientId;
 
             State = new GameState
             {

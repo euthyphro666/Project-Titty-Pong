@@ -78,8 +78,9 @@ namespace TittyPong.Core
             var scale = (dir == InputState.Direction.Up) ? -1 : 1;
             Session.GetThisClient().Position += (Vector2.UnitY * SPEED * scale);
 
-            InputStatesSinceServerSync.Enqueue(new InputState{ State = dir, InputNumber = ++LastInputState });
-            events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = new InputState { State = dir } });
+            var state = new InputState { State = dir, InputNumber = ++LastInputState };
+            InputStatesSinceServerSync.Enqueue(state);
+            events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = state });
         }
 
 
