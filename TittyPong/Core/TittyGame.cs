@@ -60,8 +60,13 @@ namespace TittyPong.Core
             LastInputState = 0;
         }
 
+        bool ShouldUpdate = false;
         public void Update(GameTime delta, InputManager input)
         {
+            ShouldUpdate = !ShouldUpdate;
+            if (!ShouldUpdate)
+                return;
+
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
             if (up ^ down)
@@ -80,7 +85,7 @@ namespace TittyPong.Core
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
-            var oldState = new GameState(Session.State);
+            var oldState = Session.State;// new GameState(Session.State);
             Session.State = e.State;
             ApplyOldInput();
 
