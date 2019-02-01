@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Common;
 using Common.Game_Data;
@@ -8,7 +9,7 @@ namespace TittyPongServer.Game_Room
 {
     public class Player
     {
-        private readonly Queue<InputState> Inputs;
+        private readonly ConcurrentQueue<InputState> Inputs;
         private static int MoveSpeed = 5;
 
         public Client PlayerClient { get; set; }
@@ -16,7 +17,7 @@ namespace TittyPongServer.Game_Room
         public Player(string id)
         {
             PlayerClient = new Client() {Id = id};
-            Inputs = new Queue<InputState>();
+            Inputs = new ConcurrentQueue<InputState>();
         }
 
         public void QueueInput(InputState input)
@@ -33,7 +34,8 @@ namespace TittyPongServer.Game_Room
         {
             while (Inputs.Count > 0)
             {
-                var input = Inputs.Dequeue();
+                Inputs.TryDequeue(out var input);
+                if (input == null) return;
                 switch (input.State)
                 {
                     case InputState.Direction.None:
