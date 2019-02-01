@@ -34,33 +34,19 @@ namespace TittyPongServer.Game_Room
 
         public void Update()
         {
+            var sum = 0;
             while (Inputs.Count > 0)
             {
                 Inputs.TryDequeue(out var inputUpdate);
                 if (inputUpdate == null) return;
-                
-                switch (inputUpdate.State)
-                {
-                    case InputState.Direction.None:
-                        break;
-                    case InputState.Direction.Up:
-                        PlayerClient.Position =
-                            new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y - MoveSpeed);
-                        break;
-                    case InputState.Direction.Down:
-                        PlayerClient.Position =
-                            new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y + MoveSpeed);
-                        break;
-                    case InputState.Direction.Left:
-                        break;
-                    case InputState.Direction.Right:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
 
+                var scale = inputUpdate.State == InputState.Direction.Up ? -1 : 1;
+
+                sum += scale;
+                
                 LastProcessedInputNumber = inputUpdate.InputNumber;
             }
+            PlayerClient.Position = new Vector2(PlayerClient.Position.X, PlayerClient.Position.Y + sum * MoveSpeed);
         }
     }
 }

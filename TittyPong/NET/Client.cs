@@ -64,6 +64,7 @@ namespace TittyPong.NET
             };
             
             ReceivedMessageEvent?.Invoke(this, args);
+            (client as NetClient)?.Recycle(msg);
         }
 
         public NetConnectionStatus Status()

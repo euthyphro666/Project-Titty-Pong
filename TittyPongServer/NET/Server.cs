@@ -59,6 +59,7 @@ namespace TittyPongServer.NET
             var args = new ReceivedMessageEventArgs(){ReceivedMessage = msg};
             
             ReceivedMessageEvent?.Invoke(this, args);
+            (state as NetServer)?.Recycle(msg);
         }
 
         private static string GetLocalIpAddress()
