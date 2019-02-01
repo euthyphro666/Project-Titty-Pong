@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TittyPong.Events;
 using TittyPong.Events.Args;
+using TittyPong.Utils;
 
 namespace TittyPong.NET.Game
 {
@@ -44,8 +46,10 @@ namespace TittyPong.NET.Game
 
         public void Run()
         {
+            var timer = new Stopwatch();
             while(IsRunning)
             {
+                timer.Restart();
                 var numberToDequeue = States.Count;
                 var inputsToSend = new List<InputState>();
                 while (numberToDequeue-- > 0)
@@ -53,7 +57,8 @@ namespace TittyPong.NET.Game
                         inputsToSend.Add(e);
                 if(inputsToSend.Count > 0)
                     Events.OnSendInputEvent(this, new InputSendEventArgs { States = inputsToSend, RoomId = this.RoomId});
-                Thread.Sleep(1000 / SendsPerSecond);
+                timer.Stop();
+                Thread.Sleep((int)TittyMaths.Max(0, (1000 / SendsPerSecond) - (int)timer.ElapsedMilliseconds));
             }   
         }
 
