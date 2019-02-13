@@ -18,7 +18,6 @@ using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
 using TittyPong.NET.Game;
-using static Common.InputState;
 
 namespace TittyPong.Core
 {
@@ -118,15 +117,16 @@ namespace TittyPong.Core
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
-            var driftAX = e.State.ClientA.Body.X - Session.State.ClientA.Body.X;
-            var driftAY = e.State.ClientA.Body.Y - Session.State.ClientA.Body.Y;
-            var driftBX = e.State.ClientB.Body.X - Session.State.ClientB.Body.X;
-            var driftBY = e.State.ClientB.Body.Y - Session.State.ClientB.Body.Y;
-
+            #region Debugging
+            //var driftAX = e.State.ClientA.Body.X - Session.State.ClientA.Body.X;
+            //var driftAY = e.State.ClientA.Body.Y - Session.State.ClientA.Body.Y;
+            //var driftBX = e.State.ClientB.Body.X - Session.State.ClientB.Body.X;
+            //var driftBY = e.State.ClientB.Body.Y - Session.State.ClientB.Body.Y;
             //Console.WriteLine("V---------------------- New State ----------------------V");
             //Console.WriteLine($"ClientA differs by ({driftAX}, {driftAY})");
             //Console.WriteLine($"ClientB differs by ({driftBX}, {driftBY})");
             //Console.WriteLine($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})");
+            #endregion
 
             var oldState = Session.State;
             Session.State = e.State;
@@ -157,9 +157,9 @@ namespace TittyPong.Core
 
         public void Render(GameTime delta, ScreenManager screen)
         {
-            screen.Render(Titty, Session.State.ClientA.Body.Position, 64, 64);
-            screen.Render(Titty, Session.State.ClientB.Body.Position, 64, 64);
-            screen.Render(Titty, Session.State.Nipple.Body.Position, 16, 16);
+            screen.Render(Titty, Session.State.ClientA.Body);
+            screen.Render(Titty, Session.State.ClientB.Body);
+            screen.Render(Titty, Session.State.Nipple.Body);
         }
 
         public void Dispose()
