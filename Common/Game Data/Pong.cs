@@ -38,8 +38,22 @@ namespace Common.Game_Data
                 
                 newY = Body.Y + Force.Y;
             }
-            
-            
+
+            if (Body.IsCollided(clientABody))
+            {
+                Force *= InvertX;
+                Force *= InvertY;
+                newY = Body.Y + Force.Y;
+                newX = Body.X + Force.X;
+            }
+            else if (Body.IsCollided(clientBBody))
+            {
+                
+                Force *= InvertX;
+                Force *= InvertY;
+                newY = Body.Y + Force.Y;
+                newX = Body.X + Force.X;
+            }
 
             Body.Position = new Vector2(newX, newY);
         }
