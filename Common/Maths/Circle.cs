@@ -51,13 +51,13 @@ namespace Common.Maths
             return dist < rad;
         }
 
-        public Vector2 CalculateRebound(Circle body, Vector2 velocity, ref Vector2 rebound)
+        public void CalculateRebound(Circle body, ref Vector2 force)
         {
-            rebound.X = body.X - X;
-            rebound.Y = body.Y - Y;
-            rebound.Normalize();
-            rebound *= velocity.Length();
-            return rebound;
+            var magnitude = force.Length();
+            force.X = body.X - X;
+            force.Y = body.Y - Y;
+            force.Normalize();
+            force *= magnitude;
         }
 
         /// <summary>
