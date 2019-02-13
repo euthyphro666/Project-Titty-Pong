@@ -92,7 +92,7 @@ namespace TittyPong.Core
 
         private void UpdateClientInput(Direction dir)
         {
-            var scale = (dir == Direction.Up) ? -1 : 1;
+            var scale = (dir == Direction.Up) ? -1 : (dir == Direction.Down) ? 1 : 0;
             Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
             //Guess collision updates
             Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
