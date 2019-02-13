@@ -23,7 +23,7 @@ namespace TittyPongServer.Game_Room
         
         private long CurrentTick;
 
-        private const int UpdateTimeStep = 1000 / 33; // 1 second / times per second
+        private const int UpdateTimeStep = 1000 / 20; // 1 second / times per second
 
         public GameSession(Events events, Guid roomId, string clientAId, string clientBId)
         {
