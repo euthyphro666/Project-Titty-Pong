@@ -18,6 +18,7 @@ using TittyPong.Events.Args;
 using TittyPong.Graphics;
 using TittyPong.IO;
 using TittyPong.NET.Game;
+using static Common.InputState;
 
 namespace TittyPong.Core
 {
@@ -29,6 +30,9 @@ namespace TittyPong.Core
         private GameSession Session;
 
         private Texture2D Titty;
+
+        private double TimeSinceLastNetworkUpdate;
+        private const int InputUpdatesPerSecond = 30; 
 
         private Queue<InputState> InputStatesSinceServerSync;
         private int LastInputState;
@@ -59,25 +63,30 @@ namespace TittyPong.Core
 
             LastInputState = 0;
         }
-
-        bool ShouldUpdate = false;
+        
         public void Update(GameTime delta, InputManager input)
         {
-            ShouldUpdate = !ShouldUpdate;
-            if (!ShouldUpdate)
-                return;
-
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
-            if (up ^ down)
-                HandleNewInputState(up ? InputState.Direction.Up : InputState.Direction.Down);
+            var dir = up ? Direction.Up : Direction.Down;
+
+            TimeSinceLastNetworkUpdate += delta.ElapsedGameTime.TotalMilliseconds;
+            if (TimeSinceLastNetworkUpdate > (1000 / InputUpdatesPerSecond))
+            {
+                UpdateServerInput(dir);
+                TimeSinceLastNetworkUpdate = 0;
+            }
+            UpdateClientInput(dir);
         }
 
-        private void HandleNewInputState(InputState.Direction dir)
+        private void UpdateClientInput(Direction dir)
         {
-            var scale = (dir == InputState.Direction.Up) ? -1 : 1;
+            var scale = (dir == Direction.Up) ? -1 : 1;
             Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
+        }
 
+        private void UpdateServerInput(Direction dir)
+        {
             var state = new InputState { State = dir, InputNumber = ++LastInputState };
             InputStatesSinceServerSync.Enqueue(state);
             events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = state });
@@ -86,16 +95,15 @@ namespace TittyPong.Core
 
         private void HandleRoomUpdateEvent(object sender, GameStateArgs e)
         {
-
             var driftAX = e.State.ClientA.Body.X - Session.State.ClientA.Body.X;
             var driftAY = e.State.ClientA.Body.Y - Session.State.ClientA.Body.Y;
             var driftBX = e.State.ClientB.Body.X - Session.State.ClientB.Body.X;
             var driftBY = e.State.ClientB.Body.Y - Session.State.ClientB.Body.Y;
 
-            Console.WriteLine("V---------------------- New State ----------------------V");
-            Console.WriteLine($"ClientA differs by ({driftAX}, {driftAY})");
-            Console.WriteLine($"ClientB differs by ({driftBX}, {driftBY})");
-            Console.WriteLine($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})");
+            //Console.WriteLine("V---------------------- New State ----------------------V");
+            //Console.WriteLine($"ClientA differs by ({driftAX}, {driftAY})");
+            //Console.WriteLine($"ClientB differs by ({driftBX}, {driftBY})");
+            //Console.WriteLine($"Client InputNumber is ahead by ({LastInputState - e.State.LastProcessedInputNumber})");
 
             var oldState = Session.State;
             Session.State = e.State;
