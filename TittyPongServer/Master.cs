@@ -31,6 +31,7 @@ namespace TittyPongServer
             OpenRooms = new Dictionary<Guid, Room>();
 
             Events.UpdateClientsEvent += HandleUpdateClientsEvent;
+            Events.StartGameEvent += HandleStartGameEvent;
         }
 
         private void ReceivedMessageHandler(object sender, ReceivedMessageEventArgs e)
@@ -115,7 +116,7 @@ namespace TittyPongServer
             {
                 MessageId = CommunicationMessageIds.RoomMessage, 
                 Contents = new RoomMessage(){RoomMessageId = RoomUpdate.MessageId, RoomId = e.RoomId, 
-                    Contents = new RoomUpdate(){State = e.ClientAState}}
+                    Contents = new RoomUpdate(){State = e.ClientAState, NetworkTimeSync = e.NetworkTimeSync}}
                     
             };
             var bytes = msg.Serialize();
@@ -127,7 +128,7 @@ namespace TittyPongServer
             {
                 MessageId = CommunicationMessageIds.RoomMessage, 
                 Contents = new RoomMessage(){RoomMessageId = RoomUpdate.MessageId, RoomId = e.RoomId, 
-                    Contents = new RoomUpdate(){State = e.ClientBState}}
+                    Contents = new RoomUpdate(){State = e.ClientBState, NetworkTimeSync = e.NetworkTimeSync}}
                     
             };
             
@@ -136,6 +137,20 @@ namespace TittyPongServer
             MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.ClientBState.ClientB.Id]);
         }
 
+        private void HandleStartGameEvent(object sender, StartGameEventArgs e)
+        {
+            var msg = new Message()
+            {
+                MessageId = CommunicationMessageIds.RoomMessage, 
+                Contents = new RoomMessage(){RoomMessageId = GameStart.MessageId, RoomId = e.RoomId, 
+                    Contents = new GameStart(){CurrentServerTick = e.NetworkSyncTime}}
+            };
+            var bytes = msg.Serialize();
+            
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.ClientAId]);
+            MessageServer.Send(bytes, ClientMacAddressToConnectionDictionary[e.ClientBId]);
+        }
+        
         /// <summary>
         /// Handles a start game response from a client.
         /// This is received from client B when client A sends a start game request to B.

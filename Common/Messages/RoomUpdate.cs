@@ -6,5 +6,6 @@ namespace Common.Messages
     {
         public static RoomMessageIds MessageId => RoomMessageIds.Update;
         public GameState State { get; set; }
+        public long NetworkTimeSync { get; set; }
     }
 }
