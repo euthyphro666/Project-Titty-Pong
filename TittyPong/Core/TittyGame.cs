@@ -32,7 +32,7 @@ namespace TittyPong.Core
         private Texture2D Titty;
 
         private double Accumulator;
-        private const double StepTime = 16.6;
+        private const double StepTime = 30;
 
         private Queue<InputState> InputStatesSinceServerSync;
         private int LastInputState;
@@ -71,13 +71,12 @@ namespace TittyPong.Core
             if (dt > 250)
                 dt = 250;
             Accumulator += dt;
-            
-            var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
-            var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
-            var dir = up ? Direction.Up : (down ? Direction.Down : Direction.None);
-            
+
             while(Accumulator >= StepTime)
             {
+                var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
+                var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
+                var dir = up ? Direction.Up : (down ? Direction.Down : Direction.None);
                 Accumulator -= StepTime;
 
                 UpdateClientInput(dir);
@@ -137,7 +136,7 @@ namespace TittyPong.Core
                 }
                 else
                 {
-                    var scale = (statesArry[i].State == Direction.Up) ? -1 : (statesArry[i].State == Direction.Up) ? -1 : 0;
+                    var scale = (statesArry[i].State == Direction.Up) ? -1 : (statesArry[i].State == Direction.Down) ? 1 : 0;
                     Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
                     Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
                 }
