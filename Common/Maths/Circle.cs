@@ -14,25 +14,13 @@ namespace Common.Maths
 
         public float X
         {
-            get
-            {
-                return Position.X;
-            }
-            set
-            {
-                Position.X = value;
-            }
+            get => Position.X;
+            set => Position.X = value;
         }
         public float Y
         {
-            get
-            {
-                return Position.Y;
-            }
-            set
-            {
-                Position.Y = value;
-            }
+            get => Position.Y;
+            set => Position.Y = value;
         }
         
         public Circle(float x, float y, float r)

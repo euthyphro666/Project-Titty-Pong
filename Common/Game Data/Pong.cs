@@ -1,3 +1,4 @@
+using System;
 using Common.Maths;
 using Microsoft.Xna.Framework;
 
@@ -5,24 +6,25 @@ namespace Common.Game_Data
 {
     public class Pong
     {
+        [NonSerialized]
         private Vector2 InvertY = new Vector2(1, -1);
+        
+        [NonSerialized]
         private Vector2 InvertX = new Vector2(-1, 1);
         
-        private Vector2 Rebound;
-
         public Vector2 Force;
         public Circle Body { get; set; }
 
         public Pong()
         {
-            Rebound = new Vector2();
+        
         }
 
         public Pong(Pong pong)
         {
             Force = new Vector2(pong.Force.X, pong.Force.Y);
             Body = new Circle(pong.Body.Position.X, pong.Body.Position.Y, 8);
-            Rebound = new Vector2();
+        
         }
 
         public void Update(Circle clientABody, Circle clientBBody)

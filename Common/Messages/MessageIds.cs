@@ -1,6 +1,6 @@
 namespace Common.Messages
 {
-    public enum CommunicationMessageIds
+    public enum CommunicationMessageIds : byte
     {
         Invalid,
         ConnectionRequest,
@@ -12,7 +12,7 @@ namespace Common.Messages
         RoomMessage
     }
 
-    public enum RoomMessageIds
+    public enum RoomMessageIds : byte
     {
         Invalid,
         RoomConfirmation,
