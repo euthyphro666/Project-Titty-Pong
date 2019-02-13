@@ -85,8 +85,9 @@ namespace TittyPong.Core
             Accumulator += dt;
             NetworkSyncTime += (long)dt;
 
-            while((Accumulator -= StepTime) >= 0)
+            while(Accumulator >= StepTime)
             {
+                Accumulator -= StepTime;
                 var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
                 var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
                 var dir = up ? Direction.Up : (down ? Direction.Down : Direction.None);
