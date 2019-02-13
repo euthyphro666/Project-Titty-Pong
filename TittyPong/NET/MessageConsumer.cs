@@ -97,7 +97,7 @@ namespace TittyPong.NET
                     break;
                 case RoomMessageIds.GameStart:
                     var start = msg.Contents.ToString().Deserialize<GameStart>();
-                    Events.OnGameStart(this, new GameStartArgs { NetworkTimeSync = start.CurrentServerTick });
+                    Events.OnGameStartEvent(this, new GameStartArgs { NetworkSyncTime = start.CurrentServerTick });
                     break;
                 default:
                     // Log that we received an unhandled data message
