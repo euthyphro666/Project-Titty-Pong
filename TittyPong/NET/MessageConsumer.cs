@@ -92,12 +92,12 @@ namespace TittyPong.NET
             switch (msg.RoomMessageId)
             {
                 case RoomMessageIds.Update:
-                    var state = msg.Contents.ToString().Deserialize<RoomUpdate>().State;
-                    Events.OnRoomUpdateEvent(this, new GameStateArgs { State = state });
+                    var room = msg.Contents.ToString().Deserialize<RoomUpdate>();
+                    Events.OnRoomUpdateEvent(this, new GameStateArgs { State = room.State, NetworkTimeSync = room.NetworkTimeSync });
                     break;
-                case RoomMessageIds.RoomConfirmation:
-                    break;
-                case RoomMessageIds.GameInputUpdate:
+                case RoomMessageIds.GameStart:
+                    var start = msg.Contents.ToString().Deserialize<GameStart>();
+                    Events.OnGameStart(this, new GameStartArgs { NetworkTimeSync = start.CurrentServerTick });
                     break;
                 default:
                     // Log that we received an unhandled data message

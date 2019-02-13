@@ -10,5 +10,6 @@ namespace TittyPong.Events.Args
     public class GameStateArgs : EventArgs
     {
         public GameState State { get; set; }
+        public long NetworkTimeSync{ get; set; }
     }
 }

@@ -28,15 +28,15 @@ namespace TittyPong.Core
         private EventManager events;
         private InputMessenger messenger;
         private GameSession Session;
-
         private Texture2D Titty;
 
         private double Accumulator;
-        private const double StepTime = 30;
+        private const double StepTime = 1000 / 33;
 
         private Queue<InputState> InputStatesSinceServerSync;
-        private int LastInputState;
+        private long NetworkSyncTime;
         private float SPEED = 20f;
+        private bool Started;
 
 
         #region Sound Testing
@@ -54,35 +54,47 @@ namespace TittyPong.Core
             Titty = assets.Load<Texture2D>("Titty");
             TittyFx = assets.Load<SoundEffect>("Sounds\\TittyCollision");
 
-            events.RoomUpdateEvent += HandleRoomUpdateEvent;
-
             InputStatesSinceServerSync = new Queue<InputState>();
-
             messenger = new InputMessenger(events);
             messenger.Start();
 
-            Accumulator = 0.0;
-            LastInputState = 0;
+            RegisterEvents();
         }
-        
+
+        #region Events
+        private void RegisterEvents()
+        {
+            events.RoomUpdateEvent += HandleRoomUpdateEvent;
+            events.GameStartEvent += HandleGameStartEvent;
+        }
+
+        private void HandleGameStartEvent(object sender, GameStartArgs e)
+        {
+            NetworkSyncTime = e.NetworkSyncTime;
+            Started = true;
+        }
+        #endregion
+
         public void Update(GameTime delta, InputManager input)
         {
+            if (!Started)
+                return;
+
             var dt = delta.ElapsedGameTime.TotalMilliseconds;
             if (dt > 250)
                 dt = 250;
             Accumulator += dt;
+            NetworkSyncTime += (long)dt;
 
-            while(Accumulator >= StepTime)
+            while((Accumulator -= StepTime) >= 0)
             {
                 var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
                 var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
                 var dir = up ? Direction.Up : (down ? Direction.Down : Direction.None);
-                Accumulator -= StepTime;
 
                 UpdateClientInput(dir);
-                LastInputState += (dir == Direction.None) ? 0 : 1;
 
-                var state = new InputState { State = dir, InputNumber = LastInputState};
+                var state = new InputState { State = dir, Timestamp = NetworkSyncTime};
                 InputStatesSinceServerSync.Enqueue(state);
 
                 if (dir != Direction.None)
@@ -118,11 +130,11 @@ namespace TittyPong.Core
 
             var oldState = Session.State;
             Session.State = e.State;
-            ApplyOldInput();
+            ApplyOldInput(e.NetworkTimeSync);
             //Todo: apply interpolation
         }
 
-        private void ApplyOldInput()
+        private void ApplyOldInput(long tick)
         {
             var statesArry = InputStatesSinceServerSync.ToArray();
             var dequeuing = true;
@@ -130,7 +142,7 @@ namespace TittyPong.Core
             {
                 if(dequeuing)
                 {
-                    if (statesArry[i].InputNumber >= Session.State.LastProcessedInputNumber)
+                    if (statesArry[i].Timestamp >= tick)
                         dequeuing = false;
                     InputStatesSinceServerSync.Dequeue();
                 }

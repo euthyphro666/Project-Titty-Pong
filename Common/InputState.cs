@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    public enum Direction
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    }
     public class InputState
     {
-        public enum Direction
-        {
-            None,
-            Up,
-            Down,
-            Left,
-            Right
-        }
-
         public Direction State { get; set; }
-        
-        public int InputNumber { get; set; }
-
+        public long Timestamp { get; set; }
     }
 }
