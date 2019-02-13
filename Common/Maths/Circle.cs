@@ -9,7 +9,6 @@ namespace Common.Maths
 {
     public class Circle
     {
-        public Rectangle Body;
         public Vector2 Position;
         public float Radius;
 
@@ -22,7 +21,6 @@ namespace Common.Maths
             set
             {
                 Position.X = value;
-                Body.X = (int)value;
             }
         }
         public float Y
@@ -34,7 +32,6 @@ namespace Common.Maths
             set
             {
                 Position.Y = value;
-                Body.Y = (int)value;
             }
         }
         
