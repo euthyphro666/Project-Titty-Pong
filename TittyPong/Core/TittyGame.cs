@@ -79,11 +79,15 @@ namespace TittyPong.Core
             while(Accumulator >= StepTime)
             {
                 Accumulator -= StepTime;
-                if (dir == Direction.None)
-                    continue;
 
-                UpdateServerInput(dir);
                 UpdateClientInput(dir);
+                LastInputState += (dir == Direction.None) ? 0 : 1;
+
+                var state = new InputState { State = dir, InputNumber = LastInputState};
+                InputStatesSinceServerSync.Enqueue(state);
+
+                if (dir != Direction.None)
+                    UpdateServerInput(state);
             }
         }
 
@@ -95,10 +99,8 @@ namespace TittyPong.Core
             Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
         }
 
-        private void UpdateServerInput(Direction dir)
+        private void UpdateServerInput(InputState state)
         {
-            var state = new InputState { State = dir, InputNumber = ++LastInputState };
-            InputStatesSinceServerSync.Enqueue(state);
             events.OnInputEvent(this, new InputEventArgs { RoomId = Session.RoomId, State = state });
         }
 
@@ -135,7 +137,7 @@ namespace TittyPong.Core
                 }
                 else
                 {
-                    var scale = (statesArry[i].State == InputState.Direction.Up) ? -1 : 1;
+                    var scale = (statesArry[i].State == Direction.Up) ? -1 : (statesArry[i].State == Direction.Up) ? -1 : 0;
                     Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
                     Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
                 }
