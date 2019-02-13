@@ -9,33 +9,18 @@ namespace Common.Maths
 {
     public class Circle
     {
-        public Rectangle Body;
         public Vector2 Position;
         public float Radius;
 
         public float X
         {
-            get
-            {
-                return Position.X;
-            }
-            set
-            {
-                Position.X = value;
-                Body.X = (int)value;
-            }
+            get => Position.X;
+            set => Position.X = value;
         }
         public float Y
         {
-            get
-            {
-                return Position.Y;
-            }
-            set
-            {
-                Position.Y = value;
-                Body.Y = (int)value;
-            }
+            get => Position.Y;
+            set => Position.Y = value;
         }
         
         public Circle(float x, float y, float r)
