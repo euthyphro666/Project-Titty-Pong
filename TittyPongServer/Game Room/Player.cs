@@ -10,7 +10,7 @@ namespace TittyPongServer.Game_Room
 {
     public class Player
     {
-        public int LastProcessedInputNumber { get; private set; }
+        public long LastProcessedTimestamp { get; private set; }
         private readonly ConcurrentQueue<InputState> Inputs;
         private static int MoveSpeed = 20;
 
@@ -43,11 +43,11 @@ namespace TittyPongServer.Game_Room
                 Inputs.TryDequeue(out var inputUpdate);
                 if (inputUpdate == null) return;
 
-                var scale = inputUpdate.State == InputState.Direction.Up ? -1 : 1;
+                var scale = inputUpdate.State == Direction.Up ? -1 : 1;
 
                 sum += scale;
                 
-                LastProcessedInputNumber = inputUpdate.InputNumber;
+                LastProcessedTimestamp = inputUpdate.Timestamp;
             }
             PlayerClient.Body.Position = new Vector2(PlayerClient.Body.Position.X, PlayerClient.Body.Position.Y + sum * MoveSpeed);
         }
