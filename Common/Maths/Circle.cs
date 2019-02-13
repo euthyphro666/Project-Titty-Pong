@@ -51,6 +51,21 @@ namespace Common.Maths
             return dist < rad;
         }
 
+        public Vector2 CalculateRebound(Circle body, Vector2 velocity, ref Vector2 rebound)
+        {
+            rebound.X = body.X - X;
+            rebound.Y = body.Y - Y;
+            rebound.Normalize();
+            rebound *= velocity.Length();
+            return rebound;
+        }
+
+        /// <summary>
+        /// Takes two corners defining a boundary and determines if the circle is within that boundary.
+        /// </summary>
+        /// <param name="v0">Corner pin one</param>
+        /// <param name="v1">Corner pin two</param>
+        /// <returns></returns>
         public bool IsInBounds(Vector2 v0, Vector2 v1)
         {
             var x0 = v0.X < v1.X ? v0.X : v1.X;
