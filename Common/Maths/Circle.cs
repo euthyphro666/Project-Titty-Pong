@@ -54,8 +54,8 @@ namespace Common.Maths
         public void CalculateRebound(Circle body, ref Vector2 force)
         {
             var magnitude = force.Length();
-            force.X = body.X - X;
-            force.Y = body.Y - Y;
+            force.X = X - body.X;
+            force.Y = Y - body.Y;
             force.Normalize();
             force *= magnitude;
         }
