@@ -74,14 +74,16 @@ namespace TittyPong.Core
             
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
-            var dir = up ? Direction.Up : Direction.Down;
+            var dir = up ? Direction.Up : (down ? Direction.Down : Direction.None);
             
             while(Accumulator >= StepTime)
             {
+                Accumulator -= StepTime;
+                if (dir == Direction.None)
+                    continue;
+
                 UpdateServerInput(dir);
                 UpdateClientInput(dir);
-
-                Accumulator -= StepTime;
             }
         }
 
