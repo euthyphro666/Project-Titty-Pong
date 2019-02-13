@@ -31,8 +31,8 @@ namespace TittyPong.Core
 
         private Texture2D Titty;
 
-        private double TimeSinceLastNetworkUpdate;
-        private const int InputUpdatesPerSecond = 30; 
+        private double Accumulator;
+        private const double StepTime = 16.6;
 
         private Queue<InputState> InputStatesSinceServerSync;
         private int LastInputState;
@@ -61,28 +61,36 @@ namespace TittyPong.Core
             messenger = new InputMessenger(events);
             messenger.Start();
 
+            Accumulator = 0.0;
             LastInputState = 0;
         }
         
         public void Update(GameTime delta, InputManager input)
         {
+            var dt = delta.ElapsedGameTime.TotalMilliseconds;
+            if (dt > 250)
+                dt = 250;
+            Accumulator += dt;
+            
             var up = input.IsKeyDown(PlayerIndex.One, Keys.W);
             var down = input.IsKeyDown(PlayerIndex.One, Keys.S);
             var dir = up ? Direction.Up : Direction.Down;
-
-            TimeSinceLastNetworkUpdate += delta.ElapsedGameTime.TotalMilliseconds;
-            if (TimeSinceLastNetworkUpdate > (1000 / InputUpdatesPerSecond))
+            
+            while(Accumulator >= StepTime)
             {
                 UpdateServerInput(dir);
-                TimeSinceLastNetworkUpdate = 0;
+                UpdateClientInput(dir);
+
+                Accumulator -= StepTime;
             }
-            UpdateClientInput(dir);
         }
 
         private void UpdateClientInput(Direction dir)
         {
             var scale = (dir == Direction.Up) ? -1 : 1;
             Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
+            //Guess collision updates
+            Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
         }
 
         private void UpdateServerInput(Direction dir)
