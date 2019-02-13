@@ -30,7 +30,7 @@ namespace TittyPong.Core
         private Texture2D Titty;
 
         private double Accumulator;
-        private const double StepTime = 1000 / 33;
+        private const double StepTime = 1000 / 50;
 
         private Queue<InputState> InputStatesSinceServerSync;
         private long NetworkSyncTime;

@@ -27,7 +27,7 @@ namespace TittyPong.NET.Game
             Events = events;
             States = new ConcurrentQueue<InputState>();
             SendThread = new Thread(Run);
-            SendsPerSecond = 10;
+            SendsPerSecond = 20;
 
             Events.InputEvent += HandleInputEvent;
         }
