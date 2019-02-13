@@ -88,10 +88,10 @@ namespace TittyPong.Graphics
         //TODO: the body should be defined inside the circle and updated given changes to position.
         public void Render(Texture2D sprite, Circle circle)
         {
-            Body.X = (int) circle.Position.X;
-            Body.Y = (int) circle.Position.Y;
-            Body.Width = (int) circle.Radius;
-            Body.Height = (int) circle.Radius;
+            Body.X = (int) (circle.Position.X - circle.Radius);
+            Body.Y = (int) (circle.Position.Y - circle.Radius);
+            Body.Width = (int) circle.Radius * 2;
+            Body.Height = (int) circle.Radius * 2;
             if (ContextOpen)
                 SB.Draw(sprite, Body, Color.White);
         }
