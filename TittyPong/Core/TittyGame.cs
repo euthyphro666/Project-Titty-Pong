@@ -127,6 +127,7 @@ namespace TittyPong.Core
                 {
                     var scale = (statesArry[i].State == InputState.Direction.Up) ? -1 : 1;
                     Session.GetThisClient().Body.Position += (Vector2.UnitY * SPEED * scale);
+                    Session.State.Nipple.Update(Session.State.ClientA.Body, Session.State.ClientB.Body);
                 }
             }
         }
