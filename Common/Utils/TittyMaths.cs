@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Common.Utils
 {
-    public static class Math
+    public static class TittyMaths
     {
         public static float Clamp(float value, float min, float max)
         {
