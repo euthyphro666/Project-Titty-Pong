@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Maths
+namespace Common.Utils
 {
-    public static class PhysicsUtils
+    public static class Math
     {
         public static float Clamp(float value, float min, float max)
         {
