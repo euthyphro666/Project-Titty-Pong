@@ -3,30 +3,40 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPong", "TittyPong\TittyPong.csproj", "{111D2670-17DA-44BB-AD7F-61909BC9432E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyPongServer", "TittyPongServer\TittyPongServer.csproj", "{0057E602-67A4-4304-AD67-A7D137171475}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyGame", "TittyGame\TittyGame.csproj", "{9D720F15-3248-4447-8C1C-0F7D64026376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyServer", "TittyServer\TittyServer.csproj", "{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Debug|x86.ActiveCfg = Debug|x86
-		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Debug|x86.Build.0 = Debug|x86
-		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Release|x86.ActiveCfg = Release|x86
-		{111D2670-17DA-44BB-AD7F-61909BC9432E}.Release|x86.Build.0 = Release|x86
-		{0057E602-67A4-4304-AD67-A7D137171475}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0057E602-67A4-4304-AD67-A7D137171475}.Debug|x86.Build.0 = Debug|Any CPU
-		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.ActiveCfg = Release|Any CPU
-		{0057E602-67A4-4304-AD67-A7D137171475}.Release|x86.Build.0 = Release|Any CPU
-		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Debug|x86.Build.0 = Debug|Any CPU
-		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.ActiveCfg = Release|Any CPU
-		{C89BDE7E-85E3-45D0-8496-1B7ADEBE6BAB}.Release|x86.Build.0 = Release|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE50C9AF-2B73-4DD8-8BEE-9C4FA6486F24}.Release|x86.Build.0 = Release|Any CPU
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Debug|x86.ActiveCfg = Debug|x86
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Debug|x86.Build.0 = Debug|x86
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Release|Any CPU.ActiveCfg = Release|x86
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Release|x86.ActiveCfg = Release|x86
+		{9D720F15-3248-4447-8C1C-0F7D64026376}.Release|x86.Build.0 = Release|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Debug|x86.ActiveCfg = Debug|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Debug|x86.Build.0 = Debug|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|Any CPU.ActiveCfg = Release|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|x86.ActiveCfg = Release|x86
+		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
