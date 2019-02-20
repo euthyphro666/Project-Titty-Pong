@@ -7,7 +7,7 @@ namespace Common.ECS
     {
         public int Id { get; private set; }
 
-        private Dictionary<string, object> Components;
+        private readonly Dictionary<string, object> Components;
 
         public Entity()
         {
