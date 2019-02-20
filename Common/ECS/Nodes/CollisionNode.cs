@@ -6,7 +6,7 @@ namespace Common.ECS.Nodes
     {
         public VelocityComponent Velocity { get; set; }
         public PositionComponent Position { get; set; }
-        public IdentityComponent IdentityA { get; set; }
-        public IdentityComponent IdentityB { get; set; }
+        public RigidBodyComponent RigidBody { get; set; }
+        public IdentityComponent Identity { get; set; }
     }
 }
