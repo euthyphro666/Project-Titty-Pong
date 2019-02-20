@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace TittyPong.Core
+namespace TittyGame
 {
     /// <summary>
     /// This is the main type for your game.
