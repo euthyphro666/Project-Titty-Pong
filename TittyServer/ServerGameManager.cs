@@ -1,4 +1,5 @@
 ﻿using Common.ECS;
+using Common.ECS.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,7 @@ namespace TittyServer
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
         }
 
         /// <summary>
@@ -32,6 +34,11 @@ namespace TittyServer
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            
+            SystemManager = new Engine();
+            SystemManager.AddSystem(new RenderSystem())
+                         .AddSystem(new CollisionSystem())
+                         .AddSystem(new MovementSystem());
         }
 
         /// <summary>
@@ -68,6 +75,8 @@ namespace TittyServer
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+            
+            SystemManager.Update();
         }
 
         /// <summary>

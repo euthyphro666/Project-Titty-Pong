@@ -19,10 +19,11 @@ namespace Common.ECS
             Entities = new List<Entity>();
         }
 
-        public void AddSystem(ISystem system)
+        public Engine AddSystem(ISystem system)
         {
             if(Systems.TrueForAll(s => s.GetType() != system.GetType()))
                 Systems.Add(system);
+            return this;
         }
 
         public void Update()
