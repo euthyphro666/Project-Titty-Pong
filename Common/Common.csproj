@@ -43,9 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ECS\Components\DisplayComponent.cs" />
+    <Compile Include="ECS\Components\IdentityComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
     <Compile Include="ECS\Components\VelocityComponent.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\Nodes\CollisionNode.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Systems\MovementSystem.cs" />
