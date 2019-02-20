@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.ECS.Systems
 {
-    class PhysicsSystem
+    class CollisionSystem
     {
     }
 }

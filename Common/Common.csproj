@@ -48,18 +48,15 @@
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
-    <Compile Include="ECS\Systems\PhysicsSystem.cs" />
+    <Compile Include="ECS\Systems\MovementSystem.cs" />
+    <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ECS\Components" />
-  </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="ECS\Components" />
-  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

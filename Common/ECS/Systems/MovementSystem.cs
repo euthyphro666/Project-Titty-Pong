@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.ECS.Systems
 {
-    public class InputSystem
+    class MovementSystem
     {
     }
 }
