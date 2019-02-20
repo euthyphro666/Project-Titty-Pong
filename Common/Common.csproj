@@ -58,5 +58,8 @@
     <Folder Include="ECS\Components" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ECS\Components" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
