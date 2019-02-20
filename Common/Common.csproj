@@ -42,10 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ECS\Components\DisplayComponent.cs" />
+    <Compile Include="ECS\Components\PositionComponent.cs" />
+    <Compile Include="ECS\Components\VelocityComponent.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\Systems\InputSystem.cs" />
+    <Compile Include="ECS\Systems\PhysicsSystem.cs" />
+    <Compile Include="ECS\Systems\RenderSystem.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
