@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Common.ECS.Components;
+using Common.ECS.Contracts;
 using Common.Utils;
 
 namespace Common.ECS
@@ -7,25 +9,25 @@ namespace Common.ECS
     public class Entity
     {
 
-        private readonly Dictionary<string, object> Components;
+        private readonly Dictionary<Type, IComponent> Components;
 
         public Entity()
         {
-            Components = new Dictionary<string, object>();
+            Components = new Dictionary<Type, IComponent>();
             Add(new IdentityComponent());
         }
 
-        public void Add(object component)
+        public void Add(IComponent component)
         {
-            Components.Add(component.ToString(), component);
+            Components.Add(component.GetType(), component);
         }
 
-        public void Remove(object component)
+        public void Remove(Type componentType)
         {
-            Components.Remove(component.ToString());
+            Components.Remove(componentType);
         }
 
-        public object Get(string componentType)
+        public IComponent Get(Type componentType)
         {
             return Components[componentType];
         }
