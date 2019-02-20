@@ -10,29 +10,40 @@ namespace Common.ECS
     public class Engine
     {
 
-        private List<ISystem> Systems { get; set; }
+        private List<ISystem> UpdateSystems { get; set; }
+        private List<ISystem> RenderSystems { get; set; }
         private List<Entity> Entities { get; set; }
 
         public Engine()
         {
-            Systems = new List<ISystem>();
+            UpdateSystems = new List<ISystem>();
+            RenderSystems = new List<ISystem>();
             Entities = new List<Entity>();
         }
 
-        public void AddSystem(ISystem system)
+        public void AddSystem(ISystem system, bool shouldRender)
         {
-            if(Systems.TrueForAll(s => s.GetType() != system.GetType()))
-                Systems.Add(system);
+            var systems = (shouldRender ? RenderSystems : UpdateSystems);
+            if (systems.TrueForAll(s => s.GetType() != system.GetType()))
+                systems.Add(system);
         }
 
         public void Update()
         {
-            foreach(var system in Systems)
+            foreach(var system in UpdateSystems)
             {
                 system.Update();
             }
         }
-        
+
+        public void Render()
+        {
+            foreach (var system in RenderSystems)
+            {
+                system.Update();
+            }
+        }
+
 
     }
 }
