@@ -15,10 +15,24 @@ namespace Common.ECS
 
         public Engine()
         {
-
+            Systems = new List<ISystem>();
+            Entities = new List<Entity>();
         }
 
+        public void AddSystem(ISystem system)
+        {
+            if(Systems.TrueForAll(s => s.GetType() != system.GetType()))
+                Systems.Add(system);
+        }
 
+        public void Update()
+        {
+            foreach(var system in Systems)
+            {
+                system.Update();
+            }
+        }
+        
 
     }
 }
