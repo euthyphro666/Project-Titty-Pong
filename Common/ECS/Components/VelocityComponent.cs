@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.ECS.Contracts;
 
 namespace Common.ECS.Components
 {
-    public class VelocityComponent
+    public class VelocityComponent : IComponent
     {
         public float X;
         public float Y;

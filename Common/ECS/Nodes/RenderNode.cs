@@ -13,5 +13,10 @@ namespace Common.ECS.Nodes
         public DisplayComponent Display { get; set; }
         public PositionComponent Position { get; set; }
         public RigidBodyComponent RigidBody { get; set; }
+        
+        public static bool Uses(IComponent component)
+        {
+            return (component is PositionComponent || component is VelocityComponent || component is RigidBodyComponent);
+        }
     }
 }
