@@ -5,7 +5,7 @@ namespace Common.ECS
 {
     public class Entity
     {
-        public int Id { get; private set; }
+        public int Id { get; }
 
         private readonly Dictionary<string, object> Components;
 

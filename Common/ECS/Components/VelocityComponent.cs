@@ -8,7 +8,7 @@ namespace Common.ECS.Components
 {
     public class VelocityComponent
     {
-        public float x;
-        public float y;
+        public float X;
+        public float Y;
     }
 }
