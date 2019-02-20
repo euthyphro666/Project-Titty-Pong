@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Common.ECS;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,6 +13,8 @@ namespace TittyServer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private Engine SystemManager;
+        
         public ServerGameManager()
         {
             graphics = new GraphicsDeviceManager(this);
