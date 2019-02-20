@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using Common.ECS.Components;
 using Common.Utils;
 
 namespace Common.ECS
 {
     public class Entity
     {
-        public int Id { get; }
 
         private readonly Dictionary<string, object> Components;
 
         public Entity()
         {
-            Id = EntityIdManager.NextAvailableId;
             Components = new Dictionary<string, object>();
+            Add(new IdentityComponent());
         }
 
         public void Add(object component)
