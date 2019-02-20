@@ -21,11 +21,12 @@ namespace Common.ECS
             Entities = new List<Entity>();
         }
 
-        public void AddSystem(ISystem system, bool shouldRender)
+        public Engine AddSystem(ISystem system, bool shouldRender)
         {
             var systems = (shouldRender ? RenderSystems : UpdateSystems);
             if (systems.TrueForAll(s => s.GetType() != system.GetType()))
                 systems.Add(system);
+            return this;
         }
 
         public void Update()
