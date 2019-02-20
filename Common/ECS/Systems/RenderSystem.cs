@@ -14,7 +14,7 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
