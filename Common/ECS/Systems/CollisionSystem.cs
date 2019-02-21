@@ -2,6 +2,7 @@
 using Common.ECS.Nodes;
 using System.Collections.Generic;
 using Common.ECS.Components;
+using Common.Utils;
 
 namespace Common.ECS.Systems
 {
@@ -22,46 +23,25 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
-            foreach (var nodeA in Nodes)
-            {
-                foreach (var nodeB in Nodes)
-                {
-                    if (nodeA == nodeB) continue;
+            CollisionNode nodeA, nodeB;
 
-                    if (Intersects(nodeA.RigidBody, nodeA.Position, nodeA.RigidBody, nodeA.Position))
+            for (var i = 0; i < Nodes.Count - 1; i++)
+            {
+                nodeA = Nodes[i];
+
+                for (var j = i + 1; j < Nodes.Count; j++)
+                {
+                    nodeB = Nodes[j];
+
+                    if (TittyMaths.Intersects(nodeA.RigidBody, nodeA.Position, nodeB.RigidBody, nodeB.Position))
                     {
                         //Events.RaiseCollisionEvent
                     }
-                    
                 }
             }
         }
 
-        private bool Intersects(RigidBodyComponent bodyA, PositionComponent posA, RigidBodyComponent bodyB, PositionComponent posB)
-        {
-            if (bodyA.IsRect)
-            {
-                if (bodyB.IsRect)
-                {
-                    
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-                if (bodyB.IsRect)
-                {
-                    
-                }
-                else
-                {
-                    
-                }
-            }
-            return false;
-        }
-}
+        
+        
+    }
 }
