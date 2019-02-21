@@ -1,7 +1,9 @@
 ﻿using Common.ECS;
 using Common.ECS.Systems;
+using Common.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TittyGame
 {
@@ -10,20 +12,22 @@ namespace TittyGame
     /// </summary>
     public class Master : Game
     {
-
-        private ContentManager assets;
         private Engine GameEngine;
+        private Screen Screen;
 
         public Master()
         {
             Content.RootDirectory = "Content";
-            assets = Content;
+
+            //This must be created in the constructor of the monogame game root.
+            Screen = new Screen(this);
         }
         
         protected override void Initialize()
         {
             base.Initialize();
             IsMouseVisible = true;
+            LoadEngine();
         }
 
         protected override void LoadContent()
@@ -39,11 +43,11 @@ namespace TittyGame
         private void LoadEngine()
         {
             GameEngine = new Engine();
-            GameEngine.AddSystem(new InputSystem(), false);
-            GameEngine.AddSystem(new CollisionSystem(), false);
-            GameEngine.AddSystem(new MovementSystem(), false);
-            GameEngine.AddSystem(new RenderSystem(), true);
-        }
+            GameEngine.AddSystem(new InputSystem(), false)
+                      .AddSystem(new CollisionSystem(), false)
+                      .AddSystem(new MovementSystem(), false)
+                      .AddSystem(new RenderSystem(Screen), true);
+        }    
 
         protected override void Update(GameTime delta)
         {

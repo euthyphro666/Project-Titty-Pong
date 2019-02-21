@@ -62,6 +62,7 @@
     <Compile Include="ECS\Systems\MovementSystem.cs" />
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
+    <Compile Include="Graphics\Screen.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
