@@ -1,3 +1,4 @@
+using System;
 using Common.ECS.Components;
 using Common.ECS.Contracts;
 
@@ -10,10 +11,10 @@ namespace Common.ECS.Nodes
         public RigidBodyComponent RigidBody { get; set; }
         public IdentityComponent Identity { get; set; }
 
-        public static bool Uses(IComponent component)
+        public static bool Uses(Type component)
         {
-            return (component is VelocityComponent || component is PositionComponent ||
-                    component is RigidBodyComponent || component is IdentityComponent);
+            return (component == typeof(VelocityComponent) || component == typeof(PositionComponent) ||
+                    component == typeof(RigidBodyComponent) || component == typeof(IdentityComponent));
         }
     }
 }
