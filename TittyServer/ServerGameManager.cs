@@ -20,7 +20,7 @@ namespace TittyServer
         private readonly Screen Screen;
 
         private Engine SystemManager;
-        private readonly IEventManager Events;
+        private readonly ISystemContext SystemContext;
 
         public ServerGameManager()
         {
@@ -28,7 +28,7 @@ namespace TittyServer
             Content.RootDirectory = "Content";
             
             Screen = new Screen(this);
-            Events = new EventManager();
+            SystemContext = new SystemContext(1920, 1080);
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace TittyServer
             base.Initialize();
             
             SystemManager = new Engine();
-            SystemManager.AddSystem(new RenderSystem(Events, Screen), true)
-                         .AddSystem(new CollisionSystem(Events), false)
-                         .AddSystem(new MovementSystem(Events), false);
+            SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), true)
+                         .AddSystem(new CollisionSystem(SystemContext), false)
+                         .AddSystem(new MovementSystem(SystemContext), false);
         }
 
         /// <summary>

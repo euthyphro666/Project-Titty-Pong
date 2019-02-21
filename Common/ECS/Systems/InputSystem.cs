@@ -11,11 +11,13 @@ namespace Common.ECS.Systems
 {
     public class InputSystem : ISystem
     {
+        private readonly ISystemContext SystemContext;
         private IEventManager Events;
 
-        public InputSystem(IEventManager events)
+        public InputSystem(ISystemContext systemContext)
         {
-            Events = events;
+            SystemContext = systemContext;
+            Events = SystemContext.Events;
         }
 
         public void Update()

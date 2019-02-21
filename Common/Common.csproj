@@ -50,8 +50,10 @@
     <Compile Include="ECS\Contracts\IComponent.cs" />
     <Compile Include="ECS\Contracts\IEventManager.cs" />
     <Compile Include="ECS\Contracts\INode.cs" />
+    <Compile Include="ECS\Contracts\ISystemContext.cs" />
     <Compile Include="ECS\Engine.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\SystemContext.cs" />
     <Compile Include="ECS\SystemEvents\EventManager.cs" />
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
