@@ -22,7 +22,13 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
+            //Only consider keyboard input for now
             var state = Keyboard.GetState();
+            var up = state.IsKeyDown(Keys.W);
+            var down = state.IsKeyDown(Keys.S);
+            var input = (byte)((up ^ down) ? (up ? -1 : 1) : 0);
+            Events.RaiseInputEvent(input);
+
         }
     }
 }
