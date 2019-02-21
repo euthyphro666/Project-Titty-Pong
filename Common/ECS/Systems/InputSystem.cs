@@ -30,5 +30,6 @@ namespace Common.ECS.Systems
             Events.RaiseInputEvent(input);
 
         }
+
     }
 }

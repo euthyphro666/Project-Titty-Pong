@@ -13,9 +13,11 @@ namespace Common.ECS
         private List<ISystem> UpdateSystems { get; set; }
         private List<ISystem> RenderSystems { get; set; }
         private List<Entity> Entities { get; set; }
+        private ISystemContext Context;
 
-        public Engine()
+        public Engine(ISystemContext context)
         {
+            Context = context;
             UpdateSystems = new List<ISystem>();
             RenderSystems = new List<ISystem>();
             Entities = new List<Entity>();
@@ -32,7 +34,7 @@ namespace Common.ECS
         public Engine AddEntity(Entity entity)
         {
             Entities.Add(entity);
-            //Raise entities modified event
+            Context.Events.RaiseEntityAddedEvent(entity);
             return this;
         }
 

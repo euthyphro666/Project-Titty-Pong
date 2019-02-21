@@ -37,7 +37,7 @@ namespace Common.Graphics
         public void Init()
         {
             Batch = new SpriteBatch(GraphicsManager.GraphicsDevice);
-            Background = Color.Crimson;
+            Background = Color.Black;
             WhitePixel = CreatePixelTex(Color.White);
             RenderVect = new Vector2();
             RenderRect = new Rectangle();

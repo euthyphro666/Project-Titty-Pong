@@ -38,7 +38,7 @@ namespace TittyGame
 
         private void LoadEngine()
         {
-            GameEngine = new Engine();
+            GameEngine = new Engine(SystemContext);
             GameEngine.AddSystem(new InputSystem(SystemContext), false)
                       .AddSystem(new CollisionSystem(SystemContext), false)
                       .AddSystem(new MovementSystem(SystemContext), false)
@@ -49,9 +49,17 @@ namespace TittyGame
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
                                     })
-                                    .Add(new PositionComponent())
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 100,
+                                        Y = 100
+                                    })
                                     .Add(new VelocityComponent())
-                                    .Add(new RigidBodyComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 64,
+                                        Height = 256
+                                    })
                                 )
                       .AddEntity(new Entity()
                                     .Add(new DisplayComponent

@@ -7,5 +7,8 @@ namespace Common.ECS.Contracts
     {
         event EventHandler<InputEventArgs> InputEvent;
         void RaiseInputEvent(byte input);
+
+        event EventHandler<EntityAddedEventArgs> EntityAddedEvent;
+        void RaiseEntityAddedEvent(Entity e);
     }
 }

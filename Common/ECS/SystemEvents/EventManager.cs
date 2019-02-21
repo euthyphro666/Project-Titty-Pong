@@ -10,5 +10,11 @@ namespace Common.ECS.SystemEvents
         {
             InputEvent?.Invoke(null, new InputEventArgs { Input = input });
         }
+
+        public event EventHandler<EntityAddedEventArgs> EntityAddedEvent;
+        public void RaiseEntityAddedEvent(Entity target)
+        {
+            EntityAddedEvent?.Invoke(null, new EntityAddedEventArgs { Target = target });
+        }
     }
 }
