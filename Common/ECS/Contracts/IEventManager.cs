@@ -6,6 +6,6 @@ namespace Common.ECS.Contracts
     public interface IEventManager
     {
         event EventHandler<InputEventArgs> InputEvent;
-        void OnInputEvent(byte input);
+        void RaiseInputEvent(byte input);
     }
 }
