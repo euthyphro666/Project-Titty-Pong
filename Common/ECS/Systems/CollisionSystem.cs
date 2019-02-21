@@ -1,11 +1,6 @@
 ﻿using Common.ECS.Contracts;
 using Common.ECS.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.ECS.Contracts;
 
 namespace Common.ECS.Systems
 {
@@ -14,6 +9,13 @@ namespace Common.ECS.Systems
 
         private List<CollisionNode> Nodes;
 
+        private IEventManager Events;
+        
+        public CollisionSystem(IEventManager eventManager)
+        {
+            Events = eventManager;
+        }
+        
         public void Update()
         {
 

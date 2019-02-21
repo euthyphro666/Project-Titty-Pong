@@ -14,6 +14,13 @@ namespace Common.ECS.Systems
 
         private List<MovementNode> Nodes;
 
+        private IEventManager Events;
+
+        public MovementSystem(IEventManager eventManager)
+        {
+            
+        }
+        
         public void Update()
         {
 

@@ -1,4 +1,6 @@
 ﻿using Common.ECS;
+using Common.ECS.Contracts;
+using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
 using Common.Graphics;
 using Microsoft.Xna.Framework;
@@ -14,6 +16,7 @@ namespace TittyGame
     {
         private Engine GameEngine;
         private Screen Screen;
+        private IEventManager Events;
 
         public Master()
         {
@@ -21,6 +24,7 @@ namespace TittyGame
 
             //This must be created in the constructor of the monogame game root.
             Screen = new Screen(this);
+            Events = new EventManager();
         }
         
         protected override void Initialize()
@@ -43,10 +47,10 @@ namespace TittyGame
         private void LoadEngine()
         {
             GameEngine = new Engine();
-            GameEngine.AddSystem(new InputSystem(), false)
-                      .AddSystem(new CollisionSystem(), false)
-                      .AddSystem(new MovementSystem(), false)
-                      .AddSystem(new RenderSystem(Screen), true);
+            GameEngine.AddSystem(new InputSystem(Events), false)
+                      .AddSystem(new CollisionSystem(Events), false)
+                      .AddSystem(new MovementSystem(Events), false)
+                      .AddSystem(new RenderSystem(Events, Screen), true);
         }    
 
         protected override void Update(GameTime delta)

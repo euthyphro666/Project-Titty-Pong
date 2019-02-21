@@ -9,7 +9,9 @@ namespace Common.ECS.Systems
         private List<NetworkInputNode> NetworkInputNodes;
         private List<NetworkSyncNode> NetworkSyncNodes;
 
-        public NetworkSystem()
+        private IEventManager Events;
+        
+        public NetworkSystem(IEventManager eventManager)
         {
             NetworkInputNodes = new List<NetworkInputNode>();
             NetworkSyncNodes = new List<NetworkSyncNode>();

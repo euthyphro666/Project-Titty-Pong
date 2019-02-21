@@ -16,8 +16,9 @@ namespace Common.ECS.Systems
         public List<RenderNode> Targets { get; set; }
 
         private readonly Screen Screen;
-
-        public RenderSystem(Screen screen)
+        private IEventManager Events;
+        
+        public RenderSystem(IEventManager eventManager, Screen screen)
         {
             Screen = screen;
         }

@@ -49,9 +49,11 @@
     <Compile Include="ECS\Components\RigidBodyComponent.cs" />
     <Compile Include="ECS\Components\VelocityComponent.cs" />
     <Compile Include="ECS\Contracts\IComponent.cs" />
+    <Compile Include="ECS\Contracts\IEventManager.cs" />
     <Compile Include="ECS\Contracts\INode.cs" />
     <Compile Include="ECS\Engine.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\SystemEvents\EventManager.cs" />
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
     <Compile Include="ECS\Components\InputComponent.cs" />
     <Compile Include="ECS\Nodes\InputNode.cs" />
@@ -70,7 +72,6 @@
     <Compile Include="Utils\TittyMaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

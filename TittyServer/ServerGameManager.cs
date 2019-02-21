@@ -1,4 +1,6 @@
 ﻿using Common.ECS;
+using Common.ECS.Contracts;
+using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
 using Common.Graphics;
 using Microsoft.Xna.Framework;
@@ -15,16 +17,18 @@ namespace TittyServer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private Screen Screen;
+        private readonly Screen Screen;
 
         private Engine SystemManager;
-        
+        private readonly IEventManager Events;
+
         public ServerGameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             
             Screen = new Screen(this);
+            Events = new EventManager();
         }
 
         /// <summary>
@@ -40,9 +44,9 @@ namespace TittyServer
             base.Initialize();
             
             SystemManager = new Engine();
-            SystemManager.AddSystem(new RenderSystem(Screen), true)
-                         .AddSystem(new CollisionSystem(), false)
-                         .AddSystem(new MovementSystem(), false);
+            SystemManager.AddSystem(new RenderSystem(Events, Screen), true)
+                         .AddSystem(new CollisionSystem(Events), false)
+                         .AddSystem(new MovementSystem(Events), false);
         }
 
         /// <summary>
