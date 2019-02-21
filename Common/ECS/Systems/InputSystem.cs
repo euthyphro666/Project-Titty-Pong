@@ -11,8 +11,6 @@ namespace Common.ECS.Systems
 {
     public class InputSystem : ISystem
     {
-
-        private List<InputNode> Nodes;
         private IEventManager Events;
 
         public InputSystem(IEventManager events)

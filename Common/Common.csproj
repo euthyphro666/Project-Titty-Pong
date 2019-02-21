@@ -55,8 +55,6 @@
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\SystemEvents\EventManager.cs" />
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
-    <Compile Include="ECS\Components\InputComponent.cs" />
-    <Compile Include="ECS\Nodes\InputNode.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Nodes\NetworkInputNode.cs" />
     <Compile Include="ECS\Nodes\NetworkSyncNode.cs" />
