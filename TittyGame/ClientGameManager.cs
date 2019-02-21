@@ -8,7 +8,6 @@ namespace TittyGame
     /// </summary>
     public class Master : Game
     {
-
         private ContentManager assets;
 
         public Master()
@@ -16,8 +15,6 @@ namespace TittyGame
             Content.RootDirectory = "Content";
             assets = Content;
         }
-
-
 
         protected override void Initialize()
         {

@@ -14,9 +14,9 @@ namespace Common.ECS.Nodes
         public PositionComponent Position { get; set; }
         public RigidBodyComponent RigidBody { get; set; }
         
-        public static bool Uses(IComponent component)
+        public static bool Uses(Type component)
         {
-            return (component is PositionComponent || component is VelocityComponent || component is RigidBodyComponent);
+            return (component == typeof(PositionComponent) || component == typeof(VelocityComponent) || component == typeof(RigidBodyComponent));
         }
     }
 }

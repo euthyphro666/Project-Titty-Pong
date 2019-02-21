@@ -11,6 +11,8 @@ namespace Common.ECS
 
         private readonly Dictionary<Type, IComponent> Components;
 
+        public event EventHandler<ComponentModifiedEventArgs> ComponentModifiedEvent;
+        
         public Entity()
         {
             Components = new Dictionary<Type, IComponent>();
@@ -20,16 +22,29 @@ namespace Common.ECS
         public void Add(IComponent component)
         {
             Components.Add(component.GetType(), component);
+            ComponentModifiedEvent?.Invoke(this, new ComponentModifiedEventArgs(component.GetType()));
         }
 
         public void Remove(Type componentType)
         {
             Components.Remove(componentType);
+            ComponentModifiedEvent?.Invoke(this, new ComponentModifiedEventArgs(componentType));
         }
 
         public IComponent Get(Type componentType)
         {
             return Components[componentType];
         }
+    }
+
+    public class ComponentModifiedEventArgs : EventArgs
+    {
+        public Type ChangedComponentType { get; set; }
+        
+        public ComponentModifiedEventArgs(Type changedComponentType)
+        {
+            ChangedComponentType = changedComponentType;
+        }
+
     }
 }

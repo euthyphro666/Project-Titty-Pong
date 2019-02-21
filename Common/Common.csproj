@@ -54,11 +54,14 @@
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
+    <Compile Include="ECS\Nodes\NetworkInputNode.cs" />
+    <Compile Include="ECS\Nodes\NetworkSyncNode.cs" />
     <Compile Include="ECS\Nodes\RenderNode.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Contracts\ISystem.cs" />
     <Compile Include="ECS\Systems\MovementSystem.cs" />
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
+    <Compile Include="ECS\Systems\NetworkSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />
