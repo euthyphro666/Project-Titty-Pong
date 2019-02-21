@@ -16,7 +16,7 @@ namespace TittyGame
     {
         private Engine GameEngine;
         private Screen Screen;
-        private IEventManager Events;
+        private ISystemContext SystemContext;
 
         public Master()
         {
@@ -24,7 +24,7 @@ namespace TittyGame
 
             //This must be created in the constructor of the monogame game root.
             Screen = new Screen(this);
-            Events = new EventManager();
+            SystemContext = new SystemContext(1920, 1080);
         }
         
         protected override void Initialize()
@@ -47,10 +47,10 @@ namespace TittyGame
         private void LoadEngine()
         {
             GameEngine = new Engine();
-            GameEngine.AddSystem(new InputSystem(Events), false)
-                      .AddSystem(new CollisionSystem(Events), false)
-                      .AddSystem(new MovementSystem(Events), false)
-                      .AddSystem(new RenderSystem(Events, Screen), true);
+            GameEngine.AddSystem(new InputSystem(SystemContext), false)
+                      .AddSystem(new CollisionSystem(SystemContext), false)
+                      .AddSystem(new MovementSystem(SystemContext), false)
+                      .AddSystem(new RenderSystem(SystemContext, Screen), true);
         }    
 
         protected override void Update(GameTime delta)

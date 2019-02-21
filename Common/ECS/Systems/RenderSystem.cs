@@ -13,13 +13,16 @@ namespace Common.ECS.Systems
 {
     public class RenderSystem : ISystem
     {
+        private readonly ISystemContext SystemContext;
         public List<RenderNode> Targets { get; set; }
 
         private readonly Screen Screen;
         private IEventManager Events;
         
-        public RenderSystem(IEventManager eventManager, Screen screen)
+        public RenderSystem(ISystemContext systemContext, Screen screen)
         {
+            SystemContext = systemContext;
+            Events = SystemContext.Events;
             Screen = screen;
         }
 

@@ -12,13 +12,16 @@ namespace Common.ECS.Systems
     public class MovementSystem : ISystem
     {
 
+        private readonly ISystemContext SystemContext;
         private List<MovementNode> Nodes;
 
         private IEventManager Events;
 
-        public MovementSystem(IEventManager eventManager)
+        public MovementSystem(ISystemContext systemContext)
         {
             
+            SystemContext = systemContext;
+            Events = SystemContext.Events;
         }
         
         public void Update()
