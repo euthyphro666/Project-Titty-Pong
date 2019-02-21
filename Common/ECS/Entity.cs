@@ -32,9 +32,9 @@ namespace Common.ECS
             ComponentModifiedEvent?.Invoke(this, new ComponentModifiedEventArgs(componentType));
         }
 
-        public IComponent Get(Type componentType)
+        public bool TryGetComponent(Type componentType, out IComponent component)
         {
-            return Components[componentType];
+            return Components.TryGetValue(componentType, out component);
         }
     }
 
