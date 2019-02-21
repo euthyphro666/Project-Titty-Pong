@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ECS\Components\CollisionComponent.cs" />
     <Compile Include="ECS\Components\DisplayComponent.cs" />
     <Compile Include="ECS\Components\IdentityComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
