@@ -1,4 +1,5 @@
 ﻿using Common.ECS;
+using Common.ECS.Components;
 using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
@@ -31,7 +32,45 @@ namespace TittyGame
         {
             base.Initialize();
             IsMouseVisible = true;
+            Screen.Init();
             LoadEngine();
+        }
+
+        private void LoadEngine()
+        {
+            GameEngine = new Engine();
+            GameEngine.AddSystem(new InputSystem(SystemContext), false)
+                      .AddSystem(new CollisionSystem(SystemContext), false)
+                      .AddSystem(new MovementSystem(SystemContext), false)
+                      .AddSystem(new RenderSystem(SystemContext, Screen), true);
+
+            GameEngine.AddEntity(new Entity()
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
+                                    .Add(new PositionComponent())
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent())
+                                )
+                      .AddEntity(new Entity()
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
+                                    .Add(new PositionComponent())
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent())
+                                )
+                      .AddEntity(new Entity()
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Ball")
+                                    })
+                                    .Add(new PositionComponent())
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent())
+                                );
         }
 
         protected override void LoadContent()
@@ -43,15 +82,6 @@ namespace TittyGame
         {
             base.UnloadContent();
         }
-
-        private void LoadEngine()
-        {
-            GameEngine = new Engine();
-            GameEngine.AddSystem(new InputSystem(SystemContext), false)
-                      .AddSystem(new CollisionSystem(SystemContext), false)
-                      .AddSystem(new MovementSystem(SystemContext), false)
-                      .AddSystem(new RenderSystem(SystemContext, Screen), true);
-        }    
 
         protected override void Update(GameTime delta)
         {

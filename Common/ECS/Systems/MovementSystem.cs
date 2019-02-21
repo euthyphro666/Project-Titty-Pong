@@ -19,9 +19,9 @@ namespace Common.ECS.Systems
 
         public MovementSystem(ISystemContext systemContext)
         {
-            
             SystemContext = systemContext;
             Events = SystemContext.Events;
+            Nodes = new List<MovementNode>();
         }
         
         public void Update()

@@ -17,6 +17,7 @@ namespace Common.ECS.Systems
         {
             SystemContext = systemContext;
             Events = SystemContext.Events;
+            Nodes = new List<CollisionNode>();
         }
 
         public void Update()

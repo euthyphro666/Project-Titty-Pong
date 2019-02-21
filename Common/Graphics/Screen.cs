@@ -31,7 +31,11 @@ namespace Common.Graphics
                 PreferredBackBufferHeight = 1080,
                 PreferredBackBufferWidth = 1920,
                 SynchronizeWithVerticalRetrace = true
-            }; ;
+            };
+        }
+
+        public void Init()
+        {
             Batch = new SpriteBatch(GraphicsManager.GraphicsDevice);
             Background = Color.Crimson;
             WhitePixel = CreatePixelTex(Color.White);

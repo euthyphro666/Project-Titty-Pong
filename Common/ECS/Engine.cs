@@ -29,6 +29,13 @@ namespace Common.ECS
             return this;
         }
 
+        public Engine AddEntity(Entity entity)
+        {
+            Entities.Add(entity);
+            //Raise entities modified event
+            return this;
+        }
+
         public void Update()
         {
             foreach(var system in UpdateSystems)

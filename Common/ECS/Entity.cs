@@ -19,10 +19,11 @@ namespace Common.ECS
             Add(new IdentityComponent());
         }
 
-        public void Add(IComponent component)
+        public Entity Add(IComponent component)
         {
             Components.Add(component.GetType(), component);
             ComponentModifiedEvent?.Invoke(this, new ComponentModifiedEventArgs(component.GetType()));
+            return this;
         }
 
         public void Remove(Type componentType)

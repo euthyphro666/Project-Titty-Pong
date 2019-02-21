@@ -10,6 +10,6 @@ namespace Common.ECS.Components
 {
     public class DisplayComponent : IComponent
     {
-        public Texture2D Sprite;
+        public Texture2D Sprite { get; set; }
     }
 }
