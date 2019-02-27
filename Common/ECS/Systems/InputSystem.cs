@@ -24,8 +24,8 @@ namespace Common.ECS.Systems
         {
             //Only consider keyboard input for now
             var state = Keyboard.GetState();
-            var up = state.IsKeyDown(Keys.W);
-            var down = state.IsKeyDown(Keys.S);
+            var up = state.IsKeyDown(Keys.W) || state.IsKeyDown(Keys.Up);
+            var down = state.IsKeyDown(Keys.S) || state.IsKeyDown(Keys.Down);
             var input = (byte)((up ^ down) ? (up ? -1 : 1) : 0);
             Events.RaiseInputEvent(input);
 

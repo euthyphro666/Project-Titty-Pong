@@ -79,8 +79,8 @@ namespace Common.Graphics
         {
             if (!ContextOpen)
                 return;
-            RenderVect.X = x;
-            RenderVect.Y = y;
+            RenderVect.X = x - (sprite.Width / 2);
+            RenderVect.Y = y - (sprite.Height / 2);
             Render(sprite, RenderVect);
         }
 
@@ -88,8 +88,8 @@ namespace Common.Graphics
         {
             if (!ContextOpen)
                 return;
-            RenderRect.X = (int)x;
-            RenderRect.Y = (int)y;
+            RenderRect.X = (int)(x - (sprite.Width / 2));
+            RenderRect.Y = (int)(y - (sprite.Height / 2));
             RenderRect.Width = (int)w;
             RenderRect.Height = (int)h;
             Render(sprite, RenderRect);
