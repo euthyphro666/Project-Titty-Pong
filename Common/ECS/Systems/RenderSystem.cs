@@ -15,6 +15,7 @@ namespace Common.ECS.Systems
 {
     public class RenderSystem : ISystem
     {
+        public uint Priority { get; set; }
         private readonly ISystemContext SystemContext;
         public List<RenderNode> Targets { get; set; }
 

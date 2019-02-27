@@ -39,10 +39,10 @@ namespace TittyGame
         private void LoadEngine()
         {
             GameEngine = new Engine(SystemContext);
-            GameEngine.AddSystem(new InputSystem(SystemContext), false)
-                      .AddSystem(new CollisionSystem(SystemContext), false)
-                      .AddSystem(new MovementSystem(SystemContext), false)
-                      .AddSystem(new RenderSystem(SystemContext, Screen), true);
+            GameEngine.AddSystem(new InputSystem(SystemContext), 1, false)
+                      .AddSystem(new CollisionSystem(SystemContext), 2, false)
+                      .AddSystem(new MovementSystem(SystemContext), 3,false)
+                      .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
             GameEngine.AddEntity(new Entity()
                                     .Add(new DisplayComponent

@@ -9,25 +9,25 @@ namespace Common.ECS
 {
     public class Engine
     {
-
-        private List<ISystem> UpdateSystems { get; set; }
-        private List<ISystem> RenderSystems { get; set; }
+        private SortedList<uint, ISystem> UpdateSystems { get; set; }
+        private SortedList<uint, ISystem> RenderSystems { get; set; }
         private List<Entity> Entities { get; set; }
         private ISystemContext Context;
 
         public Engine(ISystemContext context)
         {
             Context = context;
-            UpdateSystems = new List<ISystem>();
-            RenderSystems = new List<ISystem>();
+            UpdateSystems = new SortedList<uint, ISystem>();
+            RenderSystems = new SortedList<uint, ISystem>();
             Entities = new List<Entity>();
         }
 
-        public Engine AddSystem(ISystem system, bool shouldRender)
+        public Engine AddSystem(ISystem system, uint priority, bool shouldRender)
         {
+            system.Priority = priority;
             var systems = (shouldRender ? RenderSystems : UpdateSystems);
-            if (systems.TrueForAll(s => s.GetType() != system.GetType()))
-                systems.Add(system);
+            if (systems.Values.ToList().TrueForAll(s => s.GetType() != system.GetType()))
+                systems.Add(priority, system);
             return this;
         }
 
@@ -40,7 +40,7 @@ namespace Common.ECS
 
         public void Update()
         {
-            foreach(var system in UpdateSystems)
+            foreach(var system in UpdateSystems.Values)
             {
                 system.Update();
             }
@@ -48,7 +48,7 @@ namespace Common.ECS
 
         public void Render()
         {
-            foreach (var system in RenderSystems)
+            foreach (var system in RenderSystems.Values)
             {
                 system.Update();
             }
