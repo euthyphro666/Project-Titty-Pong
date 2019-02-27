@@ -51,14 +51,18 @@ namespace TittyGame
                                     })
                                     .Add(new PositionComponent
                                     {
-                                        X = 100,
-                                        Y = 100
+                                        X = 116,
+                                        Y = 540
                                     })
                                     .Add(new VelocityComponent())
                                     .Add(new RigidBodyComponent
                                     {
-                                        Width = 64,
-                                        Height = 256
+                                        Width = 32,
+                                        Height = 128
+                                    })
+                                    .Add(new PlayerComponent
+                                    {
+                                        Number = PlayerNumber.One
                                     })
                                 )
                       .AddEntity(new Entity()
@@ -68,14 +72,18 @@ namespace TittyGame
                                     })
                                     .Add(new PositionComponent
                                     {
-                                        X = 500,
-                                        Y = 100
+                                        X = 1804,
+                                        Y = 540
                                     })
                                     .Add(new VelocityComponent())
                                     .Add(new RigidBodyComponent
                                     {
-                                        Width = 64,
-                                        Height = 256
+                                        Width = 32,
+                                        Height = 128
+                                    })
+                                    .Add(new PlayerComponent
+                                    {
+                                        Number = PlayerNumber.Two
                                     })
                                 )
                       .AddEntity(new Entity()
@@ -85,14 +93,14 @@ namespace TittyGame
                                     })
                                     .Add(new PositionComponent
                                     {
-                                        X = 800,
-                                        Y = 100
+                                        X = 970,
+                                        Y = 540
                                     })
                                     .Add(new VelocityComponent())
                                     .Add(new RigidBodyComponent
                                     {
-                                        Width = 64,
-                                        Height = 64
+                                        Width = 32,
+                                        Height = 32
                                     })
                                 );
         }

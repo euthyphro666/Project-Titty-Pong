@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ECS\Components\DisplayComponent.cs" />
     <Compile Include="ECS\Components\IdentityComponent.cs" />
+    <Compile Include="ECS\Components\PlayerComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
     <Compile Include="ECS\Components\RigidBodyComponent.cs" />
     <Compile Include="ECS\Components\VelocityComponent.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="ECS\Contracts\ISystemContext.cs" />
     <Compile Include="ECS\Engine.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\Nodes\PlayerNode.cs" />
     <Compile Include="ECS\SystemContext.cs" />
     <Compile Include="ECS\SystemEvents\EntityAddedEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\EventManager.cs" />

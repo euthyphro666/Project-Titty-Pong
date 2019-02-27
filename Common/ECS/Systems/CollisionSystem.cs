@@ -32,9 +32,9 @@ namespace Common.ECS.Systems
         {
             var target = e.Target;
 
-            if (!target.TryGetComponent(typeof(VelocityComponent), out var velocity) ||
-                !target.TryGetComponent(typeof(RigidBodyComponent), out var body) ||
-                !target.TryGetComponent(typeof(IdentityComponent), out var identity) ||
+            if (!target.TryGetComponent(typeof(VelocityComponent), out var velocity)    ||
+                !target.TryGetComponent(typeof(RigidBodyComponent), out var body)       ||
+                !target.TryGetComponent(typeof(IdentityComponent), out var identity)    ||
                 !target.TryGetComponent(typeof(PositionComponent), out var position))
                 return;
 

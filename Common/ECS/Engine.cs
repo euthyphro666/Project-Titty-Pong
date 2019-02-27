@@ -24,7 +24,6 @@ namespace Common.ECS
 
         public Engine AddSystem(ISystem system, uint priority, bool shouldRender)
         {
-            system.Priority = priority;
             var systems = (shouldRender ? RenderSystems : UpdateSystems);
             if (systems.Values.ToList().TrueForAll(s => s.GetType() != system.GetType()))
                 systems.Add(priority, system);
