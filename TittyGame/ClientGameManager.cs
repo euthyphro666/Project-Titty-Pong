@@ -66,18 +66,34 @@ namespace TittyGame
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
                                     })
-                                    .Add(new PositionComponent())
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 500,
+                                        Y = 100
+                                    })
                                     .Add(new VelocityComponent())
-                                    .Add(new RigidBodyComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 64,
+                                        Height = 256
+                                    })
                                 )
                       .AddEntity(new Entity()
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Ball")
                                     })
-                                    .Add(new PositionComponent())
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 800,
+                                        Y = 100
+                                    })
                                     .Add(new VelocityComponent())
-                                    .Add(new RigidBodyComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 64,
+                                        Height = 64
+                                    })
                                 );
         }
 
