@@ -9,6 +9,8 @@ namespace Common.ECS.Contracts
 {
     public interface ISystem
     {
+        uint Priority { get; set; }
+        
         void Update();
     }
 }

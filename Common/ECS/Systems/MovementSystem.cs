@@ -11,6 +11,7 @@ namespace Common.ECS.Systems
 {
     public class MovementSystem : ISystem
     {
+        public uint Priority { get; set; }
 
         private readonly ISystemContext SystemContext;
         private List<MovementNode> Nodes;

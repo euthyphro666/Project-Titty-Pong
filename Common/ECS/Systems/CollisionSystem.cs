@@ -10,6 +10,8 @@ namespace Common.ECS.Systems
 {
     public class CollisionSystem : ISystem
     {
+        public uint Priority { get; set; }
+        
         private readonly ISystemContext SystemContext;
 
         private List<CollisionNode> DynamicNodes;
@@ -42,6 +44,7 @@ namespace Common.ECS.Systems
                 DynamicNodes.Add(node);
             else StaticNodes.Add(node);
         }
+
 
         public void Update()
         {

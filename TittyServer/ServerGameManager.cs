@@ -45,9 +45,9 @@ namespace TittyServer
             Screen.Init();
 
             SystemManager = new Engine(SystemContext);
-            SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), true)
-                         .AddSystem(new CollisionSystem(SystemContext), false)
-                         .AddSystem(new MovementSystem(SystemContext), false);
+            SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true)
+                         .AddSystem(new CollisionSystem(SystemContext), 1, false)
+                         .AddSystem(new MovementSystem(SystemContext), 2, false);
         }
 
         /// <summary>

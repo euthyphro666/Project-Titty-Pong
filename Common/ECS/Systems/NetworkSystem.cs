@@ -6,6 +6,7 @@ namespace Common.ECS.Systems
 {
     public class NetworkSystem : ISystem
     {
+        public uint Priority { get; set; }
         private readonly ISystemContext SystemContext;
         private List<NetworkInputNode> NetworkInputNodes;
         private List<NetworkSyncNode> NetworkSyncNodes;
