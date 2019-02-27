@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Components;
+using Microsoft.Xna.Framework;
 
 namespace Common.ECS.Systems
 {
@@ -71,7 +72,13 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
-            
+            foreach(var target in Targets)
+            {
+                if(target.Velocity.X != 0 || target.Velocity.Y != 0)
+                {
+
+                }
+            }
         }
     }
 }
