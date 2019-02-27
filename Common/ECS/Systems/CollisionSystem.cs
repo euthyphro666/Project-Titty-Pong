@@ -23,12 +23,12 @@ namespace Common.ECS.Systems
         {
             SystemContext = systemContext;
             Events = SystemContext.Events;
-            Events.EntityAddedEvent += HandleEntityAdded;
+            Events.EntityAddedEvent += OnEntityAdded;
             DynamicNodes = new List<CollisionNode>();
             StaticNodes = new List<CollisionNode>();
         }
 
-        private void HandleEntityAdded(object sender, EntityAddedEventArgs e)
+        private void OnEntityAdded(object sender, EntityAddedEventArgs e)
         {
             var target = e.Target;
 

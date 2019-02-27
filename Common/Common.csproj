@@ -54,6 +54,7 @@
     <Compile Include="ECS\Contracts\ISystemContext.cs" />
     <Compile Include="ECS\Engine.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\Nodes\SnapshotNode.cs" />
     <Compile Include="ECS\Nodes\PlayerNode.cs" />
     <Compile Include="ECS\SystemContext.cs" />
     <Compile Include="ECS\SystemEvents\EntityAddedEventArgs.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\NetworkSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
+    <Compile Include="ECS\Systems\SnapshotSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />

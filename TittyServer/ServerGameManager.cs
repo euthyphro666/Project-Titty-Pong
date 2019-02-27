@@ -21,12 +21,14 @@ namespace TittyServer
 
         private Engine SystemManager;
         private readonly ISystemContext SystemContext;
+        private bool DebugMode;
 
-        public ServerGameManager()
+        public ServerGameManager(string startArg)
         {
-            graphics = new GraphicsDeviceManager(this);
+            DebugMode = (startArg == "-debug" || startArg == "-d");
+
             Content.RootDirectory = "Content";
-            
+
             Screen = new Screen(this);
             SystemContext = new SystemContext(1920, 1080);
         }
@@ -44,10 +46,19 @@ namespace TittyServer
             base.Initialize();
             Screen.Init();
 
+            LoadEngine();
+        }
+
+        private void LoadEngine()
+        {
             SystemManager = new Engine(SystemContext);
             SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true)
-                         .AddSystem(new CollisionSystem(SystemContext), 1, false)
-                         .AddSystem(new MovementSystem(SystemContext), 2, false);
+                .AddSystem(new CollisionSystem(SystemContext), 1, false)
+                .AddSystem(new MovementSystem(SystemContext), 2, false)
+                .AddSystem(new NetworkSystem(SystemContext), 3, false);
+
+            if (DebugMode)
+                SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true);
         }
 
         /// <summary>
@@ -84,7 +95,7 @@ namespace TittyServer
             // TODO: Add your update logic here
 
             base.Update(gameTime);
-            
+
             SystemManager.Update();
         }
 
@@ -96,7 +107,7 @@ namespace TittyServer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            SystemManager.Render();
 
             base.Draw(gameTime);
         }

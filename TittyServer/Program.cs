@@ -12,9 +12,13 @@ namespace TittyServer
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            using (var game = new ServerGameManager())
+            var startArg = "";
+            if (args.Length != 0)
+                startArg = args[0];
+            
+            using (var game = new ServerGameManager(startArg))
                 game.Run();
         }
     }

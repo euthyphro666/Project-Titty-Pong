@@ -71,7 +71,7 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
-
+            
         }
     }
 }
