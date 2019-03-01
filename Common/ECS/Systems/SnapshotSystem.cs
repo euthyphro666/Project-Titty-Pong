@@ -8,7 +8,7 @@ using Common.IO;
 
 namespace Common.ECS.Systems
 {
-    public class SnapshotClientSystem : ISystem
+    public class SnapshotSystem : ISystem
     {
         private readonly ISystemContext SystemContext;
         public uint Priority { get; set; }
@@ -16,7 +16,7 @@ namespace Common.ECS.Systems
         private List<DynamicSnapshotNode> Nodes;
         private Input LastInput;
 
-        public SnapshotClientSystem(ISystemContext systemContext)
+        public SnapshotSystem(ISystemContext systemContext)
         {
             SystemContext = systemContext;
             SystemContext.Events.EntityAddedEvent += OnEntityAddedEvent;

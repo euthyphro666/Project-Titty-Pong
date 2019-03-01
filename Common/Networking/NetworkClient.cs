@@ -49,6 +49,7 @@ namespace Common.Networking
                     Debug.WriteLine("Unrecognized message type: " + msg?.MessageType);
                     break;
             }
+            Client.Recycle(msg);
         }
 
         public void Start(ReceivedCallback callback)
@@ -64,6 +65,8 @@ namespace Common.Networking
 
         public void Send(byte[] data)
         {
+            if (data == null) return;
+            
             var msg = Client.CreateMessage();
             msg.Write(data);
             Client.SendMessage(msg, NetDeliveryMethod.Unreliable);

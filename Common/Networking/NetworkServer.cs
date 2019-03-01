@@ -68,6 +68,7 @@ namespace Common.Networking
 
         public void Send(byte[] data)
         {
+            if (data == null) return;
             var msg = Server.CreateMessage();
             msg.Write(data);
             Server.SendToAll(msg, NetDeliveryMethod.Unreliable);

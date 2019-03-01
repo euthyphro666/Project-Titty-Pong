@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Common.ECS.Contracts;
 using Common.ECS.Nodes;
@@ -16,37 +20,82 @@ namespace Common.ECS.Systems
         private readonly INetworkSocket Socket;
         private readonly List<NetworkInputNode> NetworkInputNodes;
 
+        private bool IsServer;
+        private GameSnapshot LastSnapshot;
+
         public NetworkSystem(ISystemContext systemContext, INetworkSocket socket)
         {
             SystemContext = systemContext;
             Socket = socket;
 
+            IsServer = Socket is NetworkServer;
+
             NetworkInputNodes = new List<NetworkInputNode>();
 
-            SystemContext.Events.InputEvent += OnInputEvent;
-            
             socket.Start(ReceivedNetworkMessage);
-            socket.Connect("192.168.1.223"); // TODO make this not hardcoded
-        }
 
-        private void ReceivedNetworkMessage(byte[] data)
-        {
-            // parse data to whatever type we need and handle it
+            if (IsServer)
+            {
+                SystemContext.Events.GameSnapshotEvent += OnGameSnapshotEvent;
+            }
+            else
+            {
+                SystemContext.Events.InputEvent += OnInputEvent;
+                socket.Connect("192.168.1.223"); // TODO make this not hardcoded
+            }
         }
 
         public void Update()
         {
-            // Send the input nodes
-            if (NetworkInputNodes.Any())
+            if (IsServer)
             {
-                //Socket.Send();
+                var stream = new MemoryStream();
+                stream.WriteByte((byte) MessageIds.GameSnapshot);
+                var serializer = new BinaryFormatter();
+                serializer.Serialize(stream, LastSnapshot);
+                Socket.Send(stream.ToArray());
+            }
+            else
+            {
+                // Send the input nodes
+                if (NetworkInputNodes.Any())
+                {
+                    //Socket.Send();
+                }
             }
         }
-
+        
+        
+        private void ReceivedNetworkMessage(byte[] data)
+        {
+            // parse data to whatever type we need and handle it
+            using (var stream = new MemoryStream(data))
+            {
+                var msgId = (MessageIds)stream.ReadByte();
+                switch (msgId)
+                {
+                    case MessageIds.Invalid:
+                        break;
+                    case MessageIds.GameSnapshot:
+                        var serializer = new BinaryFormatter();
+                        if(serializer.Deserialize(stream) is GameSnapshot snapshot)
+                            Debug.WriteLine("Received Snapshot: Input: " + snapshot.Input + " SnapshotNodes count: " + snapshot.SnapshotNodes.Count);
+                        break;
+                    default:
+                        Debug.WriteLine("Unexpected message ID: " + msgId);
+                        break;
+                }
+            }
+        }
+        
+        private void OnGameSnapshotEvent(object sender, GameSnapshotEventArgs e)
+        {
+            LastSnapshot = e.Snapshot;
+        }
+        
         private void OnInputEvent(object sender, InputEventArgs e)
         {
-            Socket.Send(Encoding.UTF8.GetBytes("Input: " + e.Input.Value));
-            //NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
+            NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
         }
     }
 }

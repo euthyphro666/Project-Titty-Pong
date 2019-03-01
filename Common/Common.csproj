@@ -76,10 +76,11 @@
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\NetworkSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
-    <Compile Include="ECS\Systems\SnapshotClientSystem.cs" />
+    <Compile Include="ECS\Systems\SnapshotSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Input.cs" />
     <Compile Include="Networking\INetworkSocket.cs" />
+    <Compile Include="Networking\MessageIds.cs" />
     <Compile Include="Networking\NetworkClient.cs" />
     <Compile Include="Networking\NetworkServer.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
