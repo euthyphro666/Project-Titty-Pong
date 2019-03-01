@@ -11,10 +11,25 @@ namespace Common.ECS.Nodes
         public RigidBodyComponent RigidBody { get; set; }
         public IdentityComponent Identity { get; set; }
 
-        public static bool Uses(Type component)
+        public static bool TryCreate(Entity entity, out CollisionNode node)
         {
-            return (component == typeof(VelocityComponent) || component == typeof(PositionComponent) ||
-                    component == typeof(RigidBodyComponent) || component == typeof(IdentityComponent));
+            if (!entity.TryGetComponent(typeof(VelocityComponent), out var velocity) ||
+                !entity.TryGetComponent(typeof(RigidBodyComponent), out var body) ||
+                !entity.TryGetComponent(typeof(IdentityComponent), out var identity) ||
+                !entity.TryGetComponent(typeof(PositionComponent), out var position))
+            {
+                node = null;
+                return false;
+            }
+
+            node = new CollisionNode()
+            {
+                Velocity = velocity as VelocityComponent,
+                Identity = identity as IdentityComponent,
+                Position = position as PositionComponent,
+                RigidBody = body as RigidBodyComponent
+            };
+            return true;
         }
     }
 }

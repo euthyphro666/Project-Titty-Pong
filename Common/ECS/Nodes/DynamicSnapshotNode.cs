@@ -4,15 +4,17 @@ using Common.ECS.Contracts;
 
 namespace Common.ECS.Nodes
 {
-    public class NetworkSyncNode : INode
+    public class DynamicSnapshotNode : INode
     {
         public PositionComponent Position { get; set; }
         public VelocityComponent Velocity { get; set; }
+        public NetworkIdentityComponent NetworkIdentity { get; set; }
         
-        
-        public static bool Uses(Type component)
+        public static bool TryCreate(Entity entity, out DynamicSnapshotNode node)
         {
-            return (component == typeof(PositionComponent) || component == typeof(VelocityComponent));
+
+            node = null;
+            return false;
         }
     }
 }

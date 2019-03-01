@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ECS\Components\DisplayComponent.cs" />
     <Compile Include="ECS\Components\IdentityComponent.cs" />
+    <Compile Include="ECS\Components\NetworkIdentityComponent.cs" />
     <Compile Include="ECS\Components\PlayerComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
     <Compile Include="ECS\Components\RigidBodyComponent.cs" />
@@ -54,7 +55,8 @@
     <Compile Include="ECS\Contracts\ISystemContext.cs" />
     <Compile Include="ECS\Engine.cs" />
     <Compile Include="ECS\Entity.cs" />
-    <Compile Include="ECS\Nodes\SnapshotNode.cs" />
+    <Compile Include="ECS\GameSnapshot.cs" />
+    <Compile Include="ECS\Nodes\DynamicSnapshotNode.cs" />
     <Compile Include="ECS\Nodes\PlayerNode.cs" />
     <Compile Include="ECS\SystemContext.cs" />
     <Compile Include="ECS\SystemEvents\EntityAddedEventArgs.cs" />
@@ -62,7 +64,6 @@
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Nodes\NetworkInputNode.cs" />
-    <Compile Include="ECS\Nodes\NetworkSyncNode.cs" />
     <Compile Include="ECS\Nodes\RenderNode.cs" />
     <Compile Include="ECS\SystemEvents\InputEventArgs.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\NetworkSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
-    <Compile Include="ECS\Systems\SnapshotSystem.cs" />
+    <Compile Include="ECS\Systems\SnapshotClientSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Input.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />

@@ -11,6 +11,8 @@ namespace Common.ECS.SystemEvents
     public class InputEventArgs : EventArgs
     {
         public PlayerNumber Player { get; set; }
+        
+        public int Frame { get; set; }
         public Input Input { get; set; }
     }
 }

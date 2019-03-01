@@ -11,7 +11,7 @@ namespace Common.ECS.Systems
     public class CollisionSystem : ISystem
     {
         public uint Priority { get; set; }
-        
+
         private readonly ISystemContext SystemContext;
 
         private List<CollisionNode> DynamicNodes;
@@ -32,17 +32,12 @@ namespace Common.ECS.Systems
         {
             var target = e.Target;
 
-            if (!target.TryGetComponent(typeof(VelocityComponent), out var velocity)    ||
-                !target.TryGetComponent(typeof(RigidBodyComponent), out var body)       ||
-                !target.TryGetComponent(typeof(IdentityComponent), out var identity)    ||
-                !target.TryGetComponent(typeof(PositionComponent), out var position))
-                return;
-
-            var node = new CollisionNode {Identity = identity as IdentityComponent, Velocity = velocity as VelocityComponent, RigidBody = body as RigidBodyComponent, Position = position as PositionComponent};
-
+            if (!CollisionNode.TryCreate(target, out var node)) return;
+            
             if (node.RigidBody.IsDynamic)
                 DynamicNodes.Add(node);
-            else StaticNodes.Add(node);
+            else
+                StaticNodes.Add(node);
         }
 
 

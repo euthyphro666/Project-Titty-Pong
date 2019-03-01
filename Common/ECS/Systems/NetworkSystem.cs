@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Common.ECS.Contracts;
 using Common.ECS.Nodes;
+using Common.ECS.SystemEvents;
 
 namespace Common.ECS.Systems
 {
@@ -8,22 +10,29 @@ namespace Common.ECS.Systems
     {
         public uint Priority { get; set; }
         private readonly ISystemContext SystemContext;
-        private List<NetworkInputNode> NetworkInputNodes;
-        private List<NetworkSyncNode> NetworkSyncNodes;
+        private readonly List<NetworkInputNode> NetworkInputNodes;
 
-        private IEventManager Events;
-        
         public NetworkSystem(ISystemContext systemContext)
         {
             SystemContext = systemContext;
-            Events = SystemContext.Events;
+            
             NetworkInputNodes = new List<NetworkInputNode>();
-            NetworkSyncNodes = new List<NetworkSyncNode>();
+
+            SystemContext.Events.InputEvent += OnInputEvent;
         }
-        
+
         public void Update()
         {
-            
+            // Send the input nodes
+            if (NetworkInputNodes.Any())
+            {
+                
+            }
+        }
+
+        private void OnInputEvent(object sender, InputEventArgs e)
+        {
+            NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
         }
     }
 }
