@@ -56,7 +56,7 @@ namespace TittyServer
             var server = new NetworkServer();
             
             SystemManager = new Engine(SystemContext);
-            SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true)
+            SystemManager
                 .AddSystem(new CollisionSystem(SystemContext), 1, false)
                 .AddSystem(new MovementSystem(SystemContext), 2, false)
                 .AddSystem(new SnapshotSystem(SystemContext), 3, false)
