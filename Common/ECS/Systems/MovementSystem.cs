@@ -35,28 +35,10 @@ namespace Common.ECS.Systems
 
         private void OnEntityAddedEvent(object sender, EntityAddedEventArgs args)
         {
-            var target = args.Target;
-            if (target.TryGetComponent(typeof(PositionComponent), out var position) &&
-                target.TryGetComponent(typeof(VelocityComponent), out var velocity))
-            {
-                if (target.TryGetComponent(typeof(PlayerComponent), out var player))
-                {
-                    PlayerTargets.Add(new PlayerNode
-                    {
-                        Position = position as PositionComponent,
-                        Velocity = velocity as VelocityComponent,
-                        Player = player as PlayerComponent
-                    });
-                }
-                else
-                {
-                    Targets.Add(new MovementNode
-                    {
-                        Position = position as PositionComponent,
-                        Velocity = velocity as VelocityComponent
-                    });
-                }
-            }
+            if (PlayerNode.TryCreate(args.Target, out var playerNode))
+                PlayerTargets.Add(playerNode);
+            else if (MovementNode.TryCreate(args.Target, out var moveNode))
+                Targets.Add(moveNode);
         }
 
         private void OnInputEvent(object sender, InputEventArgs e)

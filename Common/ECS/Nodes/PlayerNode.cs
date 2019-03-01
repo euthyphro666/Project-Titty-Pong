@@ -14,11 +14,17 @@ namespace Common.ECS.Nodes
         public PositionComponent Position { get; set; }
         public VelocityComponent Velocity { get; set; }
 
-        public static bool Uses(Type component)
+        public static bool TryCreate(Entity target, out PlayerNode node)
         {
-            return (component == typeof(PlayerComponent) || 
-                    component == typeof(PositionComponent) ||
-                    component == typeof(VelocityComponent));
+            node = new PlayerNode();
+            if (!target.TryGetComponent(typeof(PlayerComponent), out var player)    ||
+                !target.TryGetComponent(typeof(PositionComponent), out var position)||
+                !target.TryGetComponent(typeof(VelocityComponent), out var velocity))
+                return false;
+            node.Player = player as PlayerComponent;
+            node.Position = position as PositionComponent;
+            node.Velocity = velocity as VelocityComponent;
+            return true;
         }
     }
 }

@@ -14,9 +14,17 @@ namespace Common.ECS.Nodes
         public PositionComponent Position { get; set; }
         public RigidBodyComponent RigidBody { get; set; }
         
-        public static bool Uses(Type component)
+        public static bool TryCreate(Entity target, out RenderNode node)
         {
-            return (component == typeof(PositionComponent) || component == typeof(VelocityComponent) || component == typeof(RigidBodyComponent));
+            node = new RenderNode();
+            if (!target.TryGetComponent(typeof(DisplayComponent), out var display)  ||
+                !target.TryGetComponent(typeof(RigidBodyComponent), out var body)   ||
+                !target.TryGetComponent(typeof(PositionComponent), out var position))
+                return false;
+            node.Display = display as DisplayComponent;
+            node.RigidBody = body as RigidBodyComponent;
+            node.Position = position as PositionComponent;
+            return true;
         }
     }
 }

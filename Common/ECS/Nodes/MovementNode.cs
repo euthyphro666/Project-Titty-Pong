@@ -9,9 +9,15 @@ namespace Common.ECS.Nodes
         public PositionComponent Position { get; set; }
         public VelocityComponent Velocity { get; set; }
 
-        public static bool Uses(Type component)
+        public static bool TryCreate(Entity target, out MovementNode node)
         {
-            return (component == typeof(PositionComponent) || component == typeof(VelocityComponent));
+            node = new MovementNode();
+            if (!target.TryGetComponent(typeof(PositionComponent), out var position) ||
+                !target.TryGetComponent(typeof(VelocityComponent), out var velocity))
+                return false;
+            node.Position = position as PositionComponent;
+            node.Velocity = velocity as VelocityComponent;
+            return true;
         }
     }
 }

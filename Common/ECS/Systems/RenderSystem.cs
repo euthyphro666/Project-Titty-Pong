@@ -50,18 +50,8 @@ namespace Common.ECS.Systems
 
         public void OnEntityAddedEvent(object sender, EntityAddedEventArgs args)
         {
-            var target = args.Target;
-            if( target.TryGetComponent(typeof(DisplayComponent), out var display) &&
-                target.TryGetComponent(typeof(RigidBodyComponent), out var body) &&
-                target.TryGetComponent(typeof(PositionComponent), out var position))
-            {
-                Targets.Add(new RenderNode
-                {
-                    Display = display as DisplayComponent,
-                    RigidBody = body as RigidBodyComponent,
-                    Position = position as PositionComponent
-                });
-            }
+            if (RenderNode.TryCreate(args.Target, out var node))
+                Targets.Add(node);
         }
 
     }
