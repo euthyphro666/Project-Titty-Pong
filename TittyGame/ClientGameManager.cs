@@ -70,6 +70,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.One
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                       .AddEntity(new Entity() //Paddle Two
                                     .Add(new DisplayComponent
@@ -91,6 +92,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.Two
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                       .AddEntity(new Entity() //Ball
                                     .Add(new DisplayComponent
@@ -112,6 +114,7 @@ namespace TittyGame
                                         Width = 32,
                                         Height = 32
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                         .AddEntity(new Entity() //North wall
                                     .Add(new PositionComponent
