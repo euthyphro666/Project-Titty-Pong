@@ -59,6 +59,7 @@
     <Compile Include="ECS\Nodes\DynamicSnapshotNode.cs" />
     <Compile Include="ECS\Nodes\PlayerNode.cs" />
     <Compile Include="ECS\SystemContext.cs" />
+    <Compile Include="ECS\SystemEvents\CollisionEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\EntityAddedEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\EventManager.cs" />
     <Compile Include="ECS\Nodes\CollisionNode.cs" />
@@ -75,8 +76,9 @@
     <Compile Include="ECS\Systems\SnapshotClientSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Input.cs" />
+    <Compile Include="Utils\Maths.Collision.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
-    <Compile Include="Utils\TittyMaths.cs" />
+    <Compile Include="Utils\Maths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

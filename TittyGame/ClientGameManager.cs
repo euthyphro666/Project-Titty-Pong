@@ -40,12 +40,12 @@ namespace TittyGame
         {
             GameEngine = new Engine(SystemContext);
             GameEngine.AddSystem(new InputSystem(SystemContext), 1, false)
-                      .AddSystem(new CollisionSystem(SystemContext), 2, false)
-                      .AddSystem(new MovementSystem(SystemContext), 3,false)
+                      .AddSystem(new CollisionSystem(SystemContext), 3, false)
+                      .AddSystem(new MovementSystem(SystemContext), 2,false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
             
-            GameEngine.AddEntity(new Entity() //Paddle One
+            GameEngine.AddEntity(new Entity("Paddle One")
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
@@ -59,14 +59,17 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 32,
-                                        Height = 128
+                                        Height = 128,
+                                        IsDynamic = true,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                                     .Add(new PlayerComponent
                                     {
                                         Number = PlayerNumber.One
                                     })
                                 )
-                      .AddEntity(new Entity() //Paddle Two
+                      .AddEntity(new Entity("Paddle Two")
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
@@ -80,14 +83,17 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 32,
-                                        Height = 128
+                                        Height = 128,
+                                        IsDynamic = true,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                                     .Add(new PlayerComponent
                                     {
                                         Number = PlayerNumber.Two
                                     })
                                 )
-                      .AddEntity(new Entity() //Ball
+                      .AddEntity(new Entity("Ball")
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Ball")
@@ -100,15 +106,18 @@ namespace TittyGame
                                     .Add(new VelocityComponent
                                     {
                                         X = -4,
-                                        Y = 2
+                                        Y = 0
                                     })
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 32,
-                                        Height = 32
+                                        Height = 32,
+                                        IsDynamic = true,
+                                        IsKinematic = false,
+                                        IsRect = false
                                     })
                                 )
-                        .AddEntity(new Entity() //North wall
+                        .AddEntity(new Entity("North-Wall")
                                     .Add(new PositionComponent
                                     {
                                         X = 1920 / 2,
@@ -118,10 +127,13 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 1920,
-                                        Height = 256
+                                        Height = 256,
+                                        IsDynamic = false,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                         )
-                        .AddEntity(new Entity() //South wall
+                        .AddEntity(new Entity("South-Wall")
                                     .Add(new PositionComponent
                                     {
                                         X = 1920 / 2,
@@ -131,10 +143,13 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 1920,
-                                        Height = 256
+                                        Height = 256,
+                                        IsDynamic = false,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                         )
-                        .AddEntity(new Entity() //West wall
+                        .AddEntity(new Entity("West-Wall")
                                     .Add(new PositionComponent
                                     {
                                         X = 0 - 128,
@@ -144,10 +159,13 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 256,
-                                        Height = 1080
+                                        Height = 1080,
+                                        IsDynamic = false,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                         )
-                        .AddEntity(new Entity() //East wall
+                        .AddEntity(new Entity("East-Wall")
                                     .Add(new PositionComponent
                                     {
                                         X = 1920 + 128,
@@ -157,7 +175,10 @@ namespace TittyGame
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 256,
-                                        Height = 1080
+                                        Height = 1080,
+                                        IsDynamic = false,
+                                        IsKinematic = true,
+                                        IsRect = true
                                     })
                         );
         }

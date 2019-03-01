@@ -8,9 +8,11 @@ namespace Common.ECS.Components
         private static int NextAvailableId => CurrentId++;
         
         public int Id { get; }
+        public string Name { get; }
 
-        public IdentityComponent()
+        public IdentityComponent(string name)
         {
+            Name = name;
             Id = NextAvailableId;
         }
     }

@@ -15,7 +15,7 @@ namespace Common.IO
 
         public Input(int value)
         {
-            Value = TittyMaths.Clamp(value + 128);
+            Value = Maths.Clamp(value + 128);
         }
 
         public static implicit operator Input(int value)

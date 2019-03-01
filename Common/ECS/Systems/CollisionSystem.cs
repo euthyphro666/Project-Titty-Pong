@@ -53,9 +53,9 @@ namespace Common.ECS.Systems
                 {
                     nodeB = DynamicNodes[j];
 
-                    if (TittyMaths.Intersects(nodeA.RigidBody, nodeA.Position, nodeB.RigidBody, nodeB.Position))
+                    if (Maths.Intersects(nodeA.RigidBody, nodeB.RigidBody, nodeA.Position, nodeB.Position))
                     {
-                        //Events.RaiseCollisionEvent
+                        Events.RaiseCollisionEvent(nodeA, nodeB);
                     }
                 }
 
@@ -65,9 +65,9 @@ namespace Common.ECS.Systems
                 {
                     nodeB = s;
 
-                    if (TittyMaths.Intersects(nodeA.RigidBody, nodeA.Position, nodeB.RigidBody, nodeB.Position))
+                    if (Maths.Intersects(nodeA.RigidBody, nodeB.RigidBody, nodeA.Position, nodeB.Position))
                     {
-                        //Events.RaiseCollisionEvent
+                        Events.RaiseCollisionEvent(nodeA, nodeB);
                     }
                 }
             }

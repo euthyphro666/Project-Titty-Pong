@@ -16,7 +16,13 @@ namespace Common.ECS
         public Entity()
         {
             Components = new Dictionary<Type, IComponent>();
-            Add(new IdentityComponent());
+            Add(new IdentityComponent("Default"));
+        }
+
+        public Entity(string name)
+        {
+            Components = new Dictionary<Type, IComponent>();
+            Add(new IdentityComponent(name));
         }
 
         public Entity Add(IComponent component)

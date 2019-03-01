@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Common.ECS.SystemEvents;
 using Common.ECS.Components;
 using Microsoft.Xna.Framework;
+using Common.Utils;
 
 namespace Common.ECS.Systems
 {
@@ -30,6 +31,21 @@ namespace Common.ECS.Systems
 
             Events.InputEvent += OnInputEvent;
             Events.EntityAddedEvent += OnEntityAddedEvent;
+            Events.CollisionEvent += OnCollisionEvent;
+        }
+
+        private void OnCollisionEvent(object sender, CollisionEventArgs e)
+        {
+            if (e.Node1.RigidBody.IsDynamic)
+            {
+                Maths.Reverse(e.Node1.Velocity);
+                Maths.Apply(e.Node1.Velocity, e.Node1.Position);
+            }
+            if (e.Node2.RigidBody.IsDynamic)
+            {
+                Maths.Reverse(e.Node2.Velocity);
+                Maths.Apply(e.Node2.Velocity, e.Node2.Position);
+            }
         }
 
         private void OnEntityAddedEvent(object sender, EntityAddedEventArgs args)
@@ -46,7 +62,7 @@ namespace Common.ECS.Systems
             {
                 if(target.Player.Number == e.Player)
                 {
-                    target.Position.Y += e.Input;
+                    target.Velocity.Y = e.Input;
                 }
             }
         }
