@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Components;
 using Microsoft.Xna.Framework;
@@ -54,12 +53,19 @@ namespace Common.ECS.Systems
 
         public void Update()
         {
-            foreach(var target in Targets)
+            foreach (var player in PlayerTargets)
             {
-                if(target.Velocity.X != 0 || target.Velocity.Y != 0)
-                {
-
-                }
+                if (player.Velocity.X == 0 && player.Velocity.Y == 0)
+                    continue;
+                player.Position.X += player.Velocity.X;
+                player.Position.Y += player.Velocity.Y;
+            }
+            foreach (var target in Targets)
+            {
+                if (target.Velocity.X == 0 && target.Velocity.Y == 0)
+                    continue;
+                target.Position.X += target.Velocity.X;
+                target.Position.Y += target.Velocity.Y;
             }
         }
     }

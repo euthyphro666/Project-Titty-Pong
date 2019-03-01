@@ -44,7 +44,8 @@ namespace TittyGame
                       .AddSystem(new MovementSystem(SystemContext), 3,false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
-            GameEngine.AddEntity(new Entity()
+            
+            GameEngine.AddEntity(new Entity() //Paddle One
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
@@ -65,7 +66,7 @@ namespace TittyGame
                                         Number = PlayerNumber.One
                                     })
                                 )
-                      .AddEntity(new Entity()
+                      .AddEntity(new Entity() //Paddle Two
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Paddle")
@@ -86,23 +87,79 @@ namespace TittyGame
                                         Number = PlayerNumber.Two
                                     })
                                 )
-                      .AddEntity(new Entity()
+                      .AddEntity(new Entity() //Ball
                                     .Add(new DisplayComponent
                                     {
                                         Sprite = Content.Load<Texture2D>("Ball")
                                     })
                                     .Add(new PositionComponent
                                     {
-                                        X = 970,
+                                        X = 1920 / 2,
                                         Y = 540
                                     })
-                                    .Add(new VelocityComponent())
+                                    .Add(new VelocityComponent
+                                    {
+                                        X = -4,
+                                        Y = 2
+                                    })
                                     .Add(new RigidBodyComponent
                                     {
                                         Width = 32,
                                         Height = 32
                                     })
-                                );
+                                )
+                        .AddEntity(new Entity() //North wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 / 2,
+                                        Y = 0 - 128
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 1920,
+                                        Height = 256
+                                    })
+                        )
+                        .AddEntity(new Entity() //South wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 / 2,
+                                        Y = 1080 + 128
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 1920,
+                                        Height = 256
+                                    })
+                        )
+                        .AddEntity(new Entity() //West wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 0 - 128,
+                                        Y = 1080 / 2
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 256,
+                                        Height = 1080
+                                    })
+                        )
+                        .AddEntity(new Entity() //East wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 + 128,
+                                        Y = 1080 / 2
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 256,
+                                        Height = 1080
+                                    })
+                        );
         }
 
         protected override void LoadContent()
