@@ -12,10 +12,22 @@ namespace Common.ECS.Nodes
         public NetworkIdentityComponent NetworkIdentity { get; set; }
         
         public static bool TryCreate(Entity entity, out DynamicSnapshotNode node)
-        {
-throw new NotImplementedException();
-            node = null;
-            return false;
+        { 
+            if (!entity.TryGetComponent(typeof(VelocityComponent), out var velocity) ||
+              !entity.TryGetComponent(typeof(NetworkIdentityComponent), out var identity) ||
+              !entity.TryGetComponent(typeof(PositionComponent), out var position))
+            {
+                node = null;
+                return false;
+            }
+
+            node = new DynamicSnapshotNode()
+            {
+                Velocity = velocity as VelocityComponent,
+                NetworkIdentity = identity as NetworkIdentityComponent,
+                Position = position as PositionComponent,
+            };
+            return true;
         }
     }
 }
