@@ -10,6 +10,11 @@ namespace Common.Utils
 {
     public static class TittyMaths
     {
+        public static byte Clamp(int value)
+        {
+            return (byte)(value > byte.MinValue ? ((value > byte.MaxValue) ? byte.MaxValue : value) : byte.MinValue);
+        }
+
         public static float Clamp(float value, float min, float max)
         {
             return value > min ? ((value > max) ? max : value) : min;

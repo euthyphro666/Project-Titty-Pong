@@ -1,5 +1,6 @@
 using Common.ECS.Components;
 using Common.ECS.Contracts;
+using Common.IO;
 using System;
 
 namespace Common.ECS.SystemEvents
@@ -7,7 +8,7 @@ namespace Common.ECS.SystemEvents
     public class EventManager : IEventManager
     {
         public event EventHandler<InputEventArgs> InputEvent;
-        public void RaiseInputEvent(PlayerNumber player, byte input)
+        public void RaiseInputEvent(PlayerNumber player, Input input)
         {
             InputEvent?.Invoke(null, new InputEventArgs { Player = player, Input = input });
         }

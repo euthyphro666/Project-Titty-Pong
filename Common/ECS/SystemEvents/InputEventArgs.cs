@@ -1,4 +1,5 @@
 ﻿using Common.ECS.Components;
+using Common.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Common.ECS.SystemEvents
     public class InputEventArgs : EventArgs
     {
         public PlayerNumber Player { get; set; }
-        public byte Input { get; set; }
+        public Input Input { get; set; }
     }
 }

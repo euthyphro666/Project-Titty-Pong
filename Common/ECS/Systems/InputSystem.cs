@@ -1,6 +1,7 @@
 ﻿using Common.ECS.Components;
 using Common.ECS.Contracts;
 using Common.ECS.Nodes;
+using Common.IO;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,12 @@ namespace Common.ECS.Systems
             var state = Keyboard.GetState();
             var up = state.IsKeyDown(Keys.W);
             var down = state.IsKeyDown(Keys.S);
-            var input = (byte)((up ^ down) ? (up ? 128 - 10 : 128 + 10) : 128);
+            var input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);
             if(input != 0) Events.RaiseInputEvent(PlayerNumber.One, input);
 
             up = state.IsKeyDown(Keys.Up);
             down = state.IsKeyDown(Keys.Down);
-            input = (byte)((up ^ down) ? (up ? 128 - 10 : 128 + 10) : 128);
+            input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);
             if (input != 0) Events.RaiseInputEvent(PlayerNumber.Two, input);
         }
 

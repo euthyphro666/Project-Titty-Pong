@@ -46,7 +46,7 @@ namespace Common.ECS.Systems
             {
                 if(target.Player.Number == e.Player)
                 {
-                    target.Position.Y += (e.Input - 128);
+                    target.Position.Y += e.Input;
                 }
             }
         }
