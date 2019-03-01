@@ -23,10 +23,6 @@ namespace Common.Networking
             var msg = client?.ReadMessage();
             switch (msg?.MessageType)
             {
-                case NetIncomingMessageType.Error:
-                case NetIncomingMessageType.StatusChanged:
-                case NetIncomingMessageType.UnconnectedData:
-                case NetIncomingMessageType.ConnectionApproval:
                 case NetIncomingMessageType.Data:
                     var data = msg?.ReadBytes(msg.LengthBytes);
 
@@ -36,15 +32,19 @@ namespace Common.Networking
                     }
                     
                     break;
-                case NetIncomingMessageType.Receipt:
-                case NetIncomingMessageType.DiscoveryRequest:
-                case NetIncomingMessageType.DiscoveryResponse:
-                case NetIncomingMessageType.VerboseDebugMessage:
-                case NetIncomingMessageType.DebugMessage:
-                case NetIncomingMessageType.WarningMessage:
-                case NetIncomingMessageType.ErrorMessage:
-                case NetIncomingMessageType.NatIntroductionSuccess:
-                case NetIncomingMessageType.ConnectionLatencyUpdated:
+//                case NetIncomingMessageType.Error:
+//                case NetIncomingMessageType.StatusChanged:
+//                case NetIncomingMessageType.UnconnectedData:
+//                case NetIncomingMessageType.ConnectionApproval:
+//                case NetIncomingMessageType.Receipt:
+//                case NetIncomingMessageType.DiscoveryRequest:
+//                case NetIncomingMessageType.DiscoveryResponse:
+//                case NetIncomingMessageType.VerboseDebugMessage:
+//                case NetIncomingMessageType.DebugMessage:
+//                case NetIncomingMessageType.WarningMessage:
+//                case NetIncomingMessageType.ErrorMessage:
+//                case NetIncomingMessageType.NatIntroductionSuccess:
+//                case NetIncomingMessageType.ConnectionLatencyUpdated:
                 default:
                     Debug.WriteLine("Unrecognized message type: " + msg?.MessageType);
                     break;

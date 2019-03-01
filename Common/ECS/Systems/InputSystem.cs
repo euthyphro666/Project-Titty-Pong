@@ -32,6 +32,7 @@ namespace Common.ECS.Systems
             var input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);
             if(input != 0) Events.RaiseInputEvent(PlayerNumber.One, input);
 
+            // TODO only do this one if we're not online
             up = state.IsKeyDown(Keys.Up);
             down = state.IsKeyDown(Keys.Down);
             input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using Common.ECS.Contracts;
 using Common.ECS.Nodes;
 using Common.ECS.SystemEvents;
@@ -43,7 +45,8 @@ namespace Common.ECS.Systems
 
         private void OnInputEvent(object sender, InputEventArgs e)
         {
-            NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
+            Socket.Send(Encoding.UTF8.GetBytes("Input: " + e.Input.Value));
+            //NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
         }
     }
 }

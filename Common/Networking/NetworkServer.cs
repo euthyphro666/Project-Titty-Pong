@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 using Lidgren.Network;
 
 namespace Common.Networking
@@ -13,7 +14,7 @@ namespace Common.Networking
         {
             var config = new NetPeerConfiguration("TittyPong");
             config.Port = 54555;
-            
+
             Server = new NetServer(config);
             Server.RegisterReceivedCallback(Received);
         }
@@ -24,34 +25,35 @@ namespace Common.Networking
             var msg = server?.ReadMessage();
             switch (msg?.MessageType)
             {
-                case NetIncomingMessageType.Error:
-                case NetIncomingMessageType.StatusChanged:
-                case NetIncomingMessageType.UnconnectedData:
-                case NetIncomingMessageType.ConnectionApproval:
                 case NetIncomingMessageType.Data:
                     var data = msg?.ReadBytes(msg.LengthBytes);
-
-                    Debug.WriteLine("Received Data message type");
                     if (data != null)
                     {
+                        Debug.Write("Received Data message type: ");
+                        Debug.WriteLine(Encoding.UTF8.GetString(data));
+
+
                         Callback(data);
                     }
-                    
+
                     break;
-                case NetIncomingMessageType.Receipt:
-                case NetIncomingMessageType.DiscoveryRequest:
-                case NetIncomingMessageType.DiscoveryResponse:
-                case NetIncomingMessageType.VerboseDebugMessage:
-                case NetIncomingMessageType.DebugMessage:
-                case NetIncomingMessageType.WarningMessage:
-                case NetIncomingMessageType.ErrorMessage:
-                case NetIncomingMessageType.NatIntroductionSuccess:
-                case NetIncomingMessageType.ConnectionLatencyUpdated:
+//                case NetIncomingMessageType.Error:
+//                case NetIncomingMessageType.StatusChanged:
+//                case NetIncomingMessageType.UnconnectedData:
+//                case NetIncomingMessageType.ConnectionApproval:
+//                case NetIncomingMessageType.Receipt:
+//                case NetIncomingMessageType.DiscoveryRequest:
+//                case NetIncomingMessageType.DiscoveryResponse:
+//                case NetIncomingMessageType.VerboseDebugMessage:
+//                case NetIncomingMessageType.DebugMessage:
+//                case NetIncomingMessageType.WarningMessage:
+//                case NetIncomingMessageType.ErrorMessage:
+//                case NetIncomingMessageType.NatIntroductionSuccess:
+//                case NetIncomingMessageType.ConnectionLatencyUpdated:
                 default:
                     Debug.WriteLine("Unrecognized message type: " + msg?.MessageType);
                     break;
             }
-
         }
 
         public void Start(ReceivedCallback callback)
