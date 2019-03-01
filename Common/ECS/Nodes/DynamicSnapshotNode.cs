@@ -12,7 +12,7 @@ namespace Common.ECS.Nodes
         
         public static bool TryCreate(Entity entity, out DynamicSnapshotNode node)
         {
-
+throw new NotImplementedException();
             node = null;
             return false;
         }

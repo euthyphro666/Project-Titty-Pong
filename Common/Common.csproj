@@ -65,6 +65,7 @@
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Nodes\NetworkInputNode.cs" />
     <Compile Include="ECS\Nodes\RenderNode.cs" />
+    <Compile Include="ECS\SystemEvents\GameSnapshotEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\InputEventArgs.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Contracts\ISystem.cs" />

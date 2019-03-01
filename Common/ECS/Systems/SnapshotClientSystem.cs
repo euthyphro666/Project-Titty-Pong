@@ -14,7 +14,6 @@ namespace Common.ECS.Systems
         public uint Priority { get; set; }
 
         private List<DynamicSnapshotNode> Nodes;
-        private Queue<GameSnapshot> Snapshots;
         private Input LastInput;
 
         public SnapshotClientSystem(ISystemContext systemContext)
@@ -24,13 +23,13 @@ namespace Common.ECS.Systems
             SystemContext.Events.InputEvent += OnInputEvent;
             
             Nodes = new List<DynamicSnapshotNode>();
-            Snapshots = new Queue<GameSnapshot>();
         }
 
         public void Update()
         {
             // Create a new GameSnapshot and queue it up
-            Snapshots.Enqueue(new GameSnapshot(Nodes.ToList(), LastInput));
+            var snapshot = new GameSnapshot(Nodes.ToList(), LastInput);
+            SystemContext.Events.RaiseGameSnapshotEvent(snapshot);
         }
 
         private void OnInputEvent(object sender, InputEventArgs e)
@@ -40,16 +39,11 @@ namespace Common.ECS.Systems
 
         private void OnEntityAddedEvent(object sender, EntityAddedEventArgs args)
         {
-            // TODO change this to some kind of input register
             
             var target = args.Target;
-            if( target.TryGetComponent(typeof(PositionComponent), out var pos))
+            if (DynamicSnapshotNode.TryCreate(target, out var node))
             {
-                Nodes.Add(new DynamicSnapshotNode()
-                {
-                    //Position = pos as PositionComponent
-                    
-                });
+                Nodes.Add(node);
             }
         }
     }
