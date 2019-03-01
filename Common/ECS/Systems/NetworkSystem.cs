@@ -49,11 +49,7 @@ namespace Common.ECS.Systems
         {
             if (IsServer)
             {
-                var stream = new MemoryStream();
-                stream.WriteByte((byte) MessageIds.GameSnapshot);
-                var serializer = new BinaryFormatter();
-                serializer.Serialize(stream, LastSnapshot);
-                Socket.Send(stream.ToArray());
+                Socket.Send(Serialize(MessageIds.GameSnapshot, LastSnapshot));
             }
             else
             {
@@ -64,21 +60,21 @@ namespace Common.ECS.Systems
                 }
             }
         }
-        
-        
+
+
         private void ReceivedNetworkMessage(byte[] data)
         {
             // parse data to whatever type we need and handle it
             using (var stream = new MemoryStream(data))
             {
-                var msgId = (MessageIds)stream.ReadByte();
+                var msgId = (MessageIds) stream.ReadByte();
                 switch (msgId)
                 {
                     case MessageIds.Invalid:
                         break;
                     case MessageIds.GameSnapshot:
                         var serializer = new BinaryFormatter();
-                        if(serializer.Deserialize(stream) is GameSnapshot snapshot)
+                        if (serializer.Deserialize(stream) is GameSnapshot snapshot)
                             Debug.WriteLine("Received Snapshot: Input: " + snapshot.Input + " SnapshotNodes count: " + snapshot.SnapshotNodes.Count);
                         break;
                     default:
@@ -87,15 +83,34 @@ namespace Common.ECS.Systems
                 }
             }
         }
-        
+
         private void OnGameSnapshotEvent(object sender, GameSnapshotEventArgs e)
         {
             LastSnapshot = e.Snapshot;
         }
-        
+
         private void OnInputEvent(object sender, InputEventArgs e)
         {
             NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
+        }
+
+        private byte[] Serialize(MessageIds id, object objToSerialize)
+        {
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    stream.WriteByte((byte) id);
+                    var serializer = new BinaryFormatter();
+                    serializer.Serialize(stream, objToSerialize);
+
+                    return stream.ToArray();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
