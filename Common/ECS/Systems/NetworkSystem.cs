@@ -3,6 +3,7 @@ using System.Linq;
 using Common.ECS.Contracts;
 using Common.ECS.Nodes;
 using Common.ECS.SystemEvents;
+using Common.Networking;
 
 namespace Common.ECS.Systems
 {
@@ -10,15 +11,25 @@ namespace Common.ECS.Systems
     {
         public uint Priority { get; set; }
         private readonly ISystemContext SystemContext;
+        private readonly INetworkSocket Socket;
         private readonly List<NetworkInputNode> NetworkInputNodes;
 
-        public NetworkSystem(ISystemContext systemContext)
+        public NetworkSystem(ISystemContext systemContext, INetworkSocket socket)
         {
             SystemContext = systemContext;
-            
+            Socket = socket;
+
             NetworkInputNodes = new List<NetworkInputNode>();
 
             SystemContext.Events.InputEvent += OnInputEvent;
+            
+            socket.Start(ReceivedNetworkMessage);
+            socket.Connect("192.168.1.223"); // TODO make this not hardcoded
+        }
+
+        private void ReceivedNetworkMessage(byte[] data)
+        {
+            // parse data to whatever type we need and handle it
         }
 
         public void Update()
@@ -26,7 +37,7 @@ namespace Common.ECS.Systems
             // Send the input nodes
             if (NetworkInputNodes.Any())
             {
-                
+                //Socket.Send();
             }
         }
 

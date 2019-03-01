@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\3rd Party\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,11 +79,13 @@
     <Compile Include="ECS\Systems\SnapshotClientSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Input.cs" />
+    <Compile Include="Networking\INetworkSocket.cs" />
+    <Compile Include="Networking\NetworkClient.cs" />
+    <Compile Include="Networking\NetworkServer.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\TittyMaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,7 @@ using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
 using Common.Graphics;
+using Common.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -51,11 +52,13 @@ namespace TittyServer
 
         private void LoadEngine()
         {
+            var server = new NetworkServer();
+            
             SystemManager = new Engine(SystemContext);
             SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true)
                 .AddSystem(new CollisionSystem(SystemContext), 1, false)
                 .AddSystem(new MovementSystem(SystemContext), 2, false)
-                .AddSystem(new NetworkSystem(SystemContext), 3, false);
+                .AddSystem(new NetworkSystem(SystemContext, server), 3, false);
 
             if (DebugMode)
                 SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true);
