@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Lidgren.Network;
 
 namespace Common.Networking
@@ -45,7 +46,7 @@ namespace Common.Networking
                 case NetIncomingMessageType.NatIntroductionSuccess:
                 case NetIncomingMessageType.ConnectionLatencyUpdated:
                 default:
-                    Console.WriteLine("Unrecognized message type: " + msg?.MessageType);
+                    Debug.WriteLine("Unrecognized message type: " + msg?.MessageType);
                     break;
             }
         }
