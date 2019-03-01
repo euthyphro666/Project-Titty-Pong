@@ -16,5 +16,8 @@ namespace Common.ECS.Contracts
 
         event EventHandler<EntityAddedEventArgs> EntityAddedEvent;
         void RaiseEntityAddedEvent(Entity e);
+
+        event EventHandler<GameSnapshotEventArgs> GameSnapshotEvent;
+        void RaiseGameSnapshotEvent(GameSnapshot gs);
     }
 }

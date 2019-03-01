@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\3rd Party\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +69,7 @@
     <Compile Include="ECS\Nodes\MovementNode.cs" />
     <Compile Include="ECS\Nodes\NetworkInputNode.cs" />
     <Compile Include="ECS\Nodes\RenderNode.cs" />
+    <Compile Include="ECS\SystemEvents\GameSnapshotEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\InputEventArgs.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Contracts\ISystem.cs" />
@@ -73,15 +77,18 @@
     <Compile Include="ECS\Systems\CollisionSystem.cs" />
     <Compile Include="ECS\Systems\NetworkSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
-    <Compile Include="ECS\Systems\SnapshotClientSystem.cs" />
+    <Compile Include="ECS\Systems\SnapshotSystem.cs" />
     <Compile Include="Graphics\Screen.cs" />
     <Compile Include="IO\Input.cs" />
+    <Compile Include="Networking\INetworkSocket.cs" />
+    <Compile Include="Networking\MessageIds.cs" />
+    <Compile Include="Networking\NetworkClient.cs" />
+    <Compile Include="Networking\NetworkServer.cs" />
     <Compile Include="Utils\Maths.Collision.cs" />
     <Compile Include="Utils\EntityIdManager.cs" />
     <Compile Include="Utils\Maths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

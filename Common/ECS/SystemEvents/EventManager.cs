@@ -26,5 +26,11 @@ namespace Common.ECS.SystemEvents
         {
             EntityAddedEvent?.Invoke(null, new EntityAddedEventArgs { Target = target });
         }
+
+        public event EventHandler<GameSnapshotEventArgs> GameSnapshotEvent;
+        public void RaiseGameSnapshotEvent(GameSnapshot gs)
+        {
+            GameSnapshotEvent?.Invoke(null, new GameSnapshotEventArgs(gs));
+        }
     }
 }

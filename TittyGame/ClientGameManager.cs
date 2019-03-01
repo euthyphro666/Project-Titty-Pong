@@ -4,6 +4,7 @@ using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
 using Common.Graphics;
+using Common.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,8 +39,11 @@ namespace TittyGame
 
         private void LoadEngine()
         {
+            var client = new NetworkClient();
+            
             GameEngine = new Engine(SystemContext);
             GameEngine.AddSystem(new InputSystem(SystemContext), 1, false)
+                      //.AddSystem(new NetworkSystem(SystemContext, client), 4, false) // TODO make this the snapshot system
                       .AddSystem(new CollisionSystem(SystemContext), 3, false)
                       .AddSystem(new MovementSystem(SystemContext), 2,false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
@@ -68,6 +72,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.One
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                       .AddEntity(new Entity("Paddle Two")
                                     .Add(new DisplayComponent
@@ -92,6 +97,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.Two
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                       .AddEntity(new Entity("Ball")
                                     .Add(new DisplayComponent
@@ -116,6 +122,7 @@ namespace TittyGame
                                         IsKinematic = false,
                                         IsRect = false
                                     })
+                                    .Add(new NetworkIdentityComponent(){})
                                 )
                         .AddEntity(new Entity("North-Wall")
                                     .Add(new PositionComponent

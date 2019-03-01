@@ -1,8 +1,10 @@
 ﻿using Common.ECS;
+using Common.ECS.Components;
 using Common.ECS.Contracts;
 using Common.ECS.SystemEvents;
 using Common.ECS.Systems;
 using Common.Graphics;
+using Common.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -51,12 +53,134 @@ namespace TittyServer
 
         private void LoadEngine()
         {
+            var server = new NetworkServer();
+            
             SystemManager = new Engine(SystemContext);
-            SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true)
+            SystemManager
                 .AddSystem(new CollisionSystem(SystemContext), 1, false)
                 .AddSystem(new MovementSystem(SystemContext), 2, false)
-                .AddSystem(new NetworkSystem(SystemContext), 3, false);
+                .AddSystem(new SnapshotSystem(SystemContext), 3, false)
+                .AddSystem(new NetworkSystem(SystemContext, server), 4, false);
 
+            SystemManager.AddEntity(new Entity() //Paddle One
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 116,
+                                        Y = 540
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 32,
+                                        Height = 128
+                                    })
+                                    .Add(new PlayerComponent
+                                    {
+                                        Number = PlayerNumber.One
+                                    })
+                                    .Add(new NetworkIdentityComponent(){})
+                                )
+                      .AddEntity(new Entity() //Paddle Two
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1804,
+                                        Y = 540
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 32,
+                                        Height = 128
+                                    })
+                                    .Add(new PlayerComponent
+                                    {
+                                        Number = PlayerNumber.Two
+                                    })
+                                    .Add(new NetworkIdentityComponent(){})
+                                )
+                      .AddEntity(new Entity() //Ball
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Ball")
+                                    })
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 / 2,
+                                        Y = 540
+                                    })
+                                    .Add(new VelocityComponent
+                                    {
+                                        X = -4,
+                                        Y = 2
+                                    })
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 32,
+                                        Height = 32
+                                    })
+                                    .Add(new NetworkIdentityComponent(){})
+                                )
+                        .AddEntity(new Entity() //North wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 / 2,
+                                        Y = 0 - 128
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 1920,
+                                        Height = 256
+                                    })
+                        )
+                        .AddEntity(new Entity() //South wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 / 2,
+                                        Y = 1080 + 128
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 1920,
+                                        Height = 256
+                                    })
+                        )
+                        .AddEntity(new Entity() //West wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 0 - 128,
+                                        Y = 1080 / 2
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 256,
+                                        Height = 1080
+                                    })
+                        )
+                        .AddEntity(new Entity() //East wall
+                                    .Add(new PositionComponent
+                                    {
+                                        X = 1920 + 128,
+                                        Y = 1080 / 2
+                                    })
+                                    .Add(new VelocityComponent())
+                                    .Add(new RigidBodyComponent
+                                    {
+                                        Width = 256,
+                                        Height = 1080
+                                    })
+                        );
+            
             if (DebugMode)
                 SystemManager.AddSystem(new RenderSystem(SystemContext, Screen), 1, true);
         }
