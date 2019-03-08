@@ -37,8 +37,7 @@ namespace Common.Utils
                         p2.X, p2.Y, b2.Width, b2.Height) :
                     CircleIntersectsCircle(
                         p1.X, p1.Y, b1.Width / 2,
-                        p2.X, p2.Y, b2.Width / 2
-                            );
+                        p2.X, p2.Y, b2.Width / 2);
         }
 
         /// <summary>
