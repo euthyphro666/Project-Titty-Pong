@@ -6,11 +6,13 @@ namespace Common.ECS
 {
     public class GameSnapshot
     {
+        public int FrameNumber { get; set; }
         public List<DynamicSnapshotNode> SnapshotNodes { get; set; }
         public byte Input { get; set; }
 
-        public GameSnapshot(List<DynamicSnapshotNode> snapshotNodes, byte input)
+        public GameSnapshot(int frameNumber, List<DynamicSnapshotNode> snapshotNodes, byte input)
         {
+            FrameNumber = frameNumber;
             SnapshotNodes = snapshotNodes;
             Input = input;
         }

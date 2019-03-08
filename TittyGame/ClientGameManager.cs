@@ -72,7 +72,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.One
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Paddle One"){})
                                 )
                       .AddEntity(new Entity("Paddle Two")
                                     .Add(new DisplayComponent
@@ -97,7 +97,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.Two
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Paddle Two"){})
                                 )
                       .AddEntity(new Entity("Ball")
                                     .Add(new DisplayComponent
@@ -122,7 +122,7 @@ namespace TittyGame
                                         IsKinematic = false,
                                         IsRect = false
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Ball"){})
                                 )
                         .AddEntity(new Entity("North-Wall")
                                     .Add(new PositionComponent

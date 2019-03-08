@@ -24,11 +24,12 @@ namespace Common.Networking
             switch (msg?.MessageType)
             {
                 case NetIncomingMessageType.Data:
-                    var data = msg?.ReadBytes(msg.LengthBytes);
+                    var msgId = msg?.ReadByte();
+                    var data = msg?.ReadBytes(msg.LengthBytes - 1);
 
                     if (data != null)
                     {
-                        Callback(data);
+                        Callback((MessageIds) msgId, data);
                     }
                     
                     break;
@@ -63,11 +64,12 @@ namespace Common.Networking
             Client.Connect(ip, 54555);
         }
 
-        public void Send(byte[] data)
+        public void Send(MessageIds messageId, byte[] data)
         {
             if (data == null) return;
             
             var msg = Client.CreateMessage();
+            msg.Write((byte) messageId);
             msg.Write(data);
             Client.SendMessage(msg, NetDeliveryMethod.Unreliable);
         }

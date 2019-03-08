@@ -16,8 +16,11 @@ namespace Common.ECS.Systems
         private List<DynamicSnapshotNode> Nodes;
         private Input LastInput;
 
+        private int FrameNumber;
+        
         public SnapshotSystem(ISystemContext systemContext)
         {
+            FrameNumber = 1;
             SystemContext = systemContext;
             SystemContext.Events.EntityAddedEvent += OnEntityAddedEvent;
             SystemContext.Events.InputEvent += OnInputEvent;
@@ -28,8 +31,10 @@ namespace Common.ECS.Systems
         public void Update()
         {
             // Create a new GameSnapshot and queue it up
-            var snapshot = new GameSnapshot(Nodes.ToList(), LastInput);
+            var snapshot = new GameSnapshot(FrameNumber, Nodes.ToList(), LastInput);
             SystemContext.Events.RaiseGameSnapshotEvent(snapshot);
+
+            FrameNumber++;
         }
 
         private void OnInputEvent(object sender, InputEventArgs e)
