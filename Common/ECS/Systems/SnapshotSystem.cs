@@ -14,10 +14,12 @@ namespace Common.ECS.Systems
         public uint Priority { get; set; }
 
         private List<DynamicSnapshotNode> Nodes;
+        private List<GameSnapshot> Snapshots;
         private Input LastInput;
         
         public SnapshotSystem(ISystemContext systemContext)
         {
+            Snapshots = new List<GameSnapshot>(256);
             SystemContext = systemContext;
             SystemContext.Events.EntityAddedEvent += OnEntityAddedEvent;
             SystemContext.Events.InputEvent += OnInputEvent;
@@ -30,6 +32,13 @@ namespace Common.ECS.Systems
             // Create a new GameSnapshot and queue it up
             var snapshot = new GameSnapshot(Engine.FrameNumber, Nodes.ToList(), LastInput);
             SystemContext.Events.RaiseGameSnapshotEvent(snapshot);
+            
+            
+            if (Snapshots.Count > 255)
+            {
+                Snapshots.RemoveAt(0);
+            }
+            Snapshots.Add(snapshot);
 
         }
 
@@ -42,10 +51,13 @@ namespace Common.ECS.Systems
         {
             
             var target = args.Target;
-            if (DynamicSnapshotNode.TryCreate(target, out var node))
-            {
-                Nodes.Add(node);
-            }
+            if (!DynamicSnapshotNode.TryCreate(target, out var node)) return;
+            Nodes.Add(node);
+        }
+
+        public List<GameSnapshot> GetSnapshotsFromFrame(int frameNumber)
+        {
+            return Snapshots.Where(snapshot => snapshot.FrameNumber >= frameNumber).ToList();
         }
     }
 }

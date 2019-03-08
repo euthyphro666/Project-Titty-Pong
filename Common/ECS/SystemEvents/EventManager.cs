@@ -3,6 +3,7 @@ using Common.ECS.Contracts;
 using Common.ECS.Nodes;
 using Common.IO;
 using System;
+using Common.Networking;
 
 namespace Common.ECS.SystemEvents
 {
@@ -16,9 +17,9 @@ namespace Common.ECS.SystemEvents
         }
 
         public event EventHandler<InputEventArgs> InputEvent;
-        public void RaiseInputEvent(PlayerNumber player, Input input)
+        public void RaiseInputEvent(PlayerNumber player, Input input, int frameNumber)
         {
-            InputEvent?.Invoke(null, new InputEventArgs { Player = player, Input = input });
+            InputEvent?.Invoke(null, new InputEventArgs { Player = player, Input = input, Frame = frameNumber});
         }
 
         public event EventHandler<EntityAddedEventArgs> EntityAddedEvent;
@@ -31,6 +32,12 @@ namespace Common.ECS.SystemEvents
         public void RaiseGameSnapshotEvent(GameSnapshot gs)
         {
             GameSnapshotEvent?.Invoke(null, new GameSnapshotEventArgs(gs));
+        }
+
+        public event EventHandler<NetworkSyncEventArgs> NetworkSyncEvent;
+        public void RaiseNetworkSyncEvent(NetworkSnapshot state, float divergenceLimit)
+        {
+            NetworkSyncEvent?.Invoke(null, new NetworkSyncEventArgs(state, divergenceLimit));
         }
     }
 }

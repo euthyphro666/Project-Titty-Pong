@@ -44,9 +44,10 @@ namespace TittyGame
             
             GameEngine = new Engine(SystemContext);
             GameEngine.AddSystem(new InputSystem(SystemContext), 1, false)
-                      .AddSystem(new NetworkSystem(SystemContext, client), 4, false) // TODO make this the snapshot system
-                      .AddSystem(new CollisionSystem(SystemContext), 3, false)
                       .AddSystem(new MovementSystem(SystemContext), 2,false)
+                      .AddSystem(new CollisionSystem(SystemContext), 3, false)
+                      .AddSystem(new SnapshotSystem(SystemContext), 4, false)
+                      .AddSystem(new NetworkSystem(SystemContext, client), 5, false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
             var rand = new Random();

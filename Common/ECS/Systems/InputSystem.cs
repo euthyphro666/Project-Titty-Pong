@@ -30,13 +30,13 @@ namespace Common.ECS.Systems
             var up = state.IsKeyDown(Keys.W);
             var down = state.IsKeyDown(Keys.S);
             var input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);
-            if(input != 0) Events.RaiseInputEvent(PlayerNumber.One, input);
+            if(input != 0) Events.RaiseInputEvent(PlayerNumber.One, input, Engine.FrameNumber);
 
             // TODO only do this one if we're not online
             up = state.IsKeyDown(Keys.Up);
             down = state.IsKeyDown(Keys.Down);
             input = (Input)((up ^ down) ? (up ? -10 : 10) : 0);
-            if (input != 0) Events.RaiseInputEvent(PlayerNumber.Two, input);
+            if (input != 0) Events.RaiseInputEvent(PlayerNumber.Two, input, Engine.FrameNumber);
         }
 
     }

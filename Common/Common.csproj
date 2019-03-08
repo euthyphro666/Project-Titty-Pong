@@ -93,6 +93,7 @@
     <Compile Include="ECS\Nodes\RenderNode.cs" />
     <Compile Include="ECS\SystemEvents\GameSnapshotEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\InputEventArgs.cs" />
+    <Compile Include="ECS\SystemEvents\NetworkSyncEventArgs.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Contracts\ISystem.cs" />
     <Compile Include="ECS\Systems\MovementSystem.cs" />

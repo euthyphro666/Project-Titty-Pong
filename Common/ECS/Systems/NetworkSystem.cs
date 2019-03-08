@@ -23,14 +23,16 @@ namespace Common.ECS.Systems
         private readonly List<NetworkInputNode> NetworkInputNodes;
 
         private bool IsServer;
-        private NetworkSnapshots GameState;
+        private NetworkSnapshot LastSnapshot;
+
+        private const float DivergenceLimit = 1.0f;
 
         public NetworkSystem(ISystemContext systemContext, INetworkSocket socket)
         {
             SystemContext = systemContext;
             Socket = socket;
 
-            GameState = new NetworkSnapshots();
+            LastSnapshot = new NetworkSnapshot();
 
             IsServer = Socket is NetworkServer;
 
@@ -54,7 +56,7 @@ namespace Common.ECS.Systems
             if (IsServer)
             {
                 
-                Socket.Send(MessageIds.GameSnapshot, GameState.ToByteArray());
+                Socket.Send(MessageIds.GameSnapshot, LastSnapshot.ToByteArray());
             }
             else
             {
@@ -74,12 +76,20 @@ namespace Common.ECS.Systems
                 case MessageIds.Invalid:
                     break;
                 case MessageIds.GameSnapshot:
-                    var state = NetworkSnapshots.Parser.ParseFrom(data);
+                    var state = NetworkSnapshot.Parser.ParseFrom(data);
                     if (state != null)
                     {
-                        Debug.WriteLine("Received Snapshot: SnapshotNodes count: " + state.Snapshots.Count);
+                        Debug.WriteLine($"Received Snapshot: {state.FrameNumber} Entities: {state.Entities.Count} Timestamp: {state.LastUpdated}");
+                        SystemContext.Events.RaiseNetworkSyncEvent(state, DivergenceLimit);
                     }
 
+                    break;
+                case MessageIds.PlayerInput:
+                    var inputMsg = NetworkSnapshot.Parser.ParseFrom(data);
+                    if (inputMsg != null)
+                    {
+                        Debug.WriteLine($"Received Input Message: ");
+                    }
                     break;
                 default:
                     Debug.WriteLine("Unexpected message ID: " + msgId);
@@ -103,13 +113,7 @@ namespace Common.ECS.Systems
                 });
             }
 
-
-            if(GameState.Snapshots.Count > 255)
-                GameState.Snapshots.RemoveAt(0);
-            
-            GameState.Snapshots.Add(snap);
-            
-            Debug.WriteLine("Generating snapshot: " + snap.FrameNumber);
+            LastSnapshot = snap;
         }
 
         private void OnInputEvent(object sender, InputEventArgs e)

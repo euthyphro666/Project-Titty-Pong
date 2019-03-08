@@ -3,6 +3,7 @@ using Common.ECS.Nodes;
 using Common.ECS.SystemEvents;
 using Common.IO;
 using System;
+using Common.Networking;
 
 namespace Common.ECS.Contracts
 {
@@ -12,12 +13,15 @@ namespace Common.ECS.Contracts
         void RaiseCollisionEvent(CollisionNode node1, CollisionNode node2);
 
         event EventHandler<InputEventArgs> InputEvent;
-        void RaiseInputEvent(PlayerNumber player, Input input);
+        void RaiseInputEvent(PlayerNumber player, Input input, int frameNumber);
 
         event EventHandler<EntityAddedEventArgs> EntityAddedEvent;
         void RaiseEntityAddedEvent(Entity e);
 
         event EventHandler<GameSnapshotEventArgs> GameSnapshotEvent;
         void RaiseGameSnapshotEvent(GameSnapshot gs);
+        
+        event EventHandler<NetworkSyncEventArgs> NetworkSyncEvent;
+        void RaiseNetworkSyncEvent(NetworkSnapshot state, float divergenceLimit);
     }
 }
