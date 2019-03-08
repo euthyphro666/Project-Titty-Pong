@@ -26,14 +26,11 @@ namespace Common.Networking
             switch (msg?.MessageType)
             {
                 case NetIncomingMessageType.Data:
-                    var data = msg?.ReadBytes(msg.LengthBytes);
+                    var msgId = msg?.ReadByte();
+                    var data = msg?.ReadBytes(msg.LengthBytes - 1);
                     if (data != null)
                     {
-                        Debug.Write("Received Data message type: ");
-                        Debug.WriteLine(Encoding.UTF8.GetString(data));
-
-
-                        Callback(data);
+                        Callback((MessageIds) msgId, data);
                     }
 
                     break;
@@ -66,10 +63,11 @@ namespace Common.Networking
         {
         }
 
-        public void Send(byte[] data)
+        public void Send(MessageIds messageId, byte[] data)
         {
             if (data == null) return;
             var msg = Server.CreateMessage();
+            msg.Write((byte) messageId);
             msg.Write(data);
             Server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }

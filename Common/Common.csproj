@@ -104,6 +104,7 @@
     <Compile Include="IO\Input.cs" />
     <Compile Include="Networking\INetworkSocket.cs" />
     <Compile Include="Networking\MessageIds.cs" />
+    <Compile Include="Networking\Messages\Pong.cs" />
     <Compile Include="Networking\NetworkClient.cs" />
     <Compile Include="Networking\NetworkServer.cs" />
     <Compile Include="Utils\Maths.Collision.cs" />

@@ -15,7 +15,7 @@ namespace Common.ECS.Systems
 
         private List<DynamicSnapshotNode> Nodes;
         private Input LastInput;
-
+        
         public SnapshotSystem(ISystemContext systemContext)
         {
             SystemContext = systemContext;
@@ -28,8 +28,9 @@ namespace Common.ECS.Systems
         public void Update()
         {
             // Create a new GameSnapshot and queue it up
-            var snapshot = new GameSnapshot(Nodes.ToList(), LastInput);
+            var snapshot = new GameSnapshot(Engine.FrameNumber, Nodes.ToList(), LastInput);
             SystemContext.Events.RaiseGameSnapshotEvent(snapshot);
+
         }
 
         private void OnInputEvent(object sender, InputEventArgs e)

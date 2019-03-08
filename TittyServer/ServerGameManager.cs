@@ -83,7 +83,7 @@ namespace TittyServer
                                     {
                                         Number = PlayerNumber.One
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Paddle One"){})
                                 )
                       .AddEntity(new Entity() //Paddle Two
                                     .Add(new DisplayComponent
@@ -105,7 +105,7 @@ namespace TittyServer
                                     {
                                         Number = PlayerNumber.Two
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Paddle Two"){})
                                 )
                       .AddEntity(new Entity() //Ball
                                     .Add(new DisplayComponent
@@ -127,7 +127,7 @@ namespace TittyServer
                                         Width = 32,
                                         Height = 32
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent("Ball"){})
                                 )
                         .AddEntity(new Entity() //North wall
                                     .Add(new PositionComponent
