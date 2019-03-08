@@ -55,7 +55,7 @@ namespace Common.ECS.Systems
 
                     if (Maths.Intersects(nodeA.RigidBody, nodeB.RigidBody, nodeA.Position, nodeB.Position))
                     {
-                        //Events.RaiseCollisionEvent(nodeA, nodeB);
+                        Events.RaiseCollisionEvent(nodeA, nodeB);
                     }
                 }
 
@@ -67,7 +67,7 @@ namespace Common.ECS.Systems
 
                     if (Maths.Intersects(nodeA.RigidBody, nodeB.RigidBody, nodeA.Position, nodeB.Position))
                     {
-                        //Events.RaiseCollisionEvent(nodeA, nodeB);
+                        Events.RaiseCollisionEvent(nodeA, nodeB);
                     }
                 }
             }

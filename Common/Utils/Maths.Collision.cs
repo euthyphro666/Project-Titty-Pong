@@ -1,4 +1,5 @@
 ﻿using Common.ECS.Components;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,11 +98,18 @@ namespace Common.Utils
             float x, float y,
             float w, float h)
         {
-            return PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h) ||
-                   LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h) ||
-                   LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h) ||
-                   LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h) ||
-                   LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
+            var result = false;
+            result |= PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h);
+            result |= LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h);
+            result |= LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h);
+            result |= LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h);
+            result |= LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
+            return result;
+            //return PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h) ||
+            //       LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h) ||
+            //       LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h) ||
+            //       LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h) ||
+            //       LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
         }
 
         public static bool LineIntersectsCircle(
@@ -109,11 +117,58 @@ namespace Common.Utils
             float x1, float y1,
             float x2, float y2)
         {
-            var dx = x2 - x1;
-            var dy = y2 - y1;
-            var dr = Math.Sqrt((dx * dx) + (dy * dy));
-            var d = (x1 * y2) - (x2 * y1);
-            return ((r * r * dr * dr) - (d * d)) < 0;
+            var closest = ClosestPointOnSegmentToPoint(x1, y1, x2, y2, cx, cy);
+            var distance = Math.Sqrt(Distance2(closest[0], closest[1], cx, cy));
+            return distance <= r;
+            //var dx = x2 - x1;
+            //var dy = y2 - y1;
+            //var dr = Math.Sqrt((dx * dx) + (dy * dy));
+            //var d = (x1 * y2) - (x2 * y1);
+            //return ((r * r * dr * dr) - (d * d)) < 0;
+        }
+
+        public static float[] ClosestPointOnSegmentToPoint(
+            float lx1, float ly1, float lx2, float ly2,
+            float px, float py)
+        {
+            var lVx = lx2 - lx1;
+            var lVy = ly2 - ly1;
+            var pVx = px - lx1;
+            var pVy = py - ly1;
+            var lVLen = (float)Math.Sqrt((lVx * lVx) + (lVy * lVy));
+            if (lVLen == 0) //The line segment is actually one point
+                return new float[2] { lx1, ly1 };
+            lVx /= lVLen;
+            lVy /= lVLen;
+            var proj = (pVx * lVx) + (pVy * lVy);
+            if (proj <= 0)
+                return new float[2] { lx1, ly1 };
+            if (proj >= lVLen)
+                return new float[2] { lx2, ly2 };
+            var projVx = lx1 * proj;
+            var projVy = ly1 * proj;
+            var closestX = projVx * lx1;
+            var closestY = projVy * ly1;
+            return new float[2] { closestX, closestY };
+        }
+
+        public static Vector2 ClosestPointOnSegmentToPoint(
+            Vector2 segA, Vector2 segB, Vector2 point)
+        {
+            var segV = segB - segA;
+            var pointV = point - segA;
+            var segVLen = segV.Length();
+            if (segVLen <= 0)
+                throw new ArgumentException("Invalid line segment.");
+            segV.Normalize();
+            var proj = Vector2.Dot(pointV, segV);
+            if (proj <= 0)
+                return segA;
+            if (proj >= segVLen)
+                return segB;
+            var projV = segV * proj;
+            var closest = projV * segA;
+            return closest;
         }
 
         public static bool PointIntersectsRectangle(
