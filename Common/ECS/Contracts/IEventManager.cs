@@ -4,11 +4,15 @@ using Common.ECS.SystemEvents;
 using Common.IO;
 using System;
 using Common.Networking;
+using System.Collections.Generic;
 
 namespace Common.ECS.Contracts
 {
     public interface IEventManager
     {
+        event EventHandler<SnapshotEventArgs> SnapshotEvent;
+        void RaiseSnapshotEvent(List<DynamicSnapshotNode> snapshot);
+
         event EventHandler<CollisionEventArgs> CollisionEvent;
         void RaiseCollisionEvent(CollisionNode node1, CollisionNode node2);
 

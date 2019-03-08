@@ -45,22 +45,22 @@ namespace Common.ECS
             return this;
         }
 
-        public void Update()
+        public void Update(long dt)
         {
             foreach(var system in UpdateSystems.Values)
             {
-                system.Update();
+                system.Update(dt);
             }
 
             FrameNumber++;
         }
 
 
-        public void Render()
+        public void Render(long dt)
         {
             foreach (var system in RenderSystems.Values)
             {
-                system.Update();
+                system.Update(dt);
             }
         }
 

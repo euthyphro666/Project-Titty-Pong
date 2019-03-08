@@ -27,7 +27,7 @@ namespace Common.ECS.Systems
             Nodes = new List<DynamicSnapshotNode>();
         }
 
-        public void Update()
+        public void Update(long dt)
         {
             // Create a new GameSnapshot and queue it up
             var snapshot = new GameSnapshot(Engine.FrameNumber, Nodes.ToList(), LastInput);

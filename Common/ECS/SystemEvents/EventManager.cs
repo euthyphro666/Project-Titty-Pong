@@ -4,11 +4,18 @@ using Common.ECS.Nodes;
 using Common.IO;
 using System;
 using Common.Networking;
+using System.Collections.Generic;
 
 namespace Common.ECS.SystemEvents
 {
     public class EventManager : IEventManager
     {
+
+        public event EventHandler<SnapshotEventArgs> SnapshotEvent;
+        public void RaiseSnapshotEvent(List<DynamicSnapshotNode> snapshot)
+        {
+            SnapshotEvent?.Invoke(null, new SnapshotEventArgs { Snapshot = snapshot });
+        }
 
         public event EventHandler<CollisionEventArgs> CollisionEvent;
         public void RaiseCollisionEvent(CollisionNode node1, CollisionNode node2)

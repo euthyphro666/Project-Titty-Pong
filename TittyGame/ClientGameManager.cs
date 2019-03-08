@@ -223,13 +223,15 @@ namespace TittyGame
         protected override void Update(GameTime delta)
         {
             base.Update(delta);
-            GameEngine.Update();
+            var dt = delta.ElapsedGameTime.Ticks;
+            GameEngine.Update(dt);
         }
 
         protected override void Draw(GameTime delta)
         {
             base.Draw(delta);
-            GameEngine.Render();
+            var dt = delta.ElapsedGameTime.Ticks;
+            GameEngine.Render(dt);
         }
 
     }

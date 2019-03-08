@@ -44,7 +44,7 @@ namespace PhysicsPlayground
 
         private void LoadEngine()
         {
-            Entities.Add((new Entity("Paddle")
+            Entities.Add((new Entity("Paddle One")
                     .Add(new DisplayComponent
                     {
                         Sprite = Content.Load<Texture2D>("Paddle")
@@ -67,8 +67,33 @@ namespace PhysicsPlayground
                     {
                         Number = PlayerNumber.Two
                     })
-                    .Add(new NetworkIdentityComponent() { })
+                    .Add(new NetworkIdentityComponent("Paddle One") { })
                 ));
+            Entities.Add((new Entity("Paddle Two")
+                .Add(new DisplayComponent
+                {
+                    Sprite = Content.Load<Texture2D>("Paddle")
+                })
+                .Add(new PositionComponent
+                {
+                    X = 1804,
+                    Y = 540
+                })
+                .Add(new VelocityComponent())
+                .Add(new RigidBodyComponent
+                {
+                    Width = 64,
+                    Height = 256,
+                    IsDynamic = true,
+                    IsKinematic = true,
+                    IsRect = true
+                })
+                .Add(new PlayerComponent
+                {
+                    Number = PlayerNumber.Two
+                })
+                .Add(new NetworkIdentityComponent("Paddle Two") { })
+            ));
             Entities.Add(new Entity("Ball")
                 .Add(new DisplayComponent
                 {
@@ -88,7 +113,7 @@ namespace PhysicsPlayground
                     IsKinematic = false,
                     IsRect = false
                 })
-                .Add(new NetworkIdentityComponent())
+                .Add(new NetworkIdentityComponent("Ball"))
             );
         }
 
@@ -106,13 +131,14 @@ namespace PhysicsPlayground
         {
             base.Update(delta);
 
+            ColoredEntities.Clear();
             var mouse = Mouse.GetState();
             foreach (var e1 in Entities)
             {
                 if (e1.TryGetComponent(typeof(IdentityComponent), out var identity))
                 {
                     var i = identity as IdentityComponent;
-                    if (i.Name == "Paddle")
+                    if (i.Name == "Paddle One")
                     {
                         if (e1.TryGetComponent(typeof(PositionComponent), out var pos) &&
                             e1.TryGetComponent(typeof(RigidBodyComponent), out var bod))
@@ -127,11 +153,17 @@ namespace PhysicsPlayground
                                 if (e1 == e2)
                                     continue;
                                 if (e2.TryGetComponent(typeof(PositionComponent), out pos) &&
-                                    e2.TryGetComponent(typeof(RigidBodyComponent), out bod))
+                                    e2.TryGetComponent(typeof(RigidBodyComponent), out bod) &&
+                                    e2.TryGetComponent(typeof(IdentityComponent), out identity))
                                 {
                                     var p2 = pos as PositionComponent;
                                     var b2 = bod as RigidBodyComponent;
-                                    Collided = Maths.Intersects(b1, b2, p1, p2);
+                                    var i2 = identity as IdentityComponent;
+                                    if (Maths.Intersects(b1, b2, p1, p2))
+                                    {
+                                        ColoredEntities.Add(i.Name);
+                                        ColoredEntities.Add(i2.Name);
+                                    }
                                 }
                             }
                         }   
@@ -140,7 +172,7 @@ namespace PhysicsPlayground
             }
         }
 
-        static bool Collided = true;
+        static List<string> ColoredEntities = new List<string>();
 
         protected override void Draw(GameTime delta)
         {
@@ -154,13 +186,17 @@ namespace PhysicsPlayground
                     {
                         if (entity.TryGetComponent(typeof(RigidBodyComponent), out var bod))
                         {
-                            var d = display as DisplayComponent;
-                            var p = pos as PositionComponent;
-                            var b = bod as RigidBodyComponent;
-                            if (Collided)
-                                Screen.Render(d.Sprite, p.X, p.Y, b.Width, b.Height, Color.Red);
-                            else
-                                Screen.Render(d.Sprite, p.X, p.Y, b.Width, b.Height);
+                            if (entity.TryGetComponent(typeof(IdentityComponent), out var id))
+                            {
+                                var d = display as DisplayComponent;
+                                var p = pos as PositionComponent;
+                                var b = bod as RigidBodyComponent;
+                                var i = id as IdentityComponent;
+                                if (ColoredEntities.Contains(i.Name))
+                                    Screen.Render(d.Sprite, p.X, p.Y, b.Width, b.Height, Color.Red);
+                                else
+                                    Screen.Render(d.Sprite, p.X, p.Y, b.Width, b.Height);
+                            }
                         }
                     }
 

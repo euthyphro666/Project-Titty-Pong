@@ -9,6 +9,6 @@ namespace Common.ECS.Contracts
 {
     public interface ISystem
     {
-        void Update();
+        void Update(long dt);
     }
 }
