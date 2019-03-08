@@ -49,7 +49,7 @@ namespace TittyGame
                       .AddSystem(new MovementSystem(SystemContext), 2,false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
-
+            var rand = new Random();
             GameEngine.AddEntity(new Entity("Paddle One")
                                     .Add(new DisplayComponent
                                     {
@@ -112,8 +112,10 @@ namespace TittyGame
                                     })
                                     .Add(new VelocityComponent
                                     {
-                                        X = -4,
-                                        Y = (new Random()).Next(-2, 3)
+                                        X = (float)(rand.NextDouble() * 5d + 5d) * 
+                                            (rand.Next(2) == 0 ? -1 : 1),
+                                        Y = (float)(rand.NextDouble() * 2d + 2d) *
+                                            (rand.Next(2) == 0 ? -1 : 1)
                                     })
                                     .Add(new RigidBodyComponent
                                     {

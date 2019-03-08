@@ -52,8 +52,8 @@ namespace Common.ECS.Systems
             {
                 if (otherNode.RigidBody.IsDynamic)
                 {
-                    node.Velocity.X *= -1;
-                    node.Velocity.Y -= (otherNode.Velocity.Y * 0.25f);
+                    node.Velocity.X *= -1.05f;
+                    node.Velocity.Y -= (otherNode.Velocity.Y * 0.5f);
                 }
                 else
                 {

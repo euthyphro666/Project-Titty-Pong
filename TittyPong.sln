@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyGame", "TittyGame\Titt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TittyServer", "TittyServer\TittyServer.csproj", "{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicsPlayground", "PhysicsPlayground\PhysicsPlayground\PhysicsPlayground.csproj", "{A5587D74-3F96-4101-AECF-8555FCA7C2D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,13 @@ Global
 		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|Any CPU.ActiveCfg = Release|x86
 		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|x86.ActiveCfg = Release|x86
 		{68110B25-22F0-4F9D-BEB6-D78A5385AD8D}.Release|x86.Build.0 = Release|x86
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Debug|x86.ActiveCfg = Debug|x86
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Debug|x86.Build.0 = Debug|x86
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Release|Any CPU.ActiveCfg = Release|x86
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Release|x86.ActiveCfg = Release|x86
+		{A5587D74-3F96-4101-AECF-8555FCA7C2D1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

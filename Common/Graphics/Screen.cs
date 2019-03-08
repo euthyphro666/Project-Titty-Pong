@@ -75,6 +75,12 @@ namespace Common.Graphics
                 Batch.Draw(sprite, body, Color.White);
         }
 
+        public void Render(Texture2D sprite, Rectangle body, Color col)
+        {
+            if (ContextOpen)
+                Batch.Draw(sprite, body, col);
+        }
+
         public void Render(Texture2D sprite, float x, float y)
         {
             if (!ContextOpen)
@@ -94,6 +100,18 @@ namespace Common.Graphics
             RenderRect.Height = (int)h;
             Render(sprite, RenderRect);
         }
+
+        public void Render(Texture2D sprite, float x, float y, float w, float h, Color col)
+        {
+            if (!ContextOpen)
+                return;
+            RenderRect.X = (int)(x - (w / 2));
+            RenderRect.Y = (int)(y - (h / 2));
+            RenderRect.Width = (int)w;
+            RenderRect.Height = (int)h;
+            Render(sprite, RenderRect, col);
+        }
+
 
         public void RenderText(string text, Vector2 pos, Color col)
         {

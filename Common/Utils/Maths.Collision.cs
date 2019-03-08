@@ -31,11 +31,11 @@ namespace Common.Utils
                         pos2.X + (body2.Width / 2), pos2.Y + (body2.Height / 2)) :
                     CircleIntersectsRectangle(
                         pos2.X, pos2.Y, body2.Width / 2,
-                        pos1.X, pos1.Y, body1.Width, body1.Height);
+                        pos1.X, pos1.Y, body1.Width / 2, body1.Height / 2);
             return body2.IsRect ?
                     CircleIntersectsRectangle(
                         pos1.X, pos1.Y, body1.Width / 2,
-                        pos2.X, pos2.Y, body2.Width, body2.Height) :
+                        pos2.X, pos2.Y, body2.Width / 2, body2.Height / 2) :
                     CircleIntersectsCircle(
                         pos1.X, pos1.Y, body1.Width / 2,
                         pos2.X, pos2.Y, body2.Width / 2);
@@ -98,46 +98,25 @@ namespace Common.Utils
             float x, float y,
             float w, float h)
         {
-            return PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h);// ||
-                   //LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h) ||
-                   //LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h) ||
-                   //LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h) ||
-                   //LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
+            var cp = new Vector2(cx, cy);
+            var v1 = new Vector2(x - w, y - h);
+            var v2 = new Vector2(x - w, y + h);
+            var v3 = new Vector2(x + w, y - h);
+            var v4 = new Vector2(x + w, y + h);
+            return LineIntersectsCircle(v1, v3, cp, r) ||
+                   LineIntersectsCircle(v2, v4, cp, r) ||
+                   LineIntersectsCircle(v1, v2, cp, r) ||
+                   LineIntersectsCircle(v3, v4, cp, r) ||
+                   PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h);
         }
 
         public static bool LineIntersectsCircle(
-            float cx, float cy, float r,
-            float x1, float y1,
-            float x2, float y2)
+            Vector2 segment1, Vector2 segment2,
+            Vector2 circlePos, float radius)
         {
-            var closest = ClosestPointOnSegmentToPoint(x1, y1, x2, y2, cx, cy);
-            var distance = Math.Sqrt(Distance2(closest[0], closest[1], cx, cy));
-            return distance <= r;
-        }
-
-        public static float[] ClosestPointOnSegmentToPoint(
-            float lx1, float ly1, float lx2, float ly2,
-            float px, float py)
-        {
-            var lVx = lx2 - lx1;
-            var lVy = ly2 - ly1;
-            var pVx = px - lx1;
-            var pVy = py - ly1;
-            var lVLen = (float)Math.Sqrt((lVx * lVx) + (lVy * lVy));
-            if (lVLen == 0) //The line segment is actually one point
-                return new float[2] { lx1, ly1 };
-            lVx /= lVLen;
-            lVy /= lVLen;
-            var proj = (pVx * lVx) + (pVy * lVy);
-            if (proj <= 0)
-                return new float[2] { lx1, ly1 };
-            if (proj >= lVLen)
-                return new float[2] { lx2, ly2 };
-            var projVx = lx1 * proj;
-            var projVy = ly1 * proj;
-            var closestX = projVx * lx1;
-            var closestY = projVy * ly1;
-            return new float[2] { closestX, closestY };
+            var closest = ClosestPointOnSegmentToPoint(segment1, segment2, circlePos);
+            var distance = Math.Sqrt(Distance2(closest.X, closest.Y, circlePos.X, circlePos.Y));
+            return distance <= radius;
         }
 
         public static Vector2 ClosestPointOnSegmentToPoint(
@@ -155,7 +134,7 @@ namespace Common.Utils
             if (proj >= segVLen)
                 return segB;
             var projV = segV * proj;
-            var closest = projV * segA;
+            var closest = projV + segA;
             return closest;
         }
 
