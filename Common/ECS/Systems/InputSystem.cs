@@ -23,7 +23,7 @@ namespace Common.ECS.Systems
             Events = SystemContext.Events;
         }
 
-        public void Update()
+        public void Update(long dt)
         {
             //Only consider keyboard input for now
             var state = Keyboard.GetState();

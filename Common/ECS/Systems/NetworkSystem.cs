@@ -51,7 +51,7 @@ namespace Common.ECS.Systems
             }
         }
 
-        public void Update()
+        public void Update(long dt)
         {
             if (IsServer)
             {

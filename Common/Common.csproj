@@ -82,6 +82,7 @@
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\GameSnapshot.cs" />
     <Compile Include="ECS\Nodes\DynamicSnapshotNode.cs" />
+    <Compile Include="ECS\Nodes\LerpableRenderNode.cs" />
     <Compile Include="ECS\Nodes\PlayerNode.cs" />
     <Compile Include="ECS\SystemContext.cs" />
     <Compile Include="ECS\SystemEvents\CollisionEventArgs.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="ECS\SystemEvents\GameSnapshotEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\InputEventArgs.cs" />
     <Compile Include="ECS\SystemEvents\NetworkSyncEventArgs.cs" />
+    <Compile Include="ECS\SystemEvents\SnapshotEventArgs.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Contracts\ISystem.cs" />
     <Compile Include="ECS\Systems\MovementSystem.cs" />
