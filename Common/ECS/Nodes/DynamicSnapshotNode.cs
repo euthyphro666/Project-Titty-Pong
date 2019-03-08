@@ -4,7 +4,6 @@ using Common.ECS.Contracts;
 
 namespace Common.ECS.Nodes
 {
-    [Serializable]
     public class DynamicSnapshotNode : INode
     {
         public PositionComponent Position { get; set; }

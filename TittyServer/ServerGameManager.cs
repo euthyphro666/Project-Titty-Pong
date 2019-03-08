@@ -60,7 +60,8 @@ namespace TittyServer
                 .AddSystem(new CollisionSystem(SystemContext), 1, false)
                 .AddSystem(new MovementSystem(SystemContext), 2, false)
                 .AddSystem(new SnapshotSystem(SystemContext), 3, false)
-                .AddSystem(new NetworkSystem(SystemContext, server), 4, false);
+                .AddSystem(new NetworkSystem(SystemContext, server), 4, false)
+                .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
             SystemManager.AddEntity(new Entity() //Paddle One
                                     .Add(new DisplayComponent

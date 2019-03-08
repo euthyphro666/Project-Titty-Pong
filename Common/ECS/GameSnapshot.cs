@@ -4,7 +4,6 @@ using Common.ECS.Nodes;
 
 namespace Common.ECS
 {
-    [Serializable]
     public class GameSnapshot
     {
         public List<DynamicSnapshotNode> SnapshotNodes { get; set; }

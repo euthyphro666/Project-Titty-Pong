@@ -49,7 +49,7 @@ namespace Common.ECS.Systems
         {
             if (IsServer)
             {
-                Socket.Send(Serialize(MessageIds.GameSnapshot, LastSnapshot));
+                //Socket.Send(Serialize(MessageIds.GameSnapshot, LastSnapshot));
             }
             else
             {
@@ -94,23 +94,5 @@ namespace Common.ECS.Systems
             NetworkInputNodes.Add(new NetworkInputNode() {Player = e.Player, FrameInput = e.Input, FrameNumber = e.Frame});
         }
 
-        private byte[] Serialize(MessageIds id, object objToSerialize)
-        {
-            try
-            {
-                using (var stream = new MemoryStream())
-                {
-                    stream.WriteByte((byte) id);
-                    var serializer = new BinaryFormatter();
-                    serializer.Serialize(stream, objToSerialize);
-
-                    return stream.ToArray();
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
     }
 }
