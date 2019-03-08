@@ -89,7 +89,7 @@ namespace Common.ECS.Systems
 
         private void OnGameSnapshotEvent(object sender, GameSnapshotEventArgs e)
         {
-            var snap = new NetworkSnapshot() {FrameNumber = e.Snapshot.FrameNumber, LastUpdated = new Timestamp()};
+            var snap = new NetworkSnapshot() {FrameNumber = e.Snapshot.FrameNumber, LastUpdated = Timestamp.FromDateTime(DateTime.UtcNow)};
 
             foreach (var node in e.Snapshot.SnapshotNodes)
             {

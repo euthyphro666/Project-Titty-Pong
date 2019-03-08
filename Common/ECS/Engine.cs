@@ -9,6 +9,7 @@ namespace Common.ECS
 {
     public class Engine
     {
+        public static int FrameNumber { get; private set; }
         private SortedList<uint, ISystem> UpdateSystems { get; set; }
         private SortedList<uint, ISystem> RenderSystems { get; set; }
         private List<Entity> Entities { get; set; }
@@ -16,6 +17,7 @@ namespace Common.ECS
 
         public Engine(ISystemContext context)
         {
+            FrameNumber = 1;
             Context = context;
             UpdateSystems = new SortedList<uint, ISystem>();
             RenderSystems = new SortedList<uint, ISystem>();
@@ -43,7 +45,10 @@ namespace Common.ECS
             {
                 system.Update();
             }
+
+            FrameNumber++;
         }
+
 
         public void Render()
         {
