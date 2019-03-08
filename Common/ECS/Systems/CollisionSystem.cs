@@ -59,7 +59,11 @@ namespace Common.ECS.Systems
                     }
                 }
 
+            }
 
+            for (var i = 0; i < DynamicNodes.Count; i++)
+            {
+                nodeA = DynamicNodes[i];
                 // check nodeA against static nodes
                 foreach (var s in StaticNodes)
                 {

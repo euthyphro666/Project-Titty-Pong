@@ -13,32 +13,32 @@ namespace Common.Utils
         /// <summary>
         /// Determines if two entities are colliding by taking there rigidbodies and positions.
         /// </summary>
-        /// <param name="b1">Body of entity one.</param>
-        /// <param name="b2">Body of entity two.</param>
-        /// <param name="p1">Position of entity one.</param>
-        /// <param name="p2">Position of entity two.</param>
+        /// <param name="body1">Body of entity one.</param>
+        /// <param name="body2">Body of entity two.</param>
+        /// <param name="pos1">Position of entity one.</param>
+        /// <param name="pos2">Position of entity two.</param>
         /// <returns>Whether the entities are collided.</returns>
         public static bool Intersects(
-            RigidBodyComponent b1, RigidBodyComponent b2,
-            PositionComponent p1, PositionComponent p2)
+            RigidBodyComponent body1, RigidBodyComponent body2,
+            PositionComponent pos1, PositionComponent pos2)
         {
-            if (b1.IsRect)
-                return b2.IsRect ?
+            if (body1.IsRect)
+                return body2.IsRect ?
                     RectangleIntersectsRectangle(
-                        p1.X - (b1.Width / 2), p1.Y - (b1.Height / 2),
-                        p1.X + (b1.Width / 2), p1.Y + (b1.Height / 2),
-                        p2.X - (b2.Width / 2), p2.Y - (b2.Height / 2),
-                        p2.X + (b2.Width / 2), p2.Y + (b2.Height / 2)) :
+                        pos1.X - (body1.Width / 2), pos1.Y - (body1.Height / 2),
+                        pos1.X + (body1.Width / 2), pos1.Y + (body1.Height / 2),
+                        pos2.X - (body2.Width / 2), pos2.Y - (body2.Height / 2),
+                        pos2.X + (body2.Width / 2), pos2.Y + (body2.Height / 2)) :
                     CircleIntersectsRectangle(
-                        p2.X, p2.Y, b2.Width / 2,
-                        p1.X, p1.Y, b1.Width, b1.Height);
-            return b2.IsRect ?
+                        pos2.X, pos2.Y, body2.Width / 2,
+                        pos1.X, pos1.Y, body1.Width, body1.Height);
+            return body2.IsRect ?
                     CircleIntersectsRectangle(
-                        p1.X, p1.Y, b1.Width / 2,
-                        p2.X, p2.Y, b2.Width, b2.Height) :
+                        pos1.X, pos1.Y, body1.Width / 2,
+                        pos2.X, pos2.Y, body2.Width, body2.Height) :
                     CircleIntersectsCircle(
-                        p1.X, p1.Y, b1.Width / 2,
-                        p2.X, p2.Y, b2.Width / 2);
+                        pos1.X, pos1.Y, body1.Width / 2,
+                        pos2.X, pos2.Y, body2.Width / 2);
         }
 
         /// <summary>
@@ -98,18 +98,11 @@ namespace Common.Utils
             float x, float y,
             float w, float h)
         {
-            var result = false;
-            result |= PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h);
-            result |= LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h);
-            result |= LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h);
-            result |= LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h);
-            result |= LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
-            return result;
-            //return PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h) ||
-            //       LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h) ||
-            //       LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h) ||
-            //       LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h) ||
-            //       LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
+            return PointIntersectsRectangle(cx, cy, x - w, y - h, x + w, y + h);// ||
+                   //LineIntersectsCircle(cx, cy, r, x - w, y - h, x + w, y - h) ||
+                   //LineIntersectsCircle(cx, cy, r, x - w, y + h, x + w, y + h) ||
+                   //LineIntersectsCircle(cx, cy, r, x - w, y - h, x - w, y + h) ||
+                   //LineIntersectsCircle(cx, cy, r, x + w, y - h, x + w, y + h);
         }
 
         public static bool LineIntersectsCircle(
@@ -120,11 +113,6 @@ namespace Common.Utils
             var closest = ClosestPointOnSegmentToPoint(x1, y1, x2, y2, cx, cy);
             var distance = Math.Sqrt(Distance2(closest[0], closest[1], cx, cy));
             return distance <= r;
-            //var dx = x2 - x1;
-            //var dy = y2 - y1;
-            //var dr = Math.Sqrt((dx * dx) + (dy * dy));
-            //var d = (x1 * y2) - (x2 * y1);
-            //return ((r * r * dr * dr) - (d * d)) < 0;
         }
 
         public static float[] ClosestPointOnSegmentToPoint(

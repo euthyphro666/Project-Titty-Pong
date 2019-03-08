@@ -8,6 +8,7 @@ using Common.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace TittyGame
 {
@@ -48,7 +49,7 @@ namespace TittyGame
                       .AddSystem(new MovementSystem(SystemContext), 2,false)
                       .AddSystem(new RenderSystem(SystemContext, Screen),1, true);
 
-            
+
             GameEngine.AddEntity(new Entity("Paddle One")
                                     .Add(new DisplayComponent
                                     {
@@ -72,7 +73,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.One
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent() { })
                                 )
                       .AddEntity(new Entity("Paddle Two")
                                     .Add(new DisplayComponent
@@ -97,7 +98,7 @@ namespace TittyGame
                                     {
                                         Number = PlayerNumber.Two
                                     })
-                                    .Add(new NetworkIdentityComponent(){})
+                                    .Add(new NetworkIdentityComponent() { })
                                 )
                       .AddEntity(new Entity("Ball")
                                     .Add(new DisplayComponent
@@ -112,7 +113,7 @@ namespace TittyGame
                                     .Add(new VelocityComponent
                                     {
                                         X = -4,
-                                        Y = 0
+                                        Y = (new Random()).Next(-2, 3)
                                     })
                                     .Add(new RigidBodyComponent
                                     {
@@ -139,6 +140,10 @@ namespace TittyGame
                                         IsKinematic = true,
                                         IsRect = true
                                     })
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
                         )
                         .AddEntity(new Entity("South-Wall")
                                     .Add(new PositionComponent
@@ -154,6 +159,10 @@ namespace TittyGame
                                         IsDynamic = false,
                                         IsKinematic = true,
                                         IsRect = true
+                                    })
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
                                     })
                         )
                         .AddEntity(new Entity("West-Wall")
@@ -171,6 +180,10 @@ namespace TittyGame
                                         IsKinematic = true,
                                         IsRect = true
                                     })
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
+                                    })
                         )
                         .AddEntity(new Entity("East-Wall")
                                     .Add(new PositionComponent
@@ -186,6 +199,10 @@ namespace TittyGame
                                         IsDynamic = false,
                                         IsKinematic = true,
                                         IsRect = true
+                                    })
+                                    .Add(new DisplayComponent
+                                    {
+                                        Sprite = Content.Load<Texture2D>("Paddle")
                                     })
                         );
         }

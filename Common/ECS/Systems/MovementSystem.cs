@@ -37,15 +37,30 @@ namespace Common.ECS.Systems
         private void OnCollisionEvent(object sender, CollisionEventArgs e)
         {
             if (e.Node1.RigidBody.IsDynamic)
-            {
-                Maths.Reverse(e.Node1.Velocity);
-                Maths.Apply(e.Node1.Velocity, e.Node1.Position);
-            }
+                ReboundEntity(e.Node1, e.Node2);
             if (e.Node2.RigidBody.IsDynamic)
+                ReboundEntity(e.Node2, e.Node1);
+        }
+
+        private void ReboundEntity(CollisionNode node, CollisionNode otherNode)
+        {
+            if (node.RigidBody.IsRect)
             {
-                Maths.Reverse(e.Node2.Velocity);
-                Maths.Apply(e.Node2.Velocity, e.Node2.Position);
+                Maths.Reverse(node.Velocity);
             }
+            else
+            {
+                if (otherNode.RigidBody.IsDynamic)
+                {
+                    node.Velocity.X *= -1;
+                    node.Velocity.Y -= (otherNode.Velocity.Y * 0.25f);
+                }
+                else
+                {
+                    node.Velocity.Y *= -1;
+                }
+            }
+            Maths.Apply(node.Velocity, node.Position);
         }
 
         private void OnEntityAddedEvent(object sender, EntityAddedEventArgs args)
